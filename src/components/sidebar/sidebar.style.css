@@ -1,7 +1,13 @@
-@media (width > 760px) {
+@media (width > 900px) {
 	.sidebar-container {
 		border-right: 1px solid var(--clr-border);
 		min-height: 100vh;
+		transition: max-width 0.3s ease;
+	}
+	.sidebar-open {
 		max-width: 25vw;
+	}
+	.sidebar-close {
+		max-width: 90.325px;
 	}
 }

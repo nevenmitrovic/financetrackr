@@ -1,3 +1,4 @@
+import { SidebarContextProvider, useSidebarContext } from '@/contexts/SidebarContext'
 import type { ReactNode } from 'react'
 
 interface DashboardLayoutProps {
@@ -5,12 +6,22 @@ interface DashboardLayoutProps {
 	dashboardContent: ReactNode
 }
 
-const DashboardLayout = ({ sidebar, dashboardContent }: DashboardLayoutProps) => {
+const DashboardLayoutContent = ({ sidebar, dashboardContent }: DashboardLayoutProps) => {
+	const { open } = useSidebarContext()
+
 	return (
-		<div className='dashboard-layout'>
+		<div className={`dashboard-layout ${open ? 'sidebar-open' : 'sidebar-close'}`}>
 			{sidebar}
 			{dashboardContent}
 		</div>
+	)
+}
+
+const DashboardLayout = ({ sidebar, dashboardContent }: DashboardLayoutProps) => {
+	return (
+		<SidebarContextProvider>
+			<DashboardLayoutContent sidebar={sidebar} dashboardContent={dashboardContent} />
+		</SidebarContextProvider>
 	)
 }
 
