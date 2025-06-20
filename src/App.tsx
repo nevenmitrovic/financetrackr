@@ -1,9 +1,12 @@
+import { Routes, Route } from 'react-router-dom'
+
+import Dashboard from '@/pages/Dashboard'
+
 function App() {
 	return (
-		<div className='container'>
-			<h1>Hello</h1>
-			<h2>World</h2>
-		</div>
+		<Routes>
+			<Route index element={<Dashboard />} />
+		</Routes>
 	)
 }
 

@@ -1,0 +1,42 @@
+.logo {
+	max-width: 20px;
+	margin-right: 0.5rem;
+}
+.sidebar-card-title {
+	width: 100%;
+}
+.sidebar-card-title > p {
+	color: var(--clr-text-secondary);
+	font-size: var(--font-size-xs);
+}
+.sidebar-card-title > h3 {
+	font-size: var(--font-size-sm);
+}
+
+@media (width > 900px) {
+	.logo {
+		max-width: 28px;
+	}
+	.sidebar-card-title > p {
+		font-size: var(--font-size-sm);
+	}
+	.sidebar-card-title > h3 {
+		font-size: var(--font-size-regular);
+	}
+}
+
+@media (width > 1200px) {
+	.logo {
+		max-width: 36px;
+	}
+	.sidebar-card-title > p {
+		font-size: var(--font-size-regular);
+	}
+	.sidebar-card-title > h3 {
+		font-size: var(--font-size-lg);
+	}
+	.icon > svg {
+		width: 28px;
+		height: 28px;
+	}
+}

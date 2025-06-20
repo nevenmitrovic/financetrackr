@@ -1,0 +1,7 @@
+@media (width > 760px) {
+	.sidebar-container {
+		border-right: 1px solid var(--clr-border);
+		min-height: 100vh;
+		max-width: 25vw;
+	}
+}
