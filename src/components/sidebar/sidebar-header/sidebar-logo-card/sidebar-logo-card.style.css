@@ -7,10 +7,23 @@
 }
 .sidebar-card-title > p {
 	color: var(--clr-text-secondary);
-	font-size: var(--font-size-xs);
+	font-size: var(--font-size-sm);
 }
 .sidebar-card-title > h3 {
 	font-size: var(--font-size-sm);
+}
+.icon {
+	margin-block: auto;
+}
+
+@media (width > 768px) {
+	.logo {
+		max-width: 24px;
+	}
+	.icon > svg {
+		width: 16px;
+		height: 16px;
+	}
 }
 
 @media (width > 900px) {
@@ -18,10 +31,14 @@
 		max-width: 28px;
 	}
 	.sidebar-card-title > p {
-		font-size: var(--font-size-sm);
+		font-size: var(--font-size-regular);
 	}
 	.sidebar-card-title > h3 {
 		font-size: var(--font-size-regular);
+	}
+	.icon > svg {
+		width: 24px;
+		height: 24px;
 	}
 }
 
@@ -30,7 +47,7 @@
 		max-width: 36px;
 	}
 	.sidebar-card-title > p {
-		font-size: var(--font-size-regular);
+		font-size: var(--font-size-lg);
 	}
 	.sidebar-card-title > h3 {
 		font-size: var(--font-size-lg);

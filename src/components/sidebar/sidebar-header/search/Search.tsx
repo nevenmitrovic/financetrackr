@@ -12,12 +12,7 @@ const Search = ({ onChange }: ISearchProps) => {
 
 	return (
 		<div className={`sidebar-search ${!open ? 'hidden' : ''}`}>
-			<input
-				type='text'
-				placeholder='Search "last paycheck"'
-				onChange={onChange}
-				name='sidebarSearch'
-			/>
+			<input type='text' placeholder='Search' onChange={onChange} name='sidebarSearch' />
 			<IoIosSearch className='input-icon' />
 		</div>
 	)

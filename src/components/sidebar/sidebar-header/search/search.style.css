@@ -32,6 +32,3 @@ input:focus::placeholder {
 	opacity: 0;
 	visibility: hidden;
 }
-
-@media (width > 900) {
-}

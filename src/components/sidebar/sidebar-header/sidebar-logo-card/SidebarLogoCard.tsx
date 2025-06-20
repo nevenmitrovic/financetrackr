@@ -8,7 +8,7 @@ const SidebarLogoCard = () => {
 
 	return (
 		<div className={`sidebar-card ${!open ? 'transparent' : ''}`} onClick={toggleOpen}>
-			<img className='logo' src={logo} alt='financetrackr logo' />
+			<img className={`logo ${!open ? 'margin-auto' : ''}`} src={logo} alt='financetrackr logo' />
 			<div className={`sidebar-card-title ${!open ? 'hidden' : ''}`}>
 				<h3>FinanceTrackr</h3>
 				<p>39 members</p>
