@@ -1,5 +1,5 @@
 import { SidebarContextProvider, useSidebarContext } from '@/contexts/SidebarContext'
-import type { ReactNode } from 'react'
+import { type ReactNode } from 'react'
 
 interface DashboardLayoutProps {
 	sidebar: ReactNode
