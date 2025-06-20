@@ -7,17 +7,13 @@ const SidebarLogoCard = () => {
 	const { open, toggleOpen } = useSidebarContext()
 
 	return (
-		<div
-			className='sidebar-card'
-			style={!open ? { backgroundColor: 'transparent' } : {}}
-			onClick={toggleOpen}
-		>
+		<div className={`sidebar-card ${!open && 'transparent'}`} onClick={toggleOpen}>
 			<img className='logo' src={logo} alt='financetrackr logo' />
-			<div className='sidebar-card-title' style={!open ? { display: 'none' } : {}}>
+			<div className={`sidebar-card-title ${!open && 'hidden'}`}>
 				<h3>FinanceTrackr</h3>
 				<p>39 members</p>
 			</div>
-			<div className='icon' style={!open ? { display: 'none' } : {}}>
+			<div className={`icon ${!open && 'hidden'}`}>
 				<BsLayoutSidebarInsetReverse color='var(--clr-text-secondary)' />
 			</div>
 		</div>

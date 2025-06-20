@@ -205,6 +205,14 @@
 		align-items: center;
 	}
 
+	.hidden {
+		display: none;
+	}
+
+	.transparent {
+		background-color: transparent;
+	}
+
 	@media (width > 900) {
 		.container {
 			padding: 1rem 0.8rem;
