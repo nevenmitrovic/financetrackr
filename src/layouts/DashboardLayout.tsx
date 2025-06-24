@@ -1,4 +1,5 @@
 import { SidebarContextProvider, useSidebarContext } from '@/contexts/SidebarContext'
+import { useIsMobile } from '@/hooks/useIsMobile'
 import { type ReactNode } from 'react'
 
 interface DashboardLayoutProps {
@@ -8,11 +9,22 @@ interface DashboardLayoutProps {
 
 const DashboardLayoutContent = ({ sidebar, dashboardContent }: DashboardLayoutProps) => {
 	const { open } = useSidebarContext()
+	const isMobile = useIsMobile()
 
 	return (
-		<div className={`dashboard-layout ${open ? 'sidebar-open' : 'sidebar-close'}`}>
+		<div
+			className={`dashboard-layout ${open ? 'sidebar-open' : 'sidebar-close'} ${
+				isMobile ? 'mobile-layout' : ''
+			}`}
+		>
 			{sidebar}
-			{dashboardContent}
+			<div
+				className={`dashboard-content-container ${open && isMobile ? 'hidden' : ''} ${
+					isMobile ? 'mobile-layout' : ''
+				}`}
+			>
+				{dashboardContent}
+			</div>
 		</div>
 	)
 }

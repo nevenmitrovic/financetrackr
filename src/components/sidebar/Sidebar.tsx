@@ -28,7 +28,9 @@ const Sidebar = () => {
 			<div className='sidebar-card-container'>
 				<div className='top-items'>
 					{SIDEBAR_CARD_ITEMS.map((item) => {
-						return <SidebarCard path={item.path} icon={item.icon} text={item.text} />
+						return (
+							<SidebarCard key={item.path} path={item.path} icon={item.icon} text={item.text} />
+						)
 					})}
 				</div>
 				<div className='bottom-items'>

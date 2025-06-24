@@ -189,6 +189,9 @@
 	.dashboard-layout.sidebar-close {
 		grid-template-columns: min-content 1fr;
 	}
+	.dashboard-layout.mobile-layout.sidebar-open {
+		grid-template-columns: 1fr;
+	}
 }
 
 @layer utilities {
