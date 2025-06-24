@@ -1,0 +1,16 @@
+.sidebar-card-icon {
+	margin-right: 0.5rem;
+}
+
+.card-active {
+	background-color: var(--clr-bg-card);
+	color: var(--clr-text-primary);
+}
+.card-inactive {
+	background-color: transparent;
+	color: var(--clr-sidebar-icon);
+}
+.sidebar-card > span {
+	display: flex;
+	align-items: center;
+}

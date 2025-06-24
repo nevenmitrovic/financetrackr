@@ -1,0 +1,28 @@
+.profile-card-title {
+	width: 100%;
+}
+.profile-card-title > p {
+	color: var(--clr-text-secondary);
+	font-size: var(--font-size-xs);
+}
+.profile-card-title > h3 {
+	font-size: var(--font-size-xs);
+}
+.icon {
+	display: flex;
+	align-items: center;
+}
+.avatar {
+	border-radius: 50%;
+	max-width: 36px;
+	margin-right: 0.5rem;
+}
+
+@media (width > 900px) {
+	.profile-card-title > p {
+		font-size: var(--font-size-regular);
+	}
+	.profile-card-title > h3 {
+		font-size: var(--font-size-regular);
+	}
+}
