@@ -1,7 +1,3 @@
-.sidebar-card-icon {
-	margin-right: 0.5rem;
-}
-
 .card-active {
 	background-color: var(--clr-bg-card);
 	color: var(--clr-text-primary);
@@ -13,4 +9,7 @@
 .sidebar-card > span {
 	display: flex;
 	align-items: center;
+}
+a.sidebar-card {
+	gap: 0.5rem;
 }

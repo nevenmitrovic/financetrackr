@@ -9,14 +9,14 @@ import { CgInsights } from 'react-icons/cg'
 import './sidebar.style.css'
 
 const SIDEBAR_CARD_ITEMS = [
-	{ path: '/', icon: <IoHomeSharp className='sidebar-card-icon' />, text: 'Home' },
-	{ path: '/expense', icon: <GiExpense className='sidebar-card-icon' />, text: 'Expense' },
+	{ path: '/', icon: <IoHomeSharp />, text: 'Home' },
+	{ path: '/expense', icon: <GiExpense />, text: 'Expense' },
 	{
 		path: '/documents',
-		icon: <IoDocumentSharp className='sidebar-card-icon' />,
+		icon: <IoDocumentSharp />,
 		text: 'Documents',
 	},
-	{ path: '/isights', icon: <CgInsights className='sidebar-card-icon' />, text: 'Isights' },
+	{ path: '/isights', icon: <CgInsights />, text: 'Isights' },
 ]
 
 const Sidebar = () => {

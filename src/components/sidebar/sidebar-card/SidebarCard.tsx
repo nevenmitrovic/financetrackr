@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom'
+import { useSidebarContext } from '@/contexts/SidebarContext'
 
 import './sidebar-card.style.css'
 
@@ -9,6 +10,7 @@ interface SidebarCardProps {
 }
 
 const SidebarCard = ({ path, icon, text }: SidebarCardProps) => {
+	const { open } = useSidebarContext()
 	const currentPath = useLocation()
 
 	return (
@@ -16,8 +18,8 @@ const SidebarCard = ({ path, icon, text }: SidebarCardProps) => {
 			to={path}
 			className={`sidebar-card ${currentPath.pathname === path ? 'card-active' : 'card-inactive'}`}
 		>
-			<span>{icon}</span>
-			<span>{text}</span>
+			<span className={`${!open ? 'margin-auto' : ''}`}>{icon}</span>
+			<span className={`${!open ? 'hidden' : ''}`}>{text}</span>
 		</Link>
 	)
 }
