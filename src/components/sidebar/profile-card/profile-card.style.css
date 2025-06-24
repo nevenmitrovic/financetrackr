@@ -17,12 +17,32 @@
 	max-width: 36px;
 	margin-right: 0.5rem;
 }
+.profile-dropdown {
+	position: absolute;
+	background-color: var(--clr-bg-card);
+	border-radius: var(--border-radius-2);
+	font-size: var(--font-size-sm);
+	top: -180%;
+	left: 0;
+}
+.profile-dropdown > li {
+	border-bottom: 1px solid var(--clr-border);
+	margin-bottom: 0.5rem;
+	color: var(--clr-text-secondary);
+}
+.profile-dropdown > li:hover {
+	color: var(--clr-text-primary);
+	cursor: pointer;
+}
 
 @media (width > 900px) {
 	.profile-card-title > p {
 		font-size: var(--font-size-regular);
 	}
 	.profile-card-title > h3 {
+		font-size: var(--font-size-regular);
+	}
+	.profile-dropdown {
 		font-size: var(--font-size-regular);
 	}
 }

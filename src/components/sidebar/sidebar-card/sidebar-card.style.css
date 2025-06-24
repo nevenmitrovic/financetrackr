@@ -13,3 +13,6 @@
 a.sidebar-card {
 	gap: 0.5rem;
 }
+a.sidebar-card:hover {
+	color: var(--clr-text-primary);
+}

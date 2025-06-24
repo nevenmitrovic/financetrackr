@@ -3,12 +3,41 @@ import { CgArrowsV } from 'react-icons/cg'
 
 import avatar from '@/assets/images/avatar.png'
 import './profile-card.style.css'
+import { useEffect, useRef, useState } from 'react'
 
 const ProfileCard = () => {
 	const { open, toggleOpen } = useSidebarContext()
+	const [openDropdown, setOpenDropdown] = useState(false)
+	const profileCardRef = useRef<HTMLDivElement>(null)
+
+	const handleDropdown = () => {
+		if (!open) toggleOpen()
+
+		setOpenDropdown((prev) => !prev)
+	}
+
+	useEffect(() => {
+		const handleClickOutside = (event: MouseEvent) => {
+			if (profileCardRef.current && !profileCardRef.current.contains(event.target as Node)) {
+				setOpenDropdown(false)
+			}
+		}
+
+		if (openDropdown) {
+			document.addEventListener('mousedown', handleClickOutside)
+		}
+
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside)
+		}
+	}, [openDropdown])
 
 	return (
-		<div className={`sidebar-card ${!open ? 'transparent' : ''}`} onClick={toggleOpen}>
+		<div
+			className={`sidebar-card ${!open ? 'transparent' : ''}`}
+			onClick={handleDropdown}
+			ref={profileCardRef}
+		>
 			<img
 				className={`avatar ${!open ? 'margin-auto' : ''}`}
 				src={avatar}
@@ -21,6 +50,11 @@ const ProfileCard = () => {
 			<div className={`icon ${!open ? 'hidden' : ''}`}>
 				<CgArrowsV color='var(--clr-text-secondary)' />
 			</div>
+
+			<ul className={`profile-dropdown container ${!openDropdown ? 'hidden' : ''}`}>
+				<li>Edit profile</li>
+				<li>Logout</li>
+			</ul>
 		</div>
 	)
 }

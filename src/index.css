@@ -116,7 +116,6 @@
 
 		/* interface and icons */
 		--clr-sidebar-icon: #808c9c;
-		--clr-sidebar-active: #a2b8db;
 
 		/* border radius */
 		--border-radius-1: 0.25rem;
@@ -176,7 +175,7 @@
 	}
 }
 
-@layer layout {
+@layer layouts {
 	.dashboard-layout {
 		display: grid;
 		transition: grid-template-columns 0.3s ease;
@@ -207,6 +206,7 @@
 		cursor: pointer;
 		display: flex;
 		align-items: center;
+		position: relative;
 	}
 
 	.hidden {
