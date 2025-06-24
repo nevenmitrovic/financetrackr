@@ -178,8 +178,8 @@
 @layer layouts {
 	.dashboard-layout {
 		display: grid;
-		transition: grid-template-columns 0.3s ease;
 		min-height: 100vh;
+		width: 100%;
 	}
 
 	.dashboard-layout.sidebar-open {
@@ -190,6 +190,9 @@
 	}
 	.dashboard-layout.mobile-layout.sidebar-open {
 		grid-template-columns: 1fr;
+	}
+	.dashboard-layout.mobile-layout.sidebar-close {
+		grid-template-columns: min-content 1fr;
 	}
 }
 
