@@ -10,11 +10,15 @@ const DashboardContent = () => {
 
 	return (
 		<div
-			className={`dashboard-content-container container ${open && isMobile ? 'hidden' : ''} ${
-				isMobile ? 'mobile-layout' : ''
-			}`}
+			className={`container ${open && isMobile ? 'hidden' : ''} ${isMobile ? 'mobile-layout' : ''}`}
 		>
 			<PageHeader />
+			<div className='dashboard-content-container'>
+				<div className='income-managment'>INCOME</div>
+				<div className='budget-control'>BUDGET</div>
+				<div className='recent-transaction'>RECENT TRANSACTION</div>
+				<div className='expense-recap'>EXPENSE RECAP</div>
+			</div>
 		</div>
 	)
 }
