@@ -1,5 +1,6 @@
 import { FaPlus } from 'react-icons/fa6'
 import { AiFillEdit } from 'react-icons/ai'
+import IncomeCategoryCard from '@/components/dashboard-content/income-managment/income-category-card/IncomeCategoryCard'
 
 import './income-managment.style.css'
 
@@ -12,11 +13,11 @@ const IncomeManagment = () => {
 				<div className='income-controller'>
 					<h3>3350.00$</h3>
 					<div>
-						<button>
+						<button className='button'>
 							<FaPlus />
 							Add
 						</button>
-						<button>
+						<button className='button'>
 							<AiFillEdit />
 						</button>
 					</div>
@@ -24,9 +25,26 @@ const IncomeManagment = () => {
 			</div>
 			<div className='income-managment-view'>
 				<p>Income breakdown</p>
-				<div className='part-time'>part-time</div>
-				<div className='paycheck'>paycheck</div>
-				<div className='gift'>gift</div>
+				<div className='income-category-container'>
+					<IncomeCategoryCard
+						title='Part-Time'
+						value={1412}
+						widthPerc='44'
+						widthColor='--clr-income-part-time'
+					/>
+					<IncomeCategoryCard
+						title='Paycheck'
+						value={1173}
+						widthPerc='35'
+						widthColor='--clr-income-paycheck'
+					/>
+					<IncomeCategoryCard
+						title='Part-Time'
+						value={765}
+						widthPerc='21'
+						widthColor='--clr-income-gift'
+					/>
+				</div>
 			</div>
 		</div>
 	)

@@ -122,6 +122,9 @@
 		--border-radius-2: 0.5rem;
 		--border-radius-3: 0.75rem;
 
+		/* box shadow */
+		--box-shadow-1: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;
+
 		/* font size */
 		--fs-100: 0.3rem;
 		--fs-200: 0.5rem;
@@ -200,6 +203,22 @@
 	.container {
 		padding: 1rem 0.8rem;
 	}
+	.button {
+		background-color: transparent;
+		border: 1px solid var(--clr-border);
+		border-radius: var(--border-radius-2);
+		box-shadow: var(--box-shadow-1);
+		padding: 0.5rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+		cursor: pointer;
+		color: var(--clr-text-secondary);
+	}
+	.button:hover {
+		color: var(--clr-text-primary);
+	}
 
 	.content-card {
 		background-color: var(--clr-bg-card);
@@ -208,7 +227,8 @@
 		padding: 0.5rem;
 		width: 100%;
 		max-width: 100%;
-		overflow: hidden;
+		max-height: 100%;
+		box-shadow: var(--box-shadow-1);
 	}
 
 	.sidebar-card {

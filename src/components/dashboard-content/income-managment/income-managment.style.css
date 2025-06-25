@@ -1,0 +1,48 @@
+.income-managment {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+.income-managment-header {
+	border-bottom: 1px solid var(--clr-border);
+	flex-shrink: 0;
+}
+.income-managment-header > p {
+	color: var(--clr-text-secondary);
+	font-size: var(--font-size-sm);
+	padding-top: 0.5rem;
+}
+.income-controller {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding-bottom: 0.5rem;
+	text-align: center;
+}
+.income-controller div {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+}
+.income-managment-view {
+	flex: 1;
+	min-height: 0;
+	display: flex;
+	flex-direction: column;
+}
+
+.income-managment-view > p {
+	color: var(--clr-text-secondary);
+	font-size: var(--font-size-sm);
+	padding-block: 0.5rem;
+	flex-shrink: 0;
+}
+
+.income-category-container {
+	display: flex;
+	flex: 1;
+	align-items: center;
+	gap: 0.2rem;
+	min-height: 0;
+}
