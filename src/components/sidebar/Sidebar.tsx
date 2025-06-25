@@ -16,7 +16,7 @@ const SIDEBAR_CARD_ITEMS = [
 		icon: <IoDocumentSharp />,
 		text: 'Documents',
 	},
-	{ path: '/isights', icon: <CgInsights />, text: 'Isights' },
+	{ path: '/insights', icon: <CgInsights />, text: 'Insights' },
 ]
 
 const Sidebar = () => {
