@@ -46,3 +46,12 @@
 	gap: 0.2rem;
 	min-height: 0;
 }
+
+@media (width > 768px) {
+	.income-managment-header > p {
+		font-size: var(--font-size-regular);
+	}
+	.income-managment-view > p {
+		font-size: var(--font-size-regular);
+	}
+}

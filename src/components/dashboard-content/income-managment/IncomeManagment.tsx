@@ -39,7 +39,7 @@ const IncomeManagment = () => {
 						widthColor='--clr-income-paycheck'
 					/>
 					<IncomeCategoryCard
-						title='Part-Time'
+						title='Gift'
 						value={765}
 						widthPerc='21'
 						widthColor='--clr-income-gift'

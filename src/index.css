@@ -208,13 +208,14 @@
 		border: 1px solid var(--clr-border);
 		border-radius: var(--border-radius-2);
 		box-shadow: var(--box-shadow-1);
-		padding: 0.5rem;
+		padding: 0.2rem;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		gap: 0.5rem;
 		cursor: pointer;
 		color: var(--clr-text-secondary);
+		font-size: var(--font-size-sm);
 	}
 	.button:hover {
 		color: var(--clr-text-primary);
@@ -258,9 +259,13 @@
 		background-color: var(--clr-bg-main);
 	}
 
-	@media (width > 768) {
+	@media (width > 768px) {
 		.container {
 			padding: 1.4rem 1.2rem;
+		}
+		.button {
+			padding: 0.5rem;
+			font-size: var(--font-size-regular);
 		}
 	}
 }
