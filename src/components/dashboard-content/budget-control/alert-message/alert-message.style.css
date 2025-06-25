@@ -1,0 +1,29 @@
+.alert-message {
+	border-radius: var(--border-radius-2);
+	padding: 0.2rem;
+	width: 100%;
+	color: white;
+	font-size: var(--font-size-sm);
+}
+.success-message {
+	background-color: var(--clr-success);
+}
+.warning-message {
+	background-color: var(--clr-warning);
+}
+.danger-message {
+	background-color: var(--clr-danger);
+}
+
+@media (width > 768px) {
+	.alert-message {
+		padding: 0.3rem;
+	}
+}
+
+@media (width > 900px) {
+	.alert-message {
+		padding: 0.5rem;
+		font-size: var(--font-size-regular);
+	}
+}

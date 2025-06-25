@@ -1,0 +1,39 @@
+.budget-control {
+	display: flex;
+	flex-direction: column;
+}
+.budget-control-header {
+	flex-shrink: 0;
+}
+.budget-control-view {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+.budget-control-header > div:first-child {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.limit {
+	padding-top: 0.5rem;
+}
+.limit > p,
+.limit > div {
+	color: var(--clr-text-secondary);
+	font-size: var(--font-size-sm);
+}
+.limit > div > h3 {
+	display: inline-block;
+	padding-block: 0.2rem;
+}
+
+@media (width > 768px) {
+	.limit > p {
+		font-size: var(--font-size-regular);
+	}
+	.limit > div > h3 {
+		padding-block: 0.5rem;
+	}
+}
