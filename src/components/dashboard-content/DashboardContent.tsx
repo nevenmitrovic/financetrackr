@@ -1,8 +1,9 @@
 import { useSidebarContext } from '@/contexts/SidebarContext'
 import { useIsMobile } from '@/hooks/useIsMobile'
 import PageHeader from '@/components/common/page-header/PageHeader'
+import IncomeManagment from '@/components/dashboard-content/income-managment/IncomeManagment'
 
-import './dashboard-content-container.style.css'
+import './dashboard-content.style.css'
 
 const DashboardContent = () => {
 	const { open } = useSidebarContext()
@@ -14,7 +15,7 @@ const DashboardContent = () => {
 		>
 			<PageHeader />
 			<div className='dashboard-content-container'>
-				<div className='income-managment'>INCOME</div>
+				<IncomeManagment />
 				<div className='budget-control'>BUDGET</div>
 				<div className='recent-transaction'>RECENT TRANSACTION</div>
 				<div className='expense-recap'>EXPENSE RECAP</div>

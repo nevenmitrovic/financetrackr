@@ -8,11 +8,12 @@
 @media (width > 768px) {
 	.dashboard-content-container {
 		padding-block: 1.4rem;
-		grid-template-columns: 0;
+		grid-template-columns: 2fr 1fr;
+		grid-template-rows: 1fr 2fr;
+		gap: 0.5rem;
 		grid-template-areas:
-			'income income control'
-			'recent recent recap'
-			'recent recent recap';
+			'income control'
+			'recent recap';
 	}
 	.income-managment {
 		grid-area: income;
