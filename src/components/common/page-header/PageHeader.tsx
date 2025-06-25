@@ -2,6 +2,12 @@ import { useLocation } from 'react-router-dom'
 
 import './page-header.style.css'
 
+const formatPath = (path: string) => {
+	if (path === '/') return 'Home'
+
+	return path.charAt(0).toUpperCase() + path.slice(1).toLowerCase()
+}
+
 const PageHeader = () => {
 	const path = useLocation().pathname
 
@@ -9,7 +15,7 @@ const PageHeader = () => {
 		<div className='page-header'>
 			<span>Neven Mitrovic</span>
 			<span> / </span>
-			<span>{path === '/' ? 'Home' : path}</span>
+			<span>{formatPath(path)}</span>
 		</div>
 	)
 }
