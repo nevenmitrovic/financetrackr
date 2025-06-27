@@ -4,6 +4,7 @@ import PageHeader from '@/components/common/page-header/PageHeader'
 import IncomeManagment from '@/components/dashboard-content/income-managment/IncomeManagment'
 import BudgetControl from '@/components/dashboard-content/budget-control/BudgetControl'
 import RecentTransactions from '@/components/dashboard-content/recent-transactions/RecentTransactions'
+import ExpenseRecap from '@/components/dashboard-content/expense-recap/ExpenseRecap'
 
 import './dashboard-content.style.css'
 
@@ -25,7 +26,7 @@ const DashboardContent = () => {
 					<IncomeManagment />
 					<BudgetControl />
 					<RecentTransactions />
-					<div className='expense-recap'>EXPENSE RECAP</div>
+					<ExpenseRecap />
 				</div>
 			</div>
 		</div>

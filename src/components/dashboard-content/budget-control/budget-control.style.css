@@ -1,6 +1,7 @@
 .budget-control {
 	display: flex;
 	flex-direction: column;
+	height: min-content;
 }
 .budget-control-header {
 	flex-shrink: 0;

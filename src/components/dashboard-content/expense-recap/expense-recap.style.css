@@ -1,0 +1,138 @@
+.expense-recap {
+	max-height: min-content;
+}
+
+.expense-recap-header {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 0.75rem;
+	margin-bottom: 0.5rem;
+}
+
+.expense-recap-content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 1rem;
+}
+
+.donut-chart-container {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+}
+
+.donut-chart {
+	transform: rotate(-90deg);
+	width: 120px;
+	height: 120px;
+}
+
+.percentage-change {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 4px;
+}
+
+.expense-legend {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+	width: 100%;
+}
+
+.legend-item {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.75rem;
+	background-color: #f8f9fa;
+	border-radius: 8px;
+}
+
+.legend-color {
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	flex-shrink: 0;
+}
+
+.legend-details {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.legend-category {
+	font-size: 0.875rem;
+	font-weight: 500;
+	color: var(--clr-text-secondary);
+}
+
+.legend-amount {
+	font-size: 0.75rem;
+	color: var(--clr-text-secondary);
+}
+
+.legend-percentage {
+	font-size: 0.75rem;
+	font-weight: 600;
+	color: var(--clr-text-secondary);
+}
+
+@media (width > 768px) {
+	.expense-recap-header {
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		gap: 0;
+	}
+
+	.expense-recap-content {
+		flex-direction: row;
+		gap: 2rem;
+	}
+
+	.donut-chart {
+		width: 150px;
+		height: 150px;
+	}
+
+	.expense-legend {
+		gap: 1rem;
+	}
+
+	.legend-item {
+		padding: 0.5rem;
+		background-color: transparent;
+	}
+
+	.legend-color {
+		width: 10px;
+		height: 10px;
+	}
+
+	.legend-details {
+		gap: 4px;
+	}
+
+	.legend-category {
+		font-size: var(--font-size-sm);
+	}
+
+	.legend-amount,
+	.legend-percentage {
+		font-size: 12px;
+	}
+}
+
+@media (width > 1024px) {
+	.donut-chart {
+		width: 200px;
+		height: 200px;
+	}
+}

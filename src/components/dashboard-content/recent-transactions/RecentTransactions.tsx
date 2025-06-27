@@ -18,6 +18,13 @@ const RecentTransactions = () => {
 					<div className='transactions-cards-container'>
 						<TransactionCard />
 						<TransactionCard />
+						<TransactionCard />
+						<TransactionCard />
+						<TransactionCard />
+						<TransactionCard />
+						<TransactionCard />
+						<TransactionCard />
+						<TransactionCard />
 					</div>
 				</div>
 			</div>
