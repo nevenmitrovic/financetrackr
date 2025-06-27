@@ -3,10 +3,10 @@
 }
 .profile-card-title > p {
 	color: var(--clr-text-secondary);
-	font-size: var(--font-size-xs);
+	font-size: var(--font-size-sm);
 }
 .profile-card-title > h3 {
-	font-size: var(--font-size-xs);
+	font-size: var(--font-size-sm);
 }
 .icon {
 	display: flex;
@@ -49,6 +49,7 @@
 	}
 	.profile-dropdown {
 		font-size: var(--font-size-regular);
+		top: -195%;
 	}
 	.avatar {
 		max-width: 36px;
