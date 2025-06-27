@@ -1,6 +1,7 @@
 .page-header {
 	color: var(--clr-text-secondary);
 	font-size: var(--font-size-sm);
+	padding-bottom: 0.5rem;
 }
 
 @media (width > 900px) {

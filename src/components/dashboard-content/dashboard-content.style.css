@@ -1,14 +1,38 @@
+.dashboard-content-wrapper {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	overflow: hidden;
+}
+
+.dashboard-content-header {
+	flex-shrink: 0;
+	padding: 1rem 0.8rem 0;
+}
+
+.dashboard-content-scrollable {
+	flex: 1;
+	overflow-y: auto;
+	padding: 0 0.8rem 1rem;
+}
+
 .dashboard-content-container {
 	display: grid;
 	grid-template-columns: repeat(1, 1fr);
-	padding-block: 1rem;
-	height: calc(100% - 10px);
 	gap: 0.2rem;
+	min-height: 100%;
 }
 
 @media (width > 768px) {
+	.dashboard-content-header {
+		padding: 1.4rem 1.2rem 0;
+	}
+
+	.dashboard-content-scrollable {
+		padding: 0 1.2rem 1.4rem;
+	}
+
 	.dashboard-content-container {
-		padding-block: 1.4rem;
 		grid-template-columns: 2fr 1fr;
 		grid-template-rows: 1fr 2fr;
 		gap: 0.5rem;
