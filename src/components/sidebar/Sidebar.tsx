@@ -4,7 +4,6 @@ import SidebarCard from '@/components/sidebar/sidebar-card/SidebarCard'
 import ProfileCard from '@/components/sidebar/profile-card/ProfileCard'
 import { IoHomeSharp, IoDocumentSharp } from 'react-icons/io5'
 import { GiExpense } from 'react-icons/gi'
-import { CgInsights } from 'react-icons/cg'
 
 import './sidebar.style.css'
 
@@ -16,7 +15,6 @@ const SIDEBAR_CARD_ITEMS = [
 		icon: <IoDocumentSharp />,
 		text: 'Documents',
 	},
-	{ path: '/insights', icon: <CgInsights />, text: 'Insights' },
 ]
 
 const Sidebar = () => {
