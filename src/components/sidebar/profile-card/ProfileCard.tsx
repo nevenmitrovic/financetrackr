@@ -2,8 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useSidebarContext } from '@/contexts/SidebarContext'
 import { CgArrowsV } from 'react-icons/cg'
 import { supabaseClient } from '@/services/supabaseClient'
-import { Auth } from '@supabase/auth-ui-react'
-import { ThemeSupa } from '@supabase/auth-ui-shared'
+import { FaGoogle } from 'react-icons/fa'
 
 import avatar from '@/assets/images/avatar.png'
 import './profile-card.style.css'
@@ -24,14 +23,6 @@ const ProfileCard = () => {
 		if (profileCardRef.current && !profileCardRef.current.contains(event.target as Node)) {
 			setOpenDropdown(false)
 		}
-	}
-	async function handleSignInWithGoogle(response: any) {
-		const { data, error } = await supabaseClient.auth.signInWithIdToken({
-			provider: 'google',
-			token: response.credential,
-		})
-
-		if (!error) setSe
 	}
 
 	useEffect(() => {
@@ -69,14 +60,11 @@ const ProfileCard = () => {
 					})
 				}
 			>
-				<img
-					className={`avatar ${!open ? 'margin-auto' : ''}`}
-					src={avatar}
-					alt='financetrackr logo'
-				/>
+				<div className={`avatar ${!open ? 'margin-auto' : ''}`}>
+					<FaGoogle size={24} />
+				</div>
 				<div className={`profile-card-title ${!open ? 'hidden' : ''}`}>
-					<h3>Signin</h3>
-					<p>with google</p>
+					<h3>Sign in with Google</h3>
 				</div>
 			</div>
 		)

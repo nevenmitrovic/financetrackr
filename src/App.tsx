@@ -1,13 +1,7 @@
-import { Routes, Route } from 'react-router-dom'
-
-import Dashboard from '@/pages/Dashboard'
+import Router from '@/components/common/router/Router'
 
 function App() {
-	return (
-		<Routes>
-			<Route index element={<Dashboard />} />
-		</Routes>
-	)
+	return <Router />
 }
 
 export default App
