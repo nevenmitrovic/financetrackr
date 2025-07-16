@@ -8,7 +8,7 @@ import './profile-card.style.css'
 
 const ProfileCard = () => {
 	const { open, toggleOpen } = useSidebarContext()
-	const { signOut } = useAuth()
+	const { signOut, user } = useAuth()
 	const [openDropdown, setOpenDropdown] = useState(false)
 
 	const profileCardRef = useRef<HTMLDivElement>(null)
@@ -42,12 +42,12 @@ const ProfileCard = () => {
 		>
 			<img
 				className={`avatar ${!open ? 'margin-auto' : ''}`}
-				src={avatar}
+				src={user?.user_metadata.avatar_url ?? avatar}
 				alt='financetrackr logo'
 			/>
 			<div className={`profile-card-title ${!open ? 'hidden' : ''}`}>
-				<h3>Neven Mitrovic</h3>
-				<p>neven@gmail.com</p>
+				<h3>{user?.user_metadata.full_name ?? user?.user_metadata.name ?? 'User'}</h3>
+				<p>{user?.email}</p>
 			</div>
 			<div className={`icon ${!open ? 'hidden' : ''}`}>
 				<CgArrowsV color='var(--clr-text-secondary)' />
