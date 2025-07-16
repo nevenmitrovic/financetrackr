@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useSidebarContext } from '@/contexts/SidebarContext'
+import { useAuth } from '@/contexts/AuthContext'
 import { CgArrowsV } from 'react-icons/cg'
 
 import avatar from '@/assets/images/avatar.png'
@@ -7,6 +8,7 @@ import './profile-card.style.css'
 
 const ProfileCard = () => {
 	const { open, toggleOpen } = useSidebarContext()
+	const { signOut } = useAuth()
 	const [openDropdown, setOpenDropdown] = useState(false)
 
 	const profileCardRef = useRef<HTMLDivElement>(null)
@@ -53,7 +55,7 @@ const ProfileCard = () => {
 
 			<ul className={`profile-dropdown container ${!openDropdown ? 'hidden' : ''}`}>
 				<li>Edit profile</li>
-				<li>Logout</li>
+				<li onClick={signOut}>Logout</li>
 			</ul>
 		</div>
 	)

@@ -6,6 +6,7 @@ interface IAuthContext {
 	session: Session | null
 	user: User | null
 	loading: boolean
+	signOut: () => Promise<void>
 }
 
 interface AuthProviderProps {
@@ -20,6 +21,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 	const [loading, setLoading] = useState(true)
 
 	const getSession = async () => {
+		setLoading(true)
+
 		try {
 			const {
 				data: { session },
@@ -32,6 +35,22 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
 			setSession(session)
 			setUser(session?.user ?? null)
+		} catch (error) {
+			console.error(error)
+		} finally {
+			setLoading(false)
+		}
+	}
+
+	const signOut = async (): Promise<void> => {
+		setLoading(true)
+
+		try {
+			const { error } = await supabaseClient.auth.signOut()
+
+			if (error) {
+				throw new AuthError(error.message)
+			}
 		} catch (error) {
 			console.error(error)
 		} finally {
@@ -53,7 +72,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 		}
 	}, [])
 
-	const value: IAuthContext = { session, user, loading }
+	const value: IAuthContext = { session, user, loading, signOut }
 
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
