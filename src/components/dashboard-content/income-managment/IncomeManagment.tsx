@@ -1,6 +1,8 @@
 import { FaPlus } from 'react-icons/fa6'
 import { AiFillEdit } from 'react-icons/ai'
+
 import IncomeCategoryCard from '@/components/dashboard-content/income-managment/income-category-card/IncomeCategoryCard'
+import type { IUserMonthlyIncome } from '@/types'
 
 import './income-managment.style.css'
 
