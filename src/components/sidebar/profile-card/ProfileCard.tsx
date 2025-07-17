@@ -43,6 +43,7 @@ const ProfileCard = () => {
 			<img
 				className={`avatar ${!open ? 'margin-auto' : ''}`}
 				src={user?.user_metadata.avatar_url ?? avatar}
+				referrerPolicy='no-referrer'
 				alt='financetrackr logo'
 			/>
 			<div className={`profile-card-title ${!open ? 'hidden' : ''}`}>
