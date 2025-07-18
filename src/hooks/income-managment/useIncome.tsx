@@ -1,12 +1,12 @@
-import dayjs from 'dayjs'
 import { supabaseClient } from '@/services/supabaseClient'
 import { useQuery } from '@tanstack/react-query'
 import { queryKeys } from '@/services/tanstack-query/constants'
 import { useAuth } from '@/contexts/AuthContext'
 import type { IUserMonthlyIncome } from '@/types'
+import { getCurrentMonthYear } from '@/utils'
 
 async function getCurrentMonthIncome(id: string) {
-	const currentYearMonth = dayjs().format('YYYY-MM')
+	const currentYearMonth = getCurrentMonthYear()
 
 	const { data, error } = await supabaseClient
 		.from('income-managment')
