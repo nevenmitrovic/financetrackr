@@ -6,6 +6,9 @@
 	flex-direction: column;
 	gap: 0.5rem;
 }
+.income-modal-body label {
+	color: var(--clr-text-secondary);
+}
 .income-modal-footer {
 	display: flex;
 	gap: 1rem;
