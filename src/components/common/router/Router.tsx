@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 
 import Loading from '@/components/common/loading/Loading'
 import ProtectedRoutes from '@/components/common/protected-routes/ProtectedRoutes'
+import { IncomeManagmentProvider } from '@/contexts/IncomeManagmentContext'
 
 const Dashboard = lazy(() => import('@/pages/Dashboard'))
 const SignIn = lazy(() => import('@/pages/SignIn'))
@@ -12,7 +13,14 @@ const Router = () => {
 		<Suspense fallback={<Loading />}>
 			<Routes>
 				<Route element={<ProtectedRoutes />}>
-					<Route index element={<Dashboard />} />
+					<Route
+						index
+						element={
+							<IncomeManagmentProvider>
+								<Dashboard />
+							</IncomeManagmentProvider>
+						}
+					/>
 				</Route>
 
 				<Route path='/signin' element={<SignIn />} />

@@ -1,5 +1,5 @@
 import { SidebarContextProvider, useSidebarContext } from '@/contexts/SidebarContext'
-import { useIsMobile } from '@/hooks/useIsMobile'
+import { useIsMobile } from '@/hooks/common/useIsMobile'
 
 import { type ReactNode } from 'react'
 

@@ -1,3 +1,3 @@
 export const queryKeys = {
-	income: 'income',
+	income: 'income-managment',
 }

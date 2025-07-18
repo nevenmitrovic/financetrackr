@@ -1,5 +1,5 @@
 import { useSidebarContext } from '@/contexts/SidebarContext'
-import { useIsMobile } from '@/hooks/useIsMobile'
+import { useIsMobile } from '@/hooks/common/useIsMobile'
 import PageHeader from '@/components/common/page-header/PageHeader'
 import IncomeManagment from '@/components/dashboard-content/income-managment/IncomeManagment'
 import BudgetControl from '@/components/dashboard-content/budget-control/BudgetControl'
@@ -13,23 +13,25 @@ const DashboardContent = () => {
 	const isMobile = useIsMobile()
 
 	return (
-		<div
-			className={`dashboard-content-wrapper ${open && isMobile ? 'hidden' : ''} ${
-				isMobile ? 'mobile-layout' : ''
-			}`}
-		>
-			<div className='dashboard-content-header'>
-				<PageHeader />
-			</div>
-			<div className='dashboard-content-scrollable'>
-				<div className='dashboard-content-container'>
-					<IncomeManagment />
-					<BudgetControl />
-					<RecentTransactions />
-					<ExpenseRecap />
+		<>
+			<div
+				className={`dashboard-content-wrapper ${open && isMobile ? 'hidden' : ''} ${
+					isMobile ? 'mobile-layout' : ''
+				}`}
+			>
+				<div className='dashboard-content-header'>
+					<PageHeader />
+				</div>
+				<div className='dashboard-content-scrollable'>
+					<div className='dashboard-content-container'>
+						<IncomeManagment />
+						<BudgetControl />
+						<RecentTransactions />
+						<ExpenseRecap />
+					</div>
 				</div>
 			</div>
-		</div>
+		</>
 	)
 }
 
