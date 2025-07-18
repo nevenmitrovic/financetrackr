@@ -3,6 +3,7 @@ import DashboardContent from '@/components/dashboard-content/DashboardContent'
 import DashboardLayout from '@/layouts/DashboardLayout'
 import Modal from '@/components/common/modal/Modal'
 import { useIncomeContext } from '@/contexts/IncomeManagmentContext'
+import IncomeModalContent from '@/components/dashboard-content/income-managment/income-modal-content/IncomeModalContent'
 
 const Dashboard = () => {
 	const { openModal } = useIncomeContext()
@@ -13,9 +14,7 @@ const Dashboard = () => {
 
 			{openModal && (
 				<Modal>
-					<div className='income-modal-header'>x</div>
-					<div className='income-modal-body'>This is income modal body!</div>
-					<div className='income-modal-footer'>footer</div>
+					<IncomeModalContent />
 				</Modal>
 			)}
 		</>
