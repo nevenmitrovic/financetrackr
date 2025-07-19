@@ -1,6 +1,8 @@
 import { MutationCache, QueryCache, QueryClient } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
 
+const loadId = 'react-query-toast-loading'
+
 function createTitle(errorMsg: string, actionType: 'query' | 'mutation') {
 	const action = actionType === 'query' ? 'fetch' : 'update'
 	return `could not ${action} data: ${errorMsg ?? 'error connecting to server'}`
@@ -28,6 +30,7 @@ export const queryClient = new QueryClient({
 	}),
 	mutationCache: new MutationCache({
 		onError: (error) => {
+			toast.dismiss(loadId)
 			const title = createTitle(error.message, 'mutation')
 			errorHandler(title)
 		},

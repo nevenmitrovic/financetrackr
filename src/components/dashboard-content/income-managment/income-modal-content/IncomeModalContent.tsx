@@ -3,9 +3,10 @@ import { useForm, type SubmitErrorHandler } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { addIncomeSchema } from '@/validations'
 import type { IncomeFormValues } from '@/types'
+import { toast } from 'react-toastify'
+import { useCreateIncome } from '@/hooks/income-managment/useCreateIncome'
 
 import './income-modal-content.style.css'
-import { toast } from 'react-toastify'
 
 // USE THIS FOR PATCH INCOME DATA
 {
@@ -30,13 +31,14 @@ import { toast } from 'react-toastify'
 
 const IncomeModalContent = () => {
 	const { toggleModal } = useIncomeContext()
-	const { register, handleSubmit } = useForm<IncomeFormValues>({
+	const { register, handleSubmit, reset } = useForm<IncomeFormValues>({
 		resolver: yupResolver(addIncomeSchema),
 	})
+	const createIncome = useCreateIncome()
 
 	const onSubmit = (data: IncomeFormValues) => {
-		console.log('Form Data:', data)
-		alert('Form is valid!')
+		createIncome(data)
+		toggleModal()
 	}
 	const onError: SubmitErrorHandler<IncomeFormValues> = (errors) => {
 		const id = 'react-query-toast'
