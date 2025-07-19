@@ -277,6 +277,10 @@
 	.input:focus::placeholder {
 		opacity: 0;
 	}
+	.error-message {
+		color: var(--clr-danger);
+		font-size: var(--font-size-xs);
+	}
 
 	@media (width > 768px) {
 		.container {
@@ -285,6 +289,9 @@
 		.button {
 			padding: 0.5rem;
 			font-size: var(--font-size-regular);
+		}
+		.error-message {
+			font-size: var(--font-size-sm);
 		}
 	}
 }

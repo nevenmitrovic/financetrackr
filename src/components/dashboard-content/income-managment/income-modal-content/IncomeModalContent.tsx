@@ -1,7 +1,11 @@
-import { useState } from 'react'
 import { useIncomeContext } from '@/contexts/IncomeManagmentContext'
+import { useForm, type SubmitErrorHandler } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { addIncomeSchema } from '@/validations'
+import type { IncomeFormValues } from '@/types'
 
 import './income-modal-content.style.css'
+import { toast } from 'react-toastify'
 
 // USE THIS FOR PATCH INCOME DATA
 {
@@ -26,6 +30,20 @@ import './income-modal-content.style.css'
 
 const IncomeModalContent = () => {
 	const { toggleModal } = useIncomeContext()
+	const { register, handleSubmit } = useForm<IncomeFormValues>({
+		resolver: yupResolver(addIncomeSchema),
+	})
+
+	const onSubmit = (data: IncomeFormValues) => {
+		console.log('Form Data:', data)
+		alert('Form is valid!')
+	}
+	const onError: SubmitErrorHandler<IncomeFormValues> = (errors) => {
+		const id = 'react-query-toast'
+		const errorMessage = Object.values(errors).filter((error) => error.message)
+
+		toast(errorMessage[0].message, { toastId: id })
+	}
 
 	return (
 		<>
@@ -33,19 +51,21 @@ const IncomeModalContent = () => {
 			<div className='income-modal-body'>
 				<div>
 					<label htmlFor='partTime'>Part-Time</label>
-					<input type='number' name='partTime' className='input' />
+					<input {...register('partTime')} type='number' name='partTime' className='input' />
 				</div>
 				<div>
 					<label htmlFor='paycheck'>Paycheck</label>
-					<input type='number' name='paycheck' className='input' />
+					<input {...register('paycheck')} type='number' name='paycheck' className='input' />
 				</div>
 				<div>
 					<label htmlFor='gift'>Gift</label>
-					<input type='number' name='gift' className='input' />
+					<input {...register('gift')} type='number' name='gift' className='input' />
 				</div>
 			</div>
 			<div className='income-modal-footer'>
-				<button className='button'>Add</button>
+				<button className='button' onClick={handleSubmit(onSubmit, onError)}>
+					Add
+				</button>
 				<button className='button' onClick={toggleModal}>
 					Cancel
 				</button>
