@@ -14,11 +14,9 @@ const Dashboard = () => {
 			<Loading />
 			<DashboardLayout sidebar={<Sidebar />} dashboardContent={<DashboardContent />} />
 
-			{openModal && (
-				<Modal>
-					<IncomeModalContent />
-				</Modal>
-			)}
+			<Modal isOpen={openModal}>
+				<IncomeModalContent />
+			</Modal>
 		</>
 	)
 }
