@@ -12,11 +12,9 @@ const IncomeManagment = () => {
 	const userMonthlyIncome = useIncome()
 	const { toggleModal } = useIncomeContext()
 
-	const totalIncome = sum(
-		userMonthlyIncome.partTime,
-		userMonthlyIncome.gift,
-		userMonthlyIncome.paycheck
-	)
+	const totalIncome = userMonthlyIncome
+		? sum(userMonthlyIncome.partTime, userMonthlyIncome.gift, userMonthlyIncome.paycheck)
+		: 0
 
 	return (
 		<>
@@ -25,7 +23,7 @@ const IncomeManagment = () => {
 					<h3>Income Managment</h3>
 					<p>Montly income recap</p>
 					<div className='income-controller'>
-						<h3>{totalIncome}$</h3>
+						<h3>{!!totalIncome ? totalIncome : 0}$</h3>
 						<div>
 							<button className='button' onClick={toggleModal}>
 								<FaPlus />
@@ -38,27 +36,35 @@ const IncomeManagment = () => {
 					</div>
 				</div>
 				<div className='income-managment-view'>
-					<p>Income breakdown</p>
-					<div className='income-category-container'>
-						<IncomeCategoryCard
-							title='Part-Time'
-							value={userMonthlyIncome.partTime}
-							widthPerc={getPercentageOfSum(userMonthlyIncome.partTime, totalIncome)}
-							widthColor='--clr-income-part-time'
-						/>
-						<IncomeCategoryCard
-							title='Paycheck'
-							value={userMonthlyIncome.paycheck}
-							widthPerc={getPercentageOfSum(userMonthlyIncome.paycheck, totalIncome)}
-							widthColor='--clr-income-paycheck'
-						/>
-						<IncomeCategoryCard
-							title='Gift'
-							value={userMonthlyIncome.gift}
-							widthPerc={getPercentageOfSum(userMonthlyIncome.gift, totalIncome)}
-							widthColor='--clr-income-gift'
-						/>
-					</div>
+					{userMonthlyIncome ? (
+						<>
+							<p>Income breakdown</p>
+							<div className='income-category-container'>
+								<IncomeCategoryCard
+									title='Part-Time'
+									value={userMonthlyIncome.partTime}
+									widthPerc={getPercentageOfSum(userMonthlyIncome.partTime, totalIncome)}
+									widthColor='--clr-income-part-time'
+								/>
+								<IncomeCategoryCard
+									title='Paycheck'
+									value={userMonthlyIncome.paycheck}
+									widthPerc={getPercentageOfSum(userMonthlyIncome.paycheck, totalIncome)}
+									widthColor='--clr-income-paycheck'
+								/>
+								<IncomeCategoryCard
+									title='Gift'
+									value={userMonthlyIncome.gift}
+									widthPerc={getPercentageOfSum(userMonthlyIncome.gift, totalIncome)}
+									widthColor='--clr-income-gift'
+								/>
+							</div>
+						</>
+					) : (
+						<>
+							<p>Please add information about your monthly income.</p>
+						</>
+					)}
 				</div>
 			</div>
 		</>
