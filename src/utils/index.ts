@@ -3,7 +3,11 @@ import dayjs from 'dayjs'
 export const formatPath = (path: string): string => {
 	if (path === '/') return 'Home'
 
-	return path.charAt(0).toUpperCase() + path.slice(1).toLowerCase()
+	return firstLetterUppercase(path)
+}
+
+export function firstLetterUppercase(word: string) {
+	return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
 }
 
 export function getCurrentMonthYear(): string {

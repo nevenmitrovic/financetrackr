@@ -5,40 +5,22 @@ import { addIncomeSchema } from '@/validations'
 import type { IncomeFormValues } from '@/types'
 import { toast } from 'react-toastify'
 import { useCreateIncome } from '@/hooks/income-managment/useCreateIncome'
+import { useIncome } from '@/hooks/income-managment/useIncome'
+import { firstLetterUppercase } from '@/utils'
 
 import './income-modal-content.style.css'
 
-// USE THIS FOR PATCH INCOME DATA
-{
-	/* <label htmlFor='incomeType'>Select the income type</label>
-<select
-	id='incomeType'
-	name='incomeType'
-	className='button'
-	value={incomeType}
-	onChange={handleIncomeTypeChange}
->
-	<option value=''>-- Select --</option>
-	<option value='partTime'>Part-Time</option>
-	<option value='paycheck'>Paycheck</option>
-	<option value='gift'>Gift</option>
-</select> */
-	//	const [incomeType, setIncomeType] = useState('')
-	//	const handleIncomeTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-	//	setIncomeType(e.target.value)
-	// }
-}
-
 const IncomeModalContent = () => {
-	const { toggleModal } = useIncomeContext()
-	const { register, handleSubmit, reset } = useForm<IncomeFormValues>({
+	const { toggleModal, modalType } = useIncomeContext()
+	const { register, handleSubmit } = useForm<IncomeFormValues>({
 		resolver: yupResolver(addIncomeSchema),
 	})
 	const createIncome = useCreateIncome()
+	const userMonthlyIncome = useIncome()
 
 	const onSubmit = (data: IncomeFormValues) => {
 		createIncome(data)
-		toggleModal()
+		toggleModal(null)
 	}
 	const onError: SubmitErrorHandler<IncomeFormValues> = (errors) => {
 		const id = 'react-query-toast'
@@ -49,26 +31,46 @@ const IncomeModalContent = () => {
 
 	return (
 		<>
-			<h3 className='income-modal-header'>Add income for the current month</h3>
+			<h3 className='income-modal-header'>
+				{firstLetterUppercase(modalType!)} income for the current month
+			</h3>
 			<div className='income-modal-body'>
 				<div>
 					<label htmlFor='partTime'>Part-Time</label>
-					<input {...register('partTime')} type='number' name='partTime' className='input' />
+					<input
+						{...register('partTime')}
+						type='number'
+						name='partTime'
+						className='input'
+						value={userMonthlyIncome ? userMonthlyIncome.partTime : 0}
+					/>
 				</div>
 				<div>
 					<label htmlFor='paycheck'>Paycheck</label>
-					<input {...register('paycheck')} type='number' name='paycheck' className='input' />
+					<input
+						{...register('paycheck')}
+						type='number'
+						name='paycheck'
+						className='input'
+						value={userMonthlyIncome ? userMonthlyIncome.paycheck : 0}
+					/>
 				</div>
 				<div>
 					<label htmlFor='gift'>Gift</label>
-					<input {...register('gift')} type='number' name='gift' className='input' />
+					<input
+						{...register('gift')}
+						type='number'
+						name='gift'
+						className='input'
+						value={userMonthlyIncome ? userMonthlyIncome.gift : 0}
+					/>
 				</div>
 			</div>
 			<div className='income-modal-footer'>
 				<button className='button' onClick={handleSubmit(onSubmit, onError)}>
 					Add
 				</button>
-				<button className='button' onClick={toggleModal}>
+				<button className='button' onClick={() => toggleModal(null)}>
 					Cancel
 				</button>
 			</div>

@@ -25,11 +25,11 @@ const IncomeManagment = () => {
 					<div className='income-controller'>
 						<h3>{!!totalIncome ? totalIncome : 0}$</h3>
 						<div>
-							<button className='button' onClick={toggleModal}>
+							<button className='button' onClick={() => toggleModal('create')}>
 								<FaPlus />
 								Add
 							</button>
-							<button className='button'>
+							<button className='button' onClick={() => toggleModal('update')}>
 								<AiFillEdit />
 							</button>
 						</div>
