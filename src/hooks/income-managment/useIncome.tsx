@@ -2,8 +2,8 @@ import { supabaseClient } from '@/services/supabaseClient'
 import { useQuery } from '@tanstack/react-query'
 import { queryKeys } from '@/services/tanstack-query/constants'
 import { useAuth } from '@/contexts/AuthContext'
-import type { IUserMonthlyIncome } from '@/types'
 import { getCurrentMonthYear } from '@/utils'
+import type { IMonthlyIncome } from '@/types'
 
 async function getCurrentMonthIncome(id: string) {
 	const currentYearMonth = getCurrentMonthYear()
@@ -22,12 +22,23 @@ async function getCurrentMonthIncome(id: string) {
 export function useIncome() {
 	const { user } = useAuth()
 
-	const fallback: IUserMonthlyIncome[] = []
+	const fallback: IMonthlyIncome[] = [
+		{
+			partTime: 0,
+			gift: 0,
+			paycheck: 0,
+			date: '',
+			userId: '',
+			createdAt: '',
+			updatedAt: '',
+		},
+	]
 
-	const { data: userMonthlyIncome = fallback } = useQuery({
+	const { data: userMonthlyIncome = fallback } = useQuery<IMonthlyIncome[]>({
 		queryKey: [queryKeys.income, user?.id],
-		queryFn: () => user && getCurrentMonthIncome(user.id),
+		queryFn: () => getCurrentMonthIncome(user!.id),
+		enabled: !!user,
 	})
 
-	return { userMonthlyIncome }
+	return userMonthlyIncome[0]
 }

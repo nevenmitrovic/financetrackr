@@ -1,7 +1,7 @@
 import './income-category-card.style.css'
 
 interface IncomeCategoryCardProps {
-	widthPerc: string
+	widthPerc: number
 	widthColor: string
 	title: string
 	value: number
@@ -11,7 +11,7 @@ const IncomeCategoryCard = ({ widthPerc, widthColor, title, value }: IncomeCateg
 	return (
 		<div className='income-category-card' style={{ width: `${widthPerc}%` }}>
 			<p className='title'>{title}</p>
-			<h4 className='value'>{value.toFixed(2)}$</h4>
+			<h4 className='value'>{value}$</h4>
 			<div className='percentage-width' style={{ backgroundColor: `var(${widthColor})` }}></div>
 		</div>
 	)

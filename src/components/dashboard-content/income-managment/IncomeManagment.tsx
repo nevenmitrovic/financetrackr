@@ -4,12 +4,19 @@ import { AiFillEdit } from 'react-icons/ai'
 import IncomeCategoryCard from '@/components/dashboard-content/income-managment/income-category-card/IncomeCategoryCard'
 import { useIncome } from '@/hooks/income-managment/useIncome'
 import { useIncomeContext } from '@/contexts/IncomeManagmentContext'
+import { getPercentageOfSum, sum } from '@/utils'
 
 import './income-managment.style.css'
 
 const IncomeManagment = () => {
-	const { userMonthlyIncome } = useIncome()
+	const userMonthlyIncome = useIncome()
 	const { toggleModal } = useIncomeContext()
+
+	const totalIncome = sum(
+		userMonthlyIncome.partTime,
+		userMonthlyIncome.gift,
+		userMonthlyIncome.paycheck
+	)
 
 	return (
 		<>
@@ -18,7 +25,7 @@ const IncomeManagment = () => {
 					<h3>Income Managment</h3>
 					<p>Montly income recap</p>
 					<div className='income-controller'>
-						<h3>3350.00$</h3>
+						<h3>{totalIncome}$</h3>
 						<div>
 							<button className='button' onClick={toggleModal}>
 								<FaPlus />
@@ -35,20 +42,20 @@ const IncomeManagment = () => {
 					<div className='income-category-container'>
 						<IncomeCategoryCard
 							title='Part-Time'
-							value={1412}
-							widthPerc='44'
+							value={userMonthlyIncome.partTime}
+							widthPerc={getPercentageOfSum(userMonthlyIncome.partTime, totalIncome)}
 							widthColor='--clr-income-part-time'
 						/>
 						<IncomeCategoryCard
 							title='Paycheck'
-							value={1173}
-							widthPerc='35'
+							value={userMonthlyIncome.paycheck}
+							widthPerc={getPercentageOfSum(userMonthlyIncome.paycheck, totalIncome)}
 							widthColor='--clr-income-paycheck'
 						/>
 						<IncomeCategoryCard
 							title='Gift'
-							value={765}
-							widthPerc='21'
+							value={userMonthlyIncome.gift}
+							widthPerc={getPercentageOfSum(userMonthlyIncome.gift, totalIncome)}
 							widthColor='--clr-income-gift'
 						/>
 					</div>
