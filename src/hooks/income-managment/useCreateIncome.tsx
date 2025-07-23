@@ -28,8 +28,9 @@ export function useCreateIncome() {
 			toast.success('Monthly income successfully created')
 		},
 		onMutate: () => {
-			if (!toast.isActive(LOAD_ID))
+			if (!toast.isActive(LOAD_ID)) {
 				toast.loading('Creating monthly income...', { toastId: LOAD_ID })
+			}
 		},
 	})
 

@@ -18,3 +18,4 @@ export interface IUserBudgetControl {
 export type CreateMonthlyIncome = Omit<IMonthlyIncome, 'createdAt' | 'updatedAt'>
 export type IncomeFormValues = InferType<typeof addIncomeSchema>
 export type IncomeModalType = 'create' | 'update' | null
+export type BudgetFormValue = number

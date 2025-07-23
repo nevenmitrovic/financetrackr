@@ -267,6 +267,7 @@
 		padding: 0.5rem;
 		border-radius: var(--border-radius-2);
 		border: 1px solid var(--clr-border);
+		cursor: pointer;
 	}
 	.input:focus {
 		outline: none;
