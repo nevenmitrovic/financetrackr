@@ -1,0 +1,18 @@
+.budget-modal-header {
+	margin-bottom: 0.5rem;
+	text-align: center;
+}
+.budget-modal-body {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+.budget-modal-body label {
+	color: var(--clr-text-secondary);
+}
+.budget-modal-footer {
+	display: flex;
+	gap: 1rem;
+	align-items: center;
+	justify-content: center;
+}

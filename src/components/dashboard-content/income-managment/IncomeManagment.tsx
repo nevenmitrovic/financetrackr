@@ -10,7 +10,7 @@ import './income-managment.style.css'
 
 const IncomeManagment = () => {
 	const userMonthlyIncome = useIncome()
-	const { toggleModal } = useIncomeContext()
+	const { toggleIncomeModal } = useIncomeContext()
 
 	const totalIncome = userMonthlyIncome
 		? sum(userMonthlyIncome.partTime, userMonthlyIncome.gift, userMonthlyIncome.paycheck)
@@ -25,11 +25,11 @@ const IncomeManagment = () => {
 					<div className='income-controller'>
 						<h3>{!!totalIncome ? totalIncome : 0}$</h3>
 						<div>
-							<button className='button' onClick={() => toggleModal('create')}>
+							<button className='button' onClick={() => toggleIncomeModal('create')}>
 								<FaPlus />
 								Add
 							</button>
-							<button className='button' onClick={() => toggleModal('update')}>
+							<button className='button' onClick={() => toggleIncomeModal('update')}>
 								<AiFillEdit />
 							</button>
 						</div>
