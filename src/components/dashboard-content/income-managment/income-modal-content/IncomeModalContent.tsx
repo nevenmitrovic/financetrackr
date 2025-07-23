@@ -5,7 +5,6 @@ import { addIncomeSchema } from '@/validations'
 import type { IncomeFormValues } from '@/types'
 import { toast } from 'react-toastify'
 import { useCreateIncome } from '@/hooks/income-managment/useCreateIncome'
-import { useIncome } from '@/hooks/income-managment/useIncome'
 import { firstLetterUppercase } from '@/utils'
 import { useUpdateIncome } from '@/hooks/income-managment/useUpdateIncome'
 
@@ -15,14 +14,13 @@ const IncomeModalContent = () => {
 	const { toggleModal, modalType } = useIncomeContext()
 	const createIncome = useCreateIncome()
 	const updateIncome = useUpdateIncome()
-	const userMonthlyIncome = useIncome()
 
 	const { register, handleSubmit, reset } = useForm<IncomeFormValues>({
 		resolver: yupResolver(addIncomeSchema),
 		defaultValues: {
-			partTime: userMonthlyIncome ? userMonthlyIncome.partTime : 0,
-			paycheck: userMonthlyIncome ? userMonthlyIncome.paycheck : 0,
-			gift: userMonthlyIncome ? userMonthlyIncome.gift : 0,
+			partTime: 0,
+			paycheck: 0,
+			gift: 0,
 		},
 	})
 
