@@ -22,3 +22,7 @@ export function sum(...args: number[]): number {
 export function getPercentageOfSum(individualSum: number, totalSum: number): number {
 	return (individualSum / totalSum) * 100
 }
+
+export function removeDuplicatesFromArr(arr: string[]) {
+	return [...new Set(arr)]
+}

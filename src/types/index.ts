@@ -14,6 +14,11 @@ export interface IUserBudgetControl {
 	user_id: string
 	budget_max: number
 }
+export interface IExpenseCategory {
+	id: number
+	category: string
+	title: string
+}
 
 export type CreateMonthlyIncome = Omit<IMonthlyIncome, 'createdAt' | 'updatedAt'>
 export type IncomeFormValues = InferType<typeof addIncomeSchema>
