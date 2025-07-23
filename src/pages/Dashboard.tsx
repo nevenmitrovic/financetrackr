@@ -7,10 +7,13 @@ import IncomeModalContent from '@/components/dashboard-content/income-managment/
 import Loading from '@/components/common/loading/Loading'
 import { useBudgetContext } from '@/contexts/BudgetControlContext'
 import BudgetModalContent from '@/components/dashboard-content/budget-control/budget-modal-content/BudgetModalContent'
+import TransactionModalContent from '@/components/dashboard-content/recent-transactions/transaction-modal-content/TransactionModalContent'
+import { useTransactionContext } from '@/contexts/RecentTransactionContext'
 
 const Dashboard = () => {
 	const { openIncomeModal } = useIncomeContext()
 	const { openBudgetModal } = useBudgetContext()
+	const { openTransactionModal } = useTransactionContext()
 
 	return (
 		<>
@@ -22,6 +25,9 @@ const Dashboard = () => {
 			</Modal>
 			<Modal isOpen={openBudgetModal}>
 				<BudgetModalContent />
+			</Modal>
+			<Modal isOpen={openTransactionModal}>
+				<TransactionModalContent />
 			</Modal>
 		</>
 	)

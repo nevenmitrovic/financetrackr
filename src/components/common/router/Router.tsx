@@ -5,6 +5,7 @@ import Loading from '@/components/common/loading/Loading'
 import ProtectedRoutes from '@/components/common/protected-routes/ProtectedRoutes'
 import { IncomeManagmentProvider } from '@/contexts/IncomeManagmentContext'
 import { BudgetControlProvider } from '@/contexts/BudgetControlContext'
+import { RecentTransactionProvider } from '@/contexts/RecentTransactionContext'
 
 const Dashboard = lazy(() => import('@/pages/Dashboard'))
 const SignIn = lazy(() => import('@/pages/SignIn'))
@@ -17,11 +18,13 @@ const Router = () => {
 					<Route
 						index
 						element={
-							<BudgetControlProvider>
-								<IncomeManagmentProvider>
-									<Dashboard />
-								</IncomeManagmentProvider>
-							</BudgetControlProvider>
+							<RecentTransactionProvider>
+								<BudgetControlProvider>
+									<IncomeManagmentProvider>
+										<Dashboard />
+									</IncomeManagmentProvider>
+								</BudgetControlProvider>
+							</RecentTransactionProvider>
 						}
 					/>
 				</Route>

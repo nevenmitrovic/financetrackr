@@ -1,0 +1,18 @@
+.transaction-modal-header {
+	margin-bottom: 0.5rem;
+	text-align: center;
+}
+.transaction-modal-body {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+.transaction-modal-body label {
+	color: var(--clr-text-secondary);
+}
+.transaction-modal-footer {
+	display: flex;
+	gap: 1rem;
+	align-items: center;
+	justify-content: center;
+}

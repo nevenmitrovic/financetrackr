@@ -1,14 +1,17 @@
 import TransactionCard from '@/components/dashboard-content/recent-transactions/transaction-card/TransactionCard'
+import { useTransactionContext } from '@/contexts/RecentTransactionContext'
 import { FaPlus } from 'react-icons/fa6'
 
 import './recent-transactions.style.css'
 
 const RecentTransactions = () => {
+	const { toggleTransactionModal } = useTransactionContext()
+
 	return (
 		<div className='recent-transactions content-card'>
 			<div className='recent-transactions-header'>
 				<h3>Recent Transactions</h3>
-				<button className='button'>
+				<button className='button' onClick={toggleTransactionModal}>
 					<FaPlus /> Add new
 				</button>
 			</div>
