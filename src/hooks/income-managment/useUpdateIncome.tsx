@@ -5,6 +5,7 @@ import { queryKeys } from '@/services/tanstack-query/constants'
 import { getCurrentMonthYear } from '@/utils'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
+import dayjs from 'dayjs'
 
 const LOAD_ID = 'react-query-toast-loading'
 const MUTATION_KEY = 'update-income'
@@ -12,7 +13,7 @@ const MUTATION_KEY = 'update-income'
 async function updateMonthlyIncome(data: IncomeFormValues, userId: string) {
 	const res = await supabaseClient
 		.from('income-managment')
-		.update(data)
+		.update({ ...data, updatedAt: dayjs().format('YYYY-MM-DD') })
 		.eq('userId', userId)
 		.eq('date', getCurrentMonthYear())
 		.select()
