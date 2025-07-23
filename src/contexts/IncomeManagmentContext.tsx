@@ -2,8 +2,8 @@ import type { IncomeModalType } from '@/types'
 import { useState, createContext, type ReactNode, useCallback, useContext } from 'react'
 
 interface IIncomeManagmentContext {
-	openModal: boolean
-	toggleModal: (type: IncomeModalType) => void
+	openIncomeModal: boolean
+	toggleIncomeModal: (type: IncomeModalType) => void
 	modalType: IncomeModalType
 }
 interface IncomeManagmentProviderProps {
@@ -13,16 +13,16 @@ interface IncomeManagmentProviderProps {
 const IncomeManagmentContext = createContext<IIncomeManagmentContext | undefined>(undefined)
 
 export const IncomeManagmentProvider = ({ children }: IncomeManagmentProviderProps) => {
-	const [openModal, setOpenModal] = useState(false)
+	const [openIncomeModal, setOpenIncomeModal] = useState(false)
 	const [modalType, setModalType] = useState<IncomeModalType | null>(null)
 
-	const toggleModal = useCallback((type: IncomeModalType) => {
-		setOpenModal((prev) => !prev)
+	const toggleIncomeModal = useCallback((type: IncomeModalType) => {
+		setOpenIncomeModal((prev) => !prev)
 		setModalType(type)
 	}, [])
 
 	return (
-		<IncomeManagmentContext.Provider value={{ openModal, toggleModal, modalType }}>
+		<IncomeManagmentContext.Provider value={{ openIncomeModal, toggleIncomeModal, modalType }}>
 			{children}
 		</IncomeManagmentContext.Provider>
 	)

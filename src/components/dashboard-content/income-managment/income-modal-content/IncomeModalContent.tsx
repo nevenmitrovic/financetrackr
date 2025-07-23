@@ -11,7 +11,7 @@ import { useUpdateIncome } from '@/hooks/income-managment/useUpdateIncome'
 import './income-modal-content.style.css'
 
 const IncomeModalContent = () => {
-	const { toggleModal, modalType } = useIncomeContext()
+	const { toggleIncomeModal, modalType } = useIncomeContext()
 	const createIncome = useCreateIncome()
 	const updateIncome = useUpdateIncome()
 
@@ -33,7 +33,7 @@ const IncomeModalContent = () => {
 		}
 
 		reset()
-		toggleModal(null)
+		toggleIncomeModal(null)
 	}
 	const onError: SubmitErrorHandler<IncomeFormValues> = (errors) => {
 		const id = 'react-query-toast'
@@ -65,7 +65,7 @@ const IncomeModalContent = () => {
 				<button className='button' onClick={handleSubmit(onSubmit, onError)}>
 					{modalType === 'create' ? 'Create' : 'Update'}
 				</button>
-				<button className='button' onClick={() => toggleModal(null)}>
+				<button className='button' onClick={() => toggleIncomeModal(null)}>
 					Cancel
 				</button>
 			</div>
