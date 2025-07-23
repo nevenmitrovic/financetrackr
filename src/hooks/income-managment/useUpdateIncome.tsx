@@ -7,6 +7,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
 
 const LOAD_ID = 'react-query-toast-loading'
+const MUTATION_KEY = 'update-income'
 
 async function updateMonthlyIncome(data: IncomeFormValues, userId: string) {
 	const res = await supabaseClient
@@ -28,6 +29,7 @@ export function useUpdateIncome() {
 	const queryClient = useQueryClient()
 
 	const { mutate } = useMutation({
+		mutationKey: [MUTATION_KEY],
 		mutationFn: (data: IncomeFormValues) => updateMonthlyIncome(data, user!.id),
 		onSuccess: () => {
 			toast.dismiss(LOAD_ID)
