@@ -9,12 +9,8 @@ import { getPercentageOfSum, sum } from '@/utils'
 import './income-managment.style.css'
 
 const IncomeManagment = () => {
-	const userMonthlyIncome = useIncome()
+	const { total } = useIncome()
 	const { toggleIncomeModal } = useIncomeContext()
-
-	const totalIncome = userMonthlyIncome
-		? sum(userMonthlyIncome.partTime, userMonthlyIncome.gift, userMonthlyIncome.paycheck)
-		: 0
 
 	return (
 		<>
@@ -23,7 +19,7 @@ const IncomeManagment = () => {
 					<h3>Income Managment</h3>
 					<p>Montly income recap</p>
 					<div className='income-controller'>
-						<h3>{!!totalIncome ? totalIncome : 0}$</h3>
+						<h3>{total.total}$</h3>
 						<div>
 							<button className='button' onClick={() => toggleIncomeModal('create')}>
 								<FaPlus />
@@ -36,26 +32,26 @@ const IncomeManagment = () => {
 					</div>
 				</div>
 				<div className='income-managment-view'>
-					{userMonthlyIncome ? (
+					{total.total > 0 ? (
 						<>
 							<p>Income breakdown</p>
 							<div className='income-category-container'>
 								<IncomeCategoryCard
 									title='Part-Time'
-									value={userMonthlyIncome.partTime}
-									widthPerc={getPercentageOfSum(userMonthlyIncome.partTime, totalIncome)}
+									value={total.partTime}
+									widthPerc={getPercentageOfSum(total.partTime, total.total)}
 									widthColor='--clr-income-part-time'
 								/>
 								<IncomeCategoryCard
 									title='Paycheck'
-									value={userMonthlyIncome.paycheck}
-									widthPerc={getPercentageOfSum(userMonthlyIncome.paycheck, totalIncome)}
+									value={total.paycheck}
+									widthPerc={getPercentageOfSum(total.paycheck, total.total)}
 									widthColor='--clr-income-paycheck'
 								/>
 								<IncomeCategoryCard
 									title='Gift'
-									value={userMonthlyIncome.gift}
-									widthPerc={getPercentageOfSum(userMonthlyIncome.gift, totalIncome)}
+									value={total.gift}
+									widthPerc={getPercentageOfSum(total.gift, total.total)}
 									widthColor='--clr-income-gift'
 								/>
 							</div>

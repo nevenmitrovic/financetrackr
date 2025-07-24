@@ -1,15 +1,23 @@
 import { useAuth } from '@/contexts/AuthContext'
 import { supabaseClient } from '@/services/supabaseClient'
 import { queryKeys } from '@/services/tanstack-query/constants'
-import type { IncomeFormValues } from '@/types'
+import type { AddIncomeFormValues } from '@/types'
 import { getCurrentMonthYear } from '@/utils'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
 
 const LOAD_ID = 'react-query-toast-loading'
 
-async function createMonthlyIncome(data: IncomeFormValues, userId: string) {
-	const incomeData = { ...data, userId, date: getCurrentMonthYear() }
+async function createMonthlyIncome(data: AddIncomeFormValues, userId: string) {
+	const { partTime, paycheck, gift } = data
+	const incomeData = {
+		part_time: partTime,
+		paycheck,
+		gift,
+		user_id: userId,
+		year_month: getCurrentMonthYear(),
+		transaction_date: new Date(),
+	}
 
 	const res = await supabaseClient.from('income-managment').insert(incomeData).select()
 	if (res.error) throw new Error(res.error.message)
@@ -21,7 +29,7 @@ export function useCreateIncome() {
 	const queryClient = useQueryClient()
 
 	const { mutate } = useMutation({
-		mutationFn: (data: IncomeFormValues) => createMonthlyIncome(data, user!.id),
+		mutationFn: (data: AddIncomeFormValues) => createMonthlyIncome(data, user!.id),
 		onSuccess: () => {
 			toast.dismiss(LOAD_ID)
 			queryClient.invalidateQueries({ queryKey: [queryKeys.income, user!.id] })

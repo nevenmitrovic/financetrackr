@@ -1,16 +1,60 @@
 import * as Yup from 'yup'
 
-export const addIncomeSchema = Yup.object().shape({
+export const updateIncomeSchema = Yup.object().shape({
 	partTime: Yup.number()
 		.typeError('Part-time income must be a valid number')
 		.min(0, 'Part-time income cannot be negative')
-		.default(0),
+		.optional(),
 	paycheck: Yup.number()
 		.typeError('Paycheck amount must be a valid number')
 		.min(0, 'Paycheck amount cannot be negative')
-		.default(0),
+		.default(0)
+		.optional(),
 	gift: Yup.number()
 		.typeError('Gift amount must be a valid number')
 		.min(0, 'Gift amount cannot be negative')
-		.default(0),
+		.default(0)
+		.optional(),
+})
+export const addIncomeSchema = Yup.object().shape({
+	addIncome: Yup.string()
+		.typeError('Select income type')
+		.test('not-zero', 'Please select a valid income type', (value) => value !== '0')
+		.required(),
+	partTime: Yup.number()
+		.typeError('Part-time income must be a valid number')
+		.min(0, 'Part-time income cannot be negative')
+		.default(0)
+		.when('addIncome', {
+			is: 'partTime',
+			then: (schema) =>
+				schema
+					.min(1, 'Part-time income is required and must be greater than 0')
+					.required('Part-time income is required'),
+			otherwise: (schema) => schema.optional(),
+		}),
+	paycheck: Yup.number()
+		.typeError('Paycheck amount must be a valid number')
+		.min(0, 'Paycheck amount cannot be negative')
+		.default(0)
+		.when('addIncome', {
+			is: 'paycheck',
+			then: (schema) =>
+				schema
+					.min(1, 'Paycheck amount is required and must be greater than 0')
+					.required('Paycheck amount is required'),
+			otherwise: (schema) => schema.optional(),
+		}),
+	gift: Yup.number()
+		.typeError('Gift amount must be a valid number')
+		.min(0, 'Gift amount cannot be negative')
+		.default(0)
+		.when('addIncome', {
+			is: 'gift',
+			then: (schema) =>
+				schema
+					.min(1, 'Gift amount is required and must be greater than 0')
+					.required('Gift amount is required'),
+			otherwise: (schema) => schema.optional(),
+		}),
 })

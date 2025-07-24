@@ -7,6 +7,12 @@
 	flex-direction: column;
 	gap: 0.5rem;
 }
+#addIncome,
+#partTime,
+#paycheck,
+#gift {
+	width: 100%;
+}
 .income-modal-body label {
 	color: var(--clr-text-secondary);
 }

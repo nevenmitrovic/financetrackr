@@ -1,26 +1,39 @@
-import type { addIncomeSchema } from '@/validations'
+import type { addIncomeSchema, updateIncomeSchema } from '@/validations'
 import type { InferType } from 'yup'
 
 export interface IMonthlyIncome {
+	id: string
 	userId: string
 	partTime: number
 	paycheck: number
 	gift: number
-	date: string
-	createdAt: string
-	updatedAt: string
+	yearMonth: string
+	transactionDate: Date
 }
 export interface IUserBudgetControl {
-	user_id: string
-	budget_max: number
+	userId: string
+	budgetMax: number
 }
 export interface IExpenseCategory {
 	id: number
 	category: string
 	title: string
 }
+export interface ITotalMonthlyIncome {
+	partTime: number
+	paycheck: number
+	gift: number
+	total: number
+}
 
-export type CreateMonthlyIncome = Omit<IMonthlyIncome, 'createdAt' | 'updatedAt'>
-export type IncomeFormValues = InferType<typeof addIncomeSchema>
+export type CreateMonthlyIncome = IMonthlyIncome
+export type AddIncomeFormValues = InferType<typeof addIncomeSchema>
+export type UpdateIncomeFormValues = InferType<typeof updateIncomeSchema>
 export type IncomeModalType = 'create' | 'update' | null
 export type BudgetFormValue = number
+export type IncomeTypes = 'partTime' | 'paycheck' | 'gift'
+export type DataTransformNameType =
+	| IMonthlyIncome
+	| IUserBudgetControl
+	| IExpenseCategory
+	| ITotalMonthlyIncome

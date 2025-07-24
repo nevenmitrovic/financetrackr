@@ -1,30 +1,33 @@
 import { useIncomeContext } from '@/contexts/IncomeManagmentContext'
 import { useForm, type SubmitErrorHandler } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { addIncomeSchema } from '@/validations'
-import type { IncomeFormValues } from '@/types'
+import { addIncomeSchema, updateIncomeSchema } from '@/validations'
+import type { AddIncomeFormValues, IncomeTypes, UpdateIncomeFormValues } from '@/types'
 import { toast } from 'react-toastify'
 import { useCreateIncome } from '@/hooks/income-managment/useCreateIncome'
 import { firstLetterUppercase } from '@/utils'
 import { useUpdateIncome } from '@/hooks/income-managment/useUpdateIncome'
+import { useState } from 'react'
 
 import './income-modal-content.style.css'
+
+const INCOME_TYPE_LABELS = {
+	partTime: 'Part-Time',
+	paycheck: 'Paycheck',
+	gift: 'Gift',
+}
 
 const IncomeModalContent = () => {
 	const { toggleIncomeModal, modalType } = useIncomeContext()
 	const createIncome = useCreateIncome()
 	const updateIncome = useUpdateIncome()
+	const [selectValue, setSelectValue] = useState<IncomeTypes | number>(0)
 
-	const { register, handleSubmit, reset } = useForm<IncomeFormValues>({
+	const { register, handleSubmit, reset } = useForm<AddIncomeFormValues>({
 		resolver: yupResolver(addIncomeSchema),
-		defaultValues: {
-			partTime: 0,
-			paycheck: 0,
-			gift: 0,
-		},
 	})
 
-	const onSubmit = (data: IncomeFormValues) => {
+	const onSubmit = (data: AddIncomeFormValues) => {
 		if (modalType === 'create') {
 			createIncome(data)
 		}
@@ -33,13 +36,26 @@ const IncomeModalContent = () => {
 		}
 
 		reset()
+		setSelectValue(0)
 		toggleIncomeModal(null)
 	}
-	const onError: SubmitErrorHandler<IncomeFormValues> = (errors) => {
+	const onError: SubmitErrorHandler<AddIncomeFormValues> = (errors) => {
 		const id = 'react-query-toast'
 		const errorMessage = Object.values(errors).filter((error) => error.message)
 
 		toast(errorMessage[0].message, { toastId: id })
+	}
+	const handleSelectValue = (e: React.ChangeEvent<HTMLSelectElement>) => {
+		if (e.target.value === '0') {
+			setSelectValue(0)
+		} else {
+			setSelectValue(e.target.value as IncomeTypes)
+		}
+	}
+	const closeModalAndResetValues = () => {
+		setSelectValue(0)
+		reset()
+		toggleIncomeModal(null)
 	}
 
 	return (
@@ -48,24 +64,69 @@ const IncomeModalContent = () => {
 				{firstLetterUppercase(modalType!)} income for the current month
 			</h3>
 			<div className='income-modal-body'>
-				<div>
-					<label htmlFor='partTime'>Part-Time</label>
-					<input {...register('partTime')} type='number' name='partTime' className='input' />
-				</div>
-				<div>
-					<label htmlFor='paycheck'>Paycheck</label>
-					<input {...register('paycheck')} type='number' name='paycheck' className='input' />
-				</div>
-				<div>
-					<label htmlFor='gift'>Gift</label>
-					<input {...register('gift')} type='number' name='gift' className='input' />
-				</div>
+				{modalType === 'update' ? (
+					<>
+						<div>
+							<label htmlFor='partTime'>Part-Time</label>
+							<input
+								{...register('partTime')}
+								type='number'
+								name='partTime'
+								id='partTime'
+								className='input'
+							/>
+						</div>
+						<div>
+							<label htmlFor='paycheck'>Paycheck</label>
+							<input
+								{...register('paycheck')}
+								type='number'
+								name='paycheck'
+								id='paycheck'
+								className='input'
+							/>
+						</div>
+						<div>
+							<label htmlFor='gift'>Gift</label>
+							<input {...register('gift')} type='number' name='gift' id='gift' className='input' />
+						</div>
+					</>
+				) : (
+					<>
+						<div>
+							<select
+								{...register('addIncome')}
+								name='addIncome'
+								id='addIncome'
+								className='input'
+								onChange={handleSelectValue}
+								value={selectValue}
+							>
+								<option value={0}>Select income type</option>
+								<option value='partTime'>Part-Time</option>
+								<option value='paycheck'>Paycheck</option>
+								<option value='gift'>Gift</option>
+							</select>
+						</div>
+						{typeof selectValue === 'string' && (
+							<div>
+								<label htmlFor={String(selectValue)}>{INCOME_TYPE_LABELS[selectValue]}</label>
+								<input
+									{...register(selectValue as IncomeTypes)}
+									type='number'
+									name={String(selectValue)}
+									className='input'
+								/>
+							</div>
+						)}
+					</>
+				)}
 			</div>
 			<div className='income-modal-footer'>
 				<button className='button' onClick={handleSubmit(onSubmit, onError)}>
-					{modalType === 'create' ? 'Create' : 'Update'}
+					{modalType === 'create' ? 'Add' : 'Update'}
 				</button>
-				<button className='button' onClick={() => toggleIncomeModal(null)}>
+				<button className='button' onClick={closeModalAndResetValues}>
 					Cancel
 				</button>
 			</div>

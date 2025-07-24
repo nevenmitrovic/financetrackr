@@ -9,6 +9,7 @@
 .income-category-card > p {
 	color: var(--clr-text-secondary);
 	font-size: var(--font-size-sm);
+	overflow-x: hidden;
 }
 .percentage-width {
 	height: 1rem;
