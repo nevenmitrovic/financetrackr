@@ -186,9 +186,11 @@ const IncomeModalContent = () => {
 				)}
 			</div>
 			<div className='income-modal-footer'>
-				<button className='button' onClick={handleSubmit(onSubmit, onError)}>
-					{modalType === 'create' ? 'Add' : 'Update'}
-				</button>
+				{(modalType === 'create' || (modalType === 'update' && selectedIncome)) && (
+					<button className='button' onClick={handleSubmit(onSubmit, onError)}>
+						{modalType === 'create' ? 'Add' : 'Update'}
+					</button>
+				)}
 				<button className='button' onClick={closeModalAndResetValues}>
 					Cancel
 				</button>
