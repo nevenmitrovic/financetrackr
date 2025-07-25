@@ -2,6 +2,7 @@ import { useIncomeContext } from '@/contexts/IncomeManagmentContext'
 import { useForm, type SubmitErrorHandler } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { addIncomeSchema, updateIncomeSchema } from '@/validations'
+import { AiOutlineReload } from 'react-icons/ai'
 import type {
 	AddIncomeFormValues,
 	IncomeTypes,
@@ -29,7 +30,7 @@ const IncomeModalContent = () => {
 	const { toggleIncomeModal, modalType } = useIncomeContext()
 	const createIncome = useCreateIncome()
 	const updateIncome = useUpdateIncome()
-	const { userMonthlyIncome } = useIncome()
+	const { nextPage, visibleIncomeTransactions, resetPage, hasMore } = useIncome()
 	const [selectValue, setSelectValue] = useState<IncomeTypes | number>(0)
 	const [selectedIncome, setSelectedIncome] = useState<IMonthlyIncome | null>(null)
 
@@ -49,6 +50,7 @@ const IncomeModalContent = () => {
 		}
 
 		reset()
+		resetPage()
 		setSelectValue(0)
 		setSelectedIncome(null)
 		toggleIncomeModal(null)
@@ -82,6 +84,7 @@ const IncomeModalContent = () => {
 	}
 	const closeModalAndResetValues = () => {
 		reset()
+		resetPage()
 		setSelectValue(0)
 		setSelectedIncome(null)
 		toggleIncomeModal(null)
@@ -129,7 +132,7 @@ const IncomeModalContent = () => {
 						</>
 					) : (
 						<div className='income-cards-container'>
-							{userMonthlyIncome.map((income) => {
+							{visibleIncomeTransactions.map((income) => {
 								return (
 									<div
 										key={income.id}
@@ -137,11 +140,11 @@ const IncomeModalContent = () => {
 										onClick={() => handleSelectedIncome(income)}
 									>
 										<div>
-											<p>
+											<p className='income-transaction-date'>
 												<strong>Date: </strong>
 												{dayjs(income.transactionDate).format('DD-MM-YY')}
 											</p>
-											<p>
+											<p className='income-transaction-date'>
 												<strong>Time: </strong>
 												{dayjs(income.transactionDate).format('HH:mm')}
 											</p>
@@ -194,10 +197,19 @@ const IncomeModalContent = () => {
 				<button className='button' onClick={closeModalAndResetValues}>
 					Cancel
 				</button>
-				{selectedIncome && (
+				{selectedIncome ? (
 					<button className='button' onClick={() => setSelectedIncome(null)}>
 						Back
 					</button>
+				) : (
+					<>
+						{hasMore && modalType === 'update' && (
+							<button className='button' onClick={nextPage}>
+								Load more
+								<AiOutlineReload />
+							</button>
+						)}
+					</>
 				)}
 			</div>
 		</>
