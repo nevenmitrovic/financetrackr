@@ -16,7 +16,6 @@ async function createMonthlyIncome(data: AddIncomeFormValues, userId: string) {
 		gift,
 		user_id: userId,
 		year_month: getCurrentMonthYear(),
-		transaction_date: new Date(),
 	}
 
 	const res = await supabaseClient.from('income-managment').insert(incomeData).select()

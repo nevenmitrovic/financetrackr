@@ -10,6 +10,8 @@
 	color: var(--clr-text-secondary);
 	font-size: var(--font-size-sm);
 	overflow-x: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 .percentage-width {
 	height: 1rem;

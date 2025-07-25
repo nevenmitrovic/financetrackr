@@ -26,6 +26,7 @@ async function getCurrentMonthIncome(id: string): Promise<IMonthlyIncome[]> {
 		.select('*')
 		.eq('user_id', id)
 		.eq('year_month', currentYearMonth)
+		.order('transaction_date', { ascending: false })
 	if (error) {
 		throw new Error(error.message)
 	}

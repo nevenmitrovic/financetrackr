@@ -22,3 +22,25 @@
 	align-items: center;
 	justify-content: center;
 }
+.income-cards-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+}
+.income-transaction-card {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	background-color: var(--clr-bg-card);
+	border: 1px solid var(--clr-border);
+	border-radius: var(--border-radius-2);
+	padding: 0.5rem;
+}
+.income-transaction-card > div {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}

@@ -1,8 +1,8 @@
-import type { IncomeFormValues } from '@/types'
+import type { UpdateIncomeFormValues } from '@/types'
 import { useAuth } from '@/contexts/AuthContext'
 import { supabaseClient } from '@/services/supabaseClient'
 import { queryKeys } from '@/services/tanstack-query/constants'
-import { getCurrentMonthYear } from '@/utils'
+import { getCurrentMonthYear, toSnakeCase } from '@/utils'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
 import dayjs from 'dayjs'
@@ -10,12 +10,20 @@ import dayjs from 'dayjs'
 const LOAD_ID = 'react-query-toast-loading'
 const MUTATION_KEY = 'update-income'
 
-async function updateMonthlyIncome(data: IncomeFormValues, userId: string) {
+interface UpdateIncomeMutationParams {
+	data: UpdateIncomeFormValues
+	id: string
+}
+
+async function updateMonthlyIncome(data: UpdateIncomeFormValues, userId: string, incomeId: string) {
+	const updateData = { ...toSnakeCase(data), transaction_date: dayjs().toISOString() }
+
 	const res = await supabaseClient
 		.from('income-managment')
-		.update({ ...data, updatedAt: dayjs().format('YYYY-MM-DD') })
-		.eq('userId', userId)
-		.eq('date', getCurrentMonthYear())
+		.update(updateData)
+		.eq('user_id', userId)
+		.eq('year_month', getCurrentMonthYear())
+		.eq('id', incomeId)
 		.select()
 
 	if (res.error) throw new Error(res.error.message)
@@ -31,7 +39,8 @@ export function useUpdateIncome() {
 
 	const { mutate } = useMutation({
 		mutationKey: [MUTATION_KEY],
-		mutationFn: (data: IncomeFormValues) => updateMonthlyIncome(data, user!.id),
+		mutationFn: ({ data, id }: UpdateIncomeMutationParams) =>
+			updateMonthlyIncome(data, user!.id, id),
 		onSuccess: () => {
 			toast.dismiss(LOAD_ID)
 			queryClient.invalidateQueries({ queryKey: [queryKeys.income, user!.id] })
