@@ -134,11 +134,7 @@ const IncomeModalContent = () => {
 						<div className='income-cards-container'>
 							{visibleIncomeTransactions.map((income) => {
 								return (
-									<div
-										key={income.id}
-										className='income-transaction-card'
-										onClick={() => handleSelectedIncome(income)}
-									>
+									<div key={income.id} className='income-transaction-card'>
 										<div>
 											<p className='income-transaction-date'>
 												<strong>Date: </strong>
@@ -149,7 +145,7 @@ const IncomeModalContent = () => {
 												{dayjs(income.transactionDate).format('HH:mm')}
 											</p>
 										</div>
-										<button className='button'>
+										<button className='button' onClick={() => handleSelectedIncome(income)}>
 											<AiFillEdit />
 										</button>
 									</div>
