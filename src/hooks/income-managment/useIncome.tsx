@@ -57,5 +57,5 @@ export function useIncome() {
 
 	const total = useMemo(() => getTotalMonthIncome(userMonthlyIncome), [userMonthlyIncome])
 
-	return { total }
+	return { total, userMonthlyIncome }
 }

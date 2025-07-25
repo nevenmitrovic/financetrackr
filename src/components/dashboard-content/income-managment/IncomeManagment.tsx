@@ -4,7 +4,7 @@ import { AiFillEdit } from 'react-icons/ai'
 import IncomeCategoryCard from '@/components/dashboard-content/income-managment/income-category-card/IncomeCategoryCard'
 import { useIncome } from '@/hooks/income-managment/useIncome'
 import { useIncomeContext } from '@/contexts/IncomeManagmentContext'
-import { getPercentageOfSum, sum } from '@/utils'
+import { getPercentageOfSum } from '@/utils'
 
 import './income-managment.style.css'
 
