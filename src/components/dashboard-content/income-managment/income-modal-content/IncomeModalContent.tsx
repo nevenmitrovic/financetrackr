@@ -177,6 +177,7 @@ const IncomeModalContent = () => {
 									{...createForm.register(selectValue as IncomeTypes)}
 									type='number'
 									name={String(selectValue)}
+									id={String(selectValue)}
 									className='input'
 								/>
 							</div>

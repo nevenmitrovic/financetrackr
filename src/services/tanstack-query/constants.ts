@@ -3,4 +3,5 @@ export const queryKeys = {
 	budget: 'budget_control',
 	expenseCategory: 'expense_categories',
 	images: 'images',
+	transactions: 'transactions',
 }

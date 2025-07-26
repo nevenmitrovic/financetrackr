@@ -17,7 +17,8 @@
 	flex-direction: column;
 	gap: 0.2rem;
 }
-.transactions-per-date > p {
+.transactions-per-date > p,
+.transactions-cards-container > p {
 	color: var(--clr-text-secondary);
 	font-size: var(--font-size-sm);
 	padding-bottom: 0.5rem;
@@ -30,7 +31,12 @@
 	.transactions-cards-container {
 		gap: 0.5rem;
 	}
-	.transactions-per-date > p {
+	.transactions-per-date > p,
+	.transactions-cards-container > p {
 		font-size: var(--font-size-regular);
+	}
+	.transactions-cards-container > .button {
+		width: 200px;
+		margin: auto;
 	}
 }

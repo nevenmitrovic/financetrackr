@@ -2,6 +2,8 @@ import './transaction-card.style.css'
 import logo from '@/assets/images/avatar.png'
 import { GoDotFill } from 'react-icons/go'
 
+interface TransactionCardProps {}
+
 const TransactionCard = () => {
 	return (
 		<div className='transaction-card'>

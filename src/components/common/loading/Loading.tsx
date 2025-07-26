@@ -4,8 +4,9 @@ import { useIsFetching } from '@tanstack/react-query'
 import './loading.style.css'
 
 const Loading = () => {
-	const isFetching = useIsFetching()
-
+	const isFetching = useIsFetching({
+		predicate: (query) => !query.queryKey.includes('transactions'),
+	})
 	if (isFetching === 0) return null
 
 	return (

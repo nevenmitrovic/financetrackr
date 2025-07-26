@@ -6,10 +6,10 @@ import { useQuery } from '@tanstack/react-query'
 
 async function getImages(): Promise<FileObject[]> {
 	const storage = supabaseClient.storage.from('images')
-	const res = await storage.list('categories')
-	if (res.error) throw new Error('Failed to fetch images.')
+	const { data, error } = await storage.list('categories')
+	if (error) throw new Error('Failed to fetch images.')
 
-	const imagesWithUrls = res.data.map((image) => {
+	const imagesWithUrls = data.map((image) => {
 		const { data } = storage.getPublicUrl(`${image.name}`)
 
 		return {
@@ -17,7 +17,6 @@ async function getImages(): Promise<FileObject[]> {
 			publicUrl: data.publicUrl,
 		}
 	})
-
 	return imagesWithUrls
 }
 
