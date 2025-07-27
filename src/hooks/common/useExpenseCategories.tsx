@@ -22,6 +22,7 @@ export function useExpenseCategories() {
 	const handleCategoryValue = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		setCategoryValue(Number(e.target.value))
 	}
+	const resetCategoryValue = () => setCategoryValue(0)
 
 	const { data: expenseCategories } = useQuery({
 		queryKey: [queryKeys.expenseCategories],
@@ -48,6 +49,7 @@ export function useExpenseCategories() {
 	return {
 		expenseCategories,
 		handleCategoryValue,
+		resetCategoryValue,
 		categoryValue,
 		expenseSubcategories,
 		filteredSubcategories,

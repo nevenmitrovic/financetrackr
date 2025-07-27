@@ -56,3 +56,15 @@ export const addIncomeSchema = Yup.object().shape({
 			otherwise: (schema) => schema.optional(),
 		}),
 })
+export const expenseTransactionSchema = Yup.object().shape({
+	value: Yup.number()
+		.typeError('Expense amount must be a valid number')
+		.min(1, 'Expense amount must be greater than 0')
+		.required('Expense amount is required'),
+	category: Yup.number()
+		.min(1, 'Category value is required')
+		.required('Category value is required'),
+	subcategory: Yup.number()
+		.min(1, 'Subcategory value is required')
+		.required('Subcategory value is required'),
+})

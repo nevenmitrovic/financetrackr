@@ -31,7 +31,7 @@ const IncomeModalContent = () => {
 	const createIncome = useCreateIncome()
 	const updateIncome = useUpdateIncome()
 	const { nextPage, visibleIncomeTransactions, resetPage, hasMore } = useIncome()
-	const [selectValue, setSelectValue] = useState<IncomeTypes | number>(0)
+	const [selectedIncomeType, setSelectedIncomeType] = useState<IncomeTypes | number>(0)
 	const [selectedIncome, setSelectedIncome] = useState<IMonthlyIncome | null>(null)
 
 	const createForm = useForm<AddIncomeFormValues>({
@@ -51,7 +51,7 @@ const IncomeModalContent = () => {
 
 		reset()
 		resetPage()
-		setSelectValue(0)
+		setSelectedIncomeType(0)
 		setSelectedIncome(null)
 		toggleIncomeModal(null)
 	}
@@ -74,9 +74,9 @@ const IncomeModalContent = () => {
 
 	const handleSelectValue = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		if (e.target.value === '0') {
-			setSelectValue(0)
+			setSelectedIncomeType(0)
 		} else {
-			setSelectValue(e.target.value as IncomeTypes)
+			setSelectedIncomeType(e.target.value as IncomeTypes)
 		}
 	}
 	const handleSelectedIncome = (income: IMonthlyIncome) => {
@@ -85,7 +85,7 @@ const IncomeModalContent = () => {
 	const closeModalAndResetValues = () => {
 		reset()
 		resetPage()
-		setSelectValue(0)
+		setSelectedIncomeType(0)
 		setSelectedIncome(null)
 		toggleIncomeModal(null)
 	}
@@ -162,7 +162,7 @@ const IncomeModalContent = () => {
 								id='addIncome'
 								className='input'
 								onChange={handleSelectValue}
-								value={selectValue}
+								value={selectedIncomeType}
 							>
 								<option value={0}>Select income type</option>
 								<option value='partTime'>Part-Time</option>
@@ -170,14 +170,16 @@ const IncomeModalContent = () => {
 								<option value='gift'>Gift</option>
 							</select>
 						</div>
-						{typeof selectValue === 'string' && (
+						{typeof selectedIncomeType === 'string' && (
 							<div>
-								<label htmlFor={String(selectValue)}>{INCOME_TYPE_LABELS[selectValue]}</label>
+								<label htmlFor={String(selectedIncomeType)}>
+									{INCOME_TYPE_LABELS[selectedIncomeType]}
+								</label>
 								<input
-									{...createForm.register(selectValue as IncomeTypes)}
+									{...createForm.register(selectedIncomeType as IncomeTypes)}
 									type='number'
-									name={String(selectValue)}
-									id={String(selectValue)}
+									name={String(selectedIncomeType)}
+									id={String(selectedIncomeType)}
 									className='input'
 								/>
 							</div>
