@@ -1,7 +1,8 @@
 export const queryKeys = {
 	income: 'income-managment',
 	budget: 'budget_control',
-	expenseCategory: 'expense_categories',
+	expenseCategories: 'expense_categories',
+	expenseSubcategories: 'expense_subcategories',
 	images: 'images',
 	transactions: 'transactions',
 }

@@ -17,7 +17,11 @@ export interface IUserBudgetControl {
 export interface IExpenseCategory {
 	id: number
 	category: string
-	title: string
+}
+export interface IExpenseSubcategory {
+	id: number
+	categoryId: number
+	subcategory: string
 }
 export interface ITotalMonthlyIncome {
 	partTime: number
@@ -38,3 +42,4 @@ export type DataTransformNameType =
 	| IExpenseCategory
 	| ITotalMonthlyIncome
 	| UpdateIncomeFormValues
+	| IExpenseSubcategory
