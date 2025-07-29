@@ -21,9 +21,14 @@ const TransactionCard = ({
 	const { getImageByName } = useImages()
 	const { getCategoryNameById, getSubcategoryNameById } = useExpenseCategories()
 
+	const image =
+		typeof category === 'string'
+			? logo
+			: getImageByName(getCategoryNameById(category as number))?.publicUrl ?? logo
+
 	return (
 		<div className='transaction-card'>
-			<img src={logo} alt='transaction card logo' />
+			<img src={image} alt='transaction card logo' />
 			<div>
 				<div className='transaction-card-info'>
 					<div>

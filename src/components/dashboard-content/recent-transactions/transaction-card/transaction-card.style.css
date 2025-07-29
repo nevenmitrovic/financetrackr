@@ -48,4 +48,10 @@
 		justify-content: center;
 		flex: 1;
 	}
+	.transaction-value {
+		min-width: 50px;
+	}
+	.transaction-value > h4 {
+		text-align: right;
+	}
 }
