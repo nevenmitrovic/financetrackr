@@ -45,11 +45,23 @@ export function useExpenseCategories() {
 		}
 		return expenseSubcategories.filter((subcategory) => subcategory.categoryId === categoryValue)
 	}, [categoryValue, expenseSubcategories])
+	const getCategoryNameById = (id: number): string | null => {
+		if (!expenseCategories) return null
+
+		return expenseCategories.find((category) => category.id === id)?.category ?? null
+	}
+	const getSubcategoryNameById = (id: number): string | null => {
+		if (!expenseSubcategories) return null
+
+		return expenseSubcategories.find((subcategory) => subcategory.id === id)?.subcategory ?? null
+	}
 
 	return {
 		expenseCategories,
 		handleCategoryValue,
 		resetCategoryValue,
+		getCategoryNameById,
+		getSubcategoryNameById,
 		categoryValue,
 		expenseSubcategories,
 		filteredSubcategories,

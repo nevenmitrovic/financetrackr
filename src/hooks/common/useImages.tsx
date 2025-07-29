@@ -1,4 +1,3 @@
-import { useAuth } from '@/contexts/AuthContext'
 import { supabaseClient } from '@/services/supabaseClient'
 import { queryKeys } from '@/services/tanstack-query/constants'
 import type { FileObject } from '@supabase/storage-js'
@@ -21,15 +20,18 @@ async function getImages(): Promise<FileObject[]> {
 }
 
 export function useImages() {
-	const { user } = useAuth()
-
 	const { data: images } = useQuery({
-		queryKey: [queryKeys.images, user!.id],
+		queryKey: [queryKeys.images],
 		queryFn: getImages,
-		enabled: !!user,
 		staleTime: 30 * 60 * 1000, // 30min
 		gcTime: 45 * 60 * 1000, // 45min
 	})
 
-	return { images }
+	function getImageByName(name: string | null): FileObject | null {
+		if (!images) return null
+
+		return images.find((image) => image.name === name) ?? null
+	}
+
+	return { images, getImageByName }
 }

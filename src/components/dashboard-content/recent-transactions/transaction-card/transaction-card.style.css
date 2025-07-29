@@ -30,6 +30,7 @@
 .transaction-category {
 	display: flex;
 	align-items: center;
+	width: 100%;
 }
 .transaction-category > span {
 	color: var(--clr-text-secondary);
@@ -39,5 +40,12 @@
 	.transaction-card > div {
 		flex-direction: row;
 		align-items: center;
+		gap: 1rem;
+	}
+	.transaction-category {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex: 1;
 	}
 }

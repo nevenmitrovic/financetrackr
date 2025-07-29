@@ -8,6 +8,8 @@ import { useEffect, useRef } from 'react'
 import { useIsMobile } from '@/hooks/common/useIsMobile'
 
 import './recent-transactions.style.css'
+import { sum } from '@/utils'
+import type { IExpense, IMonthlyIncome } from '@/types'
 
 const RecentTransactions = () => {
 	const { toggleTransactionModal } = useTransactionContext()
@@ -34,13 +36,34 @@ const RecentTransactions = () => {
 			</div>
 			<div className='transactions-container'>
 				<div className='transactions-per-date'>
-					<p>June 27, 2025</p>
 					<div className='transactions-cards-container'>
 						{!transactions ? (
 							<p>Currently you don't have any transactions.</p>
 						) : (
 							transactions.pages.map((page) =>
-								page.map((transaction) => <TransactionCard key={transaction.id} />)
+								page.map((transaction) =>
+									Object.getOwnPropertyNames(transaction).includes('partTime') ? (
+										<TransactionCard
+											category='Income transaction'
+											subcategory='Income'
+											transactionDate={transaction.transactionDate}
+											value={sum(
+												(transaction as IMonthlyIncome).partTime,
+												(transaction as IMonthlyIncome).gift,
+												(transaction as IMonthlyIncome).paycheck
+											)}
+											key={transaction.id}
+										/>
+									) : (
+										<TransactionCard
+											category={(transaction as IExpense).category}
+											subcategory={(transaction as IExpense).subcategory}
+											value={(transaction as IExpense).value}
+											transactionDate={transaction.transactionDate}
+											key={transaction.id}
+										/>
+									)
+								)
 							)
 						)}
 

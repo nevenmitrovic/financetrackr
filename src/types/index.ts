@@ -51,4 +51,7 @@ export type DataTransformNameType =
 	| ITotalMonthlyIncome
 	| UpdateIncomeFormValues
 	| IExpenseSubcategory
+	| TransactionsType
+	| IExpense
 export type ExpenseFormValue = InferType<typeof expenseTransactionSchema>
+export type TransactionsType = (IMonthlyIncome | IExpense)[]

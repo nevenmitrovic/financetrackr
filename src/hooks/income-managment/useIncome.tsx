@@ -14,7 +14,7 @@ const DEFAULT_FALLBACK: IMonthlyIncome[] = [
 		paycheck: 0,
 		yearMonth: '',
 		userId: '',
-		transactionDate: new Date(),
+		transactionDate: '',
 	},
 ]
 
