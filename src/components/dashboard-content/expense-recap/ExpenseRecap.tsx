@@ -38,7 +38,7 @@ const ExpenseRecap = () => {
 
 							return (
 								<circle
-									key={item.percentage}
+									key={`${item.category}-${index}`}
 									cx='100'
 									cy='100'
 									r='45'
@@ -56,7 +56,7 @@ const ExpenseRecap = () => {
 
 				<div className='expense-legend'>
 					{categoryStats.map((item, index) => (
-						<div key={item.percentage} className='legend-item'>
+						<div key={`${item.category}-${index}`} className='legend-item'>
 							<div
 								className='legend-color'
 								style={{ backgroundColor: getColorByIndex(index) }}
