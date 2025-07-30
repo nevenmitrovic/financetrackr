@@ -4,6 +4,7 @@ import logo from '@/assets/images/avatar.png'
 import { useImages } from '@/hooks/common/useImages'
 import dayjs from 'dayjs'
 import { GoDotFill } from 'react-icons/go'
+import { getExpenseCSSVariable } from '@/utils'
 
 interface TransactionCardProps {
 	category: number | string
@@ -23,8 +24,12 @@ const TransactionCard = ({
 
 	const image =
 		typeof category === 'string'
-			? logo
+			? getImageByName('income')?.publicUrl ?? logo
 			: getImageByName(getCategoryNameById(category as number))?.publicUrl ?? logo
+	const transactionColor =
+		typeof category === 'string'
+			? 'var(--clr-income-paycheck)'
+			: getExpenseCSSVariable(getCategoryNameById(category as number))
 
 	return (
 		<div className='transaction-card'>
@@ -39,7 +44,7 @@ const TransactionCard = ({
 					</div>
 				</div>
 				<div className='transaction-category'>
-					<GoDotFill color='var(--clr-expense-fixed)' />
+					<GoDotFill color={transactionColor} />
 					{typeof category === 'string' ? category : getCategoryNameById(category)}
 				</div>
 				<div className='transaction-value'>

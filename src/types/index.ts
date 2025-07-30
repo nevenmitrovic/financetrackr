@@ -55,3 +55,4 @@ export type DataTransformNameType =
 	| IExpense
 export type ExpenseFormValue = InferType<typeof expenseTransactionSchema>
 export type TransactionsType = (IMonthlyIncome | IExpense)[]
+export type ExpenseType = 'subscriptions' | 'fixed' | 'transfers'

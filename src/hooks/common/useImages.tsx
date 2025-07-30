@@ -23,6 +23,21 @@ async function getImages(): Promise<FileObjectWithUrl[]> {
 	return imagesWithUrls
 }
 
+function mapCategoryWithImageTitle(title: string | null): string | null {
+	if (!title) return null
+
+	switch (title) {
+		case 'Education':
+			return 'Educ'
+		case 'Transport & Travel':
+			return 'Travel'
+		case 'Housing & Utilities':
+			return 'Utilities'
+		default:
+			return title
+	}
+}
+
 export function useImages() {
 	const { data: images } = useQuery({
 		queryKey: [queryKeys.images],
@@ -34,7 +49,9 @@ export function useImages() {
 	function getImageByName(name: string | null): FileObjectWithUrl | null {
 		if (!images) return null
 
-		return images.find((image) => image.name.split('.')[0] === name) ?? null
+		return (
+			images.find((image) => image.name.split('.')[0] === mapCategoryWithImageTitle(name)) ?? null
+		)
 	}
 
 	return { images, getImageByName }

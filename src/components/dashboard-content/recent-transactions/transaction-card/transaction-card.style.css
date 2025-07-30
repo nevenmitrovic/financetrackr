@@ -19,9 +19,10 @@
 	align-items: center;
 }
 .transaction-card > img {
-	height: 30px;
-	width: 30px;
+	height: 50px;
+	width: 50px;
 	margin-right: 0.5rem;
+	border-radius: var(--border-radius-2);
 }
 .transaction-card-info p {
 	color: var(--clr-text-secondary);

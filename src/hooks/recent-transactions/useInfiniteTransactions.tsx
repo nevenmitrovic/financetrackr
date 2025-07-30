@@ -60,7 +60,7 @@ export function useInfiniteTransactions() {
 			),
 		}),
 		getNextPageParam: (lastPage, pages) => {
-			if (lastPage.length < PAGE_SIZE) {
+			if (lastPage.length < PAGE_SIZE || pages.length > 2) {
 				return undefined
 			}
 			return pages.length

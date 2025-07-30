@@ -1,4 +1,4 @@
-import type { DataTransformNameType } from '@/types'
+import type { DataTransformNameType, ExpenseType } from '@/types'
 import dayjs from 'dayjs'
 
 export const formatPath = (path: string): string => {
@@ -45,4 +45,50 @@ export function toCamelCase(obj: DataTransformNameType) {
 			value,
 		])
 	)
+}
+
+function categorizeExpense(category: string): ExpenseType {
+	const subscriptionCategories = ['Bills & Subscriptions', 'Entertainment & Hobbies']
+	const fixedCategories = [
+		'Housing & Utilities',
+		'Transport & Travel',
+		'Health & Fitness',
+		'Education',
+	]
+	const transferCategories = ['Finance & Savings', 'Work & Business']
+
+	if (subscriptionCategories.includes(category)) {
+		return 'subscriptions'
+	}
+
+	if (fixedCategories.includes(category)) {
+		return 'fixed'
+	}
+
+	if (transferCategories.includes(category)) {
+		return 'transfers'
+	}
+
+	const defaultMapping: Record<string, ExpenseType> = {
+		'Food & Drinks': 'subscriptions',
+		'Shopping & Personal': 'subscriptions',
+		'Family & Kids': 'fixed',
+		'Gifts & Donations': 'transfers',
+		Other: 'subscriptions',
+	}
+
+	return defaultMapping[category] || 'subscriptions'
+}
+export function getExpenseCSSVariable(category: string | null): string {
+	if (!category) return '--clr-text-primary'
+
+	const expenseType = categorizeExpense(category)
+
+	const cssVarMap: Record<ExpenseType, string> = {
+		subscriptions: 'var(--clr-expense-subscriptions)',
+		fixed: 'var(--clr-expense-fixed)',
+		transfers: 'var(--clr-expense-transfers)',
+	}
+
+	return cssVarMap[expenseType]
 }
