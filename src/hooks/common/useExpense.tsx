@@ -68,6 +68,12 @@ function calculateCategoryStats(expenses: IExpense[]) {
 		.slice(0, 3) // get top 3 category
 }
 
+function getTotalExpenses(expenses: IExpense[] | undefined): number {
+	if (!expenses) return 0
+
+	return expenses.reduce((acc, expense) => acc + expense.value, 0)
+}
+
 export function useExpenses() {
 	const { user } = useAuth()
 	const [timeFilter, setTimeFilter] = useState<ExpenseTimeFilterValue>('week')
@@ -85,6 +91,12 @@ export function useExpenses() {
 	const categoryStats = useMemo(() => {
 		return calculateCategoryStats(getFilteredExpenses(expenses, timeFilter))
 	}, [timeFilter, expenses])
+	const total = useMemo(() => {
+		return getTotalExpenses(expenses)
+	}, [expenses])
+	const monthlyTotal = useMemo(() => {
+		return getTotalExpenses(getFilteredExpenses(expenses, 'month'))
+	}, [expenses])
 
-	return { expenses, handleFilterChange, timeFilter, categoryStats }
+	return { expenses, handleFilterChange, timeFilter, categoryStats, total, monthlyTotal }
 }

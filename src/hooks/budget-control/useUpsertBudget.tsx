@@ -10,8 +10,8 @@ const MUTATION_KEY = 'upsert-budget-limit'
 
 async function upsertBudgetLimit(formData: BudgetFormValue, id: string) {
 	const data: IUserBudgetControl = {
-		user_id: id,
-		budget_max: formData,
+		userId: id,
+		budgetMax: formData,
 	}
 
 	const res = await supabaseClient

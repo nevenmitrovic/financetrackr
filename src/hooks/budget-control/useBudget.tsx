@@ -2,30 +2,37 @@ import { useAuth } from '@/contexts/AuthContext'
 import { supabaseClient } from '@/services/supabaseClient'
 import { queryKeys } from '@/services/tanstack-query/constants'
 import type { IUserBudgetControl } from '@/types'
+import { toCamelCase } from '@/utils'
 import { useQuery } from '@tanstack/react-query'
 
-async function getBudgetControl(id: string) {
-	const res = await supabaseClient.from('budget_control').select('*').eq('user_id', id)
+const FALLBACK: IUserBudgetControl[] = [
+	{
+		userId: '',
+		budgetMax: 0,
+	},
+]
 
-	if (res.error) throw new Error(res.error.message)
-	return res.data
+async function getBudgetControl(id: string) {
+	const { data, error } = await supabaseClient.from('budget_control').select('*').eq('user_id', id)
+
+	if (error) throw new Error(error.message)
+	return data
+}
+
+function getBudgetControlPercentage(total: number, userBudgetMax: number): number {
+	return (total / userBudgetMax) * 100
 }
 
 export function useBudget() {
 	const { user } = useAuth()
 
-	const fallback: IUserBudgetControl[] = [
-		{
-			user_id: '',
-			budget_max: 0,
-		},
-	]
-
-	const { data: userBudgetMax = fallback } = useQuery<IUserBudgetControl[]>({
+	const { data: userBudgetMax = FALLBACK } = useQuery<IUserBudgetControl[]>({
 		queryKey: [queryKeys.budget, user!.id],
 		queryFn: () => getBudgetControl(user!.id),
+		select: (data: IUserBudgetControl[]) =>
+			data.map((budget) => toCamelCase(budget) as IUserBudgetControl),
 		enabled: !!user,
 	})
 
-	return userBudgetMax[0]
+	return { userBudgetMax: userBudgetMax[0], getBudgetControlPercentage }
 }
