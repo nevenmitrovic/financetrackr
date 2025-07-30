@@ -4,6 +4,9 @@
 .profile-card-title > p {
 	color: var(--clr-text-secondary);
 	font-size: var(--font-size-sm);
+	overflow-x: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 .profile-card-title > h3 {
 	font-size: var(--font-size-sm);
