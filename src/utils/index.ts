@@ -92,3 +92,15 @@ export function getExpenseCSSVariable(category: string | null): string {
 
 	return cssVarMap[expenseType]
 }
+export function getColorByIndex(index: number): string {
+	switch (index) {
+		case 0:
+			return 'var(--clr-info)'
+		case 1:
+			return 'var(--clr-expense-fixed)'
+		case 2:
+			return 'var(--clr-income-gift)'
+		default:
+			return 'var(--clr-expense-subscriptions)'
+	}
+}

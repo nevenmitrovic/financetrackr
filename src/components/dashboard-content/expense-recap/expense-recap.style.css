@@ -93,8 +93,7 @@
 	}
 
 	.expense-recap-content {
-		flex-direction: row;
-		gap: 2rem;
+		gap: 1rem;
 	}
 
 	.donut-chart {
@@ -134,5 +133,12 @@
 	.donut-chart {
 		width: 200px;
 		height: 200px;
+	}
+}
+
+@media (width > 1536px) {
+	.expense-recap-content {
+		gap: 2rem;
+		flex-direction: row;
 	}
 }

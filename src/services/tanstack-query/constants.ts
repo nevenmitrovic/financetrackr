@@ -5,4 +5,5 @@ export const queryKeys = {
 	expenseSubcategories: 'expense_subcategories',
 	images: 'images',
 	transactions: 'transactions',
+	expenses: 'expenses',
 }

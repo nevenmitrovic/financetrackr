@@ -48,7 +48,10 @@ const TransactionCard = ({
 					{typeof category === 'string' ? category : getCategoryNameById(category)}
 				</div>
 				<div className='transaction-value'>
-					<h4>{value}$</h4>
+					<h4>
+						{category === 'Income transaction' ? '+' : '-'}
+						{value}$
+					</h4>
 				</div>
 			</div>
 		</div>
