@@ -9,18 +9,18 @@ const LOAD_ID = 'react-query-toast-loading'
 const MUTATION_KEY = 'upsert-budget-limit'
 
 async function upsertBudgetLimit(formData: BudgetFormValue, id: string) {
-	const data: IUserBudgetControl = {
-		userId: id,
-		budgetMax: formData,
+	const newBudget = {
+		user_id: id,
+		budge_max: formData,
 	}
 
-	const res = await supabaseClient
+	const { data, error } = await supabaseClient
 		.from('budget_control')
-		.upsert(data, { onConflict: 'user_id' })
+		.upsert(newBudget, { onConflict: 'user_id' })
 		.select()
 
-	if (res.error) throw new Error(res.error.message)
-	return res.data
+	if (error) throw new Error(error.message)
+	return data
 }
 
 export function useUpsertBudgetLimit() {
