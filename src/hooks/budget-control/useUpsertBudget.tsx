@@ -1,7 +1,7 @@
 import { useAuth } from '@/contexts/AuthContext'
 import { supabaseClient } from '@/services/supabaseClient'
 import { queryKeys } from '@/services/tanstack-query/constants'
-import type { BudgetFormValue, IUserBudgetControl } from '@/types'
+import type { BudgetFormValue } from '@/types'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
 
@@ -11,7 +11,7 @@ const MUTATION_KEY = 'upsert-budget-limit'
 async function upsertBudgetLimit(formData: BudgetFormValue, id: string) {
 	const newBudget = {
 		user_id: id,
-		budge_max: formData,
+		budget_max: formData,
 	}
 
 	const { data, error } = await supabaseClient
