@@ -27,11 +27,17 @@
 	background-color: var(--clr-danger);
 }
 
-@media (width > 768px) {
+@media (width > 1280px) {
 	.stripe-container {
 		height: 28px;
 	}
 	.stripe-bar {
-		width: 5.3px;
+		width: 4px;
+	}
+}
+
+@media (width > 1440) {
+	.stripe-bar {
+		width: 6px;
 	}
 }

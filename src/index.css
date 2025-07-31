@@ -283,7 +283,7 @@
 		font-size: var(--font-size-xs);
 	}
 
-	@media (width > 768px) {
+	@media (width > 1024px) {
 		.container {
 			padding: 1.4rem 1.2rem;
 		}
