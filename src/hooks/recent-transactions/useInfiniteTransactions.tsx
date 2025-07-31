@@ -13,20 +13,25 @@ async function getTransactions(id: string, pageParam: number): Promise<Transacti
 	const from = pageParam * PAGE_SIZE
 	const to = (pageParam + 1) * PAGE_SIZE - 1
 
-	const { data: userIncomes, error: incomeError } = await supabaseClient
-		.from('income-managment')
-		.select('*')
-		.eq('user_id', id)
-		.eq('year_month', currentYearMonth)
-		.order('transaction_date', { ascending: false })
-		.range(from, to)
-	const { data: userExpenseTransactions, error: transactionsError } = await supabaseClient
-		.from('expenses')
-		.select('*')
-		.eq('user_id', id)
-		.eq('year_month', currentYearMonth)
-		.order('transaction_date', { ascending: false })
-		.range(from, to)
+	const [
+		{ data: userIncomes, error: incomeError },
+		{ data: userExpenseTransactions, error: transactionsError },
+	] = await Promise.all([
+		supabaseClient
+			.from('income-managment')
+			.select('*')
+			.eq('user_id', id)
+			.eq('year_month', currentYearMonth)
+			.order('transaction_date', { ascending: false })
+			.range(from, to),
+		supabaseClient
+			.from('expenses')
+			.select('*')
+			.eq('user_id', id)
+			.eq('year_month', currentYearMonth)
+			.order('transaction_date', { ascending: false })
+			.range(from, to),
+	])
 
 	if (incomeError || transactionsError) {
 		throw new Error(
