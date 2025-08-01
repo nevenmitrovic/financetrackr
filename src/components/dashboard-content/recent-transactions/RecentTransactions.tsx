@@ -21,10 +21,10 @@ const RecentTransactions = () => {
 	const { transactions, fetchNextPage, isFetchingNextPage, hasNextPage } = useInfiniteTransactions()
 
 	useEffect(() => {
-		if (inView) {
+		if (inView && hasNextPage) {
 			fetchNextPage()
 		}
-	}, [inView, fetchNextPage])
+	}, [inView, fetchNextPage, hasNextPage])
 
 	return (
 		<div className='recent-transactions content-card'>
@@ -37,12 +37,12 @@ const RecentTransactions = () => {
 			<div className='transactions-container'>
 				<div className='transactions-per-date'>
 					<div className='transactions-cards-container'>
-						{!transactions ? (
+						{!transactions || transactions.pages[0].length === 0 ? (
 							<p>Currently you don't have any transactions.</p>
 						) : (
 							transactions.pages.map((page) =>
 								page.map((transaction) =>
-									Object.getOwnPropertyNames(transaction).includes('partTime') ? (
+									transaction.type! === 'income' ? (
 										<TransactionCard
 											category='Income transaction'
 											subcategory='Income'
@@ -53,6 +53,7 @@ const RecentTransactions = () => {
 												(transaction as IMonthlyIncome).paycheck
 											)}
 											key={transaction.id}
+											type={transaction.type!}
 										/>
 									) : (
 										<TransactionCard
@@ -61,6 +62,7 @@ const RecentTransactions = () => {
 											value={(transaction as IExpense).value}
 											transactionDate={transaction.transactionDate}
 											key={transaction.id}
+											type={transaction.type!}
 										/>
 									)
 								)

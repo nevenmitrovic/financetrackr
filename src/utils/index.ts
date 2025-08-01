@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 export const formatPath = (path: string): string => {
 	if (path === '/') return 'Home'
 
-	return firstLetterUppercase(path)
+	return firstLetterUppercase(path.slice(1))
 }
 
 export function firstLetterUppercase(word: string) {

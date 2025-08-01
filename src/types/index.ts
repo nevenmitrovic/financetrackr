@@ -9,6 +9,7 @@ export interface IMonthlyIncome {
 	gift: number
 	yearMonth: string
 	transactionDate: string
+	type?: TransactionType
 }
 export interface IUserBudgetControl {
 	userId: string
@@ -37,6 +38,7 @@ export interface IExpense {
 	subcategory: number
 	value: number
 	yearMonth: string
+	type?: TransactionType
 }
 
 export type CreateMonthlyIncome = IMonthlyIncome
@@ -58,3 +60,4 @@ export type ExpenseFormValue = InferType<typeof expenseTransactionSchema>
 export type TransactionsType = (IMonthlyIncome | IExpense)[]
 export type ExpenseType = 'subscriptions' | 'fixed' | 'transfers'
 export type ExpenseTimeFilterValue = 'week' | 'month' | 'year'
+export type TransactionType = 'income' | 'expense'

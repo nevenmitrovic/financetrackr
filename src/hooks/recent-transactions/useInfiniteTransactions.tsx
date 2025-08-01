@@ -8,7 +8,11 @@ import dayjs from 'dayjs'
 
 const PAGE_SIZE = 3
 
-async function getTransactions(id: string, pageParam: number): Promise<TransactionsType> {
+async function getTransactions(
+	id: string,
+	pageParam: number,
+	acc: any[] = []
+): Promise<TransactionsType> {
 	const currentYearMonth = getCurrentMonthYear()
 	const from = pageParam * PAGE_SIZE
 	const to = (pageParam + 1) * PAGE_SIZE - 1
@@ -32,17 +36,25 @@ async function getTransactions(id: string, pageParam: number): Promise<Transacti
 			.order('transaction_date', { ascending: false })
 			.range(from, to),
 	])
-
 	if (incomeError || transactionsError) {
 		throw new Error(
-			incomeError!.message ?? transactionsError!.message ?? 'unknown error with supabase'
+			incomeError?.message ?? transactionsError?.message ?? 'unknown error with supabase'
 		)
 	}
 
-	const transactions = [userIncomes, userExpenseTransactions]
-	return transactions
-		.flatMap((transaction) => transaction || [])
-		.sort((a, b) => dayjs(b.transaction_date).valueOf() - dayjs(a.transaction_date).valueOf())
+	const combined = [...(userIncomes || []), ...(userExpenseTransactions || [])]
+	const all = [...acc, ...combined]
+
+	if (combined.length === 0 || all.length >= PAGE_SIZE * 2) {
+		return all
+			.sort(
+				(a: any, b: any) =>
+					dayjs(b.transaction_date).valueOf() - dayjs(a.transaction_date).valueOf()
+			)
+			.slice(0, PAGE_SIZE * 2)
+	}
+
+	return getTransactions(id, pageParam + 1, all)
 }
 
 export function useInfiniteTransactions() {
@@ -58,14 +70,22 @@ export function useInfiniteTransactions() {
 		queryKey: [queryKeys.transactions, user!.id],
 		initialPageParam: 0,
 		queryFn: ({ pageParam }) => getTransactions(user!.id, pageParam as number),
-		select: (data) => ({
-			...data,
-			pages: data.pages.map((page) =>
-				page.map((transaction) => toCamelCase(transaction) as IMonthlyIncome | IExpense)
-			),
-		}),
+		select: (data) => {
+			const allTransactions = data.pages.flat()
+			const uniqueTransactions = allTransactions.filter(
+				(item, index, self) => self.findIndex((t) => t.id === item.id) === index
+			)
+			return {
+				...data,
+				pages: [
+					uniqueTransactions.map(
+						(transaction) => toCamelCase(transaction) as IMonthlyIncome | IExpense
+					),
+				],
+			}
+		},
 		getNextPageParam: (lastPage, pages) => {
-			if (lastPage.length < PAGE_SIZE || pages.length > 2) {
+			if (lastPage.length < PAGE_SIZE * 2) {
 				return undefined
 			}
 			return pages.length

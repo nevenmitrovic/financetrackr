@@ -5,12 +5,14 @@ import { useImages } from '@/hooks/common/useImages'
 import dayjs from 'dayjs'
 import { GoDotFill } from 'react-icons/go'
 import { getExpenseCSSVariable } from '@/utils'
+import type { TransactionType } from '@/types'
 
 interface TransactionCardProps {
 	category: number | string
 	subcategory: number | string
 	transactionDate: string
 	value: number
+	type: TransactionType
 }
 
 const TransactionCard = ({
@@ -18,16 +20,17 @@ const TransactionCard = ({
 	subcategory,
 	transactionDate,
 	value,
+	type,
 }: TransactionCardProps) => {
 	const { getImageByName } = useImages()
 	const { getCategoryNameById, getSubcategoryNameById } = useExpenseCategories()
 
 	const image =
-		typeof category === 'string'
+		type === 'income'
 			? getImageByName('income')?.publicUrl ?? logo
 			: getImageByName(getCategoryNameById(category as number))?.publicUrl ?? logo
 	const transactionColor =
-		typeof category === 'string'
+		type === 'income'
 			? 'var(--clr-income-paycheck)'
 			: getExpenseCSSVariable(getCategoryNameById(category as number))
 
