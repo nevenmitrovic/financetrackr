@@ -36,6 +36,7 @@ export interface IExpense {
 	category: number
 	subcategory: number
 	value: number
+	yearMonth: string
 }
 
 export type CreateMonthlyIncome = IMonthlyIncome

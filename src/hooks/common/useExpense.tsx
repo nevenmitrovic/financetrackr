@@ -2,7 +2,7 @@ import { useAuth } from '@/contexts/AuthContext'
 import { supabaseClient } from '@/services/supabaseClient'
 import { queryKeys } from '@/services/tanstack-query/constants'
 import type { ExpenseTimeFilterValue, IExpense } from '@/types'
-import { toCamelCase } from '@/utils'
+import { getCurrentMonthYear, toCamelCase } from '@/utils'
 import { useQuery } from '@tanstack/react-query'
 import dayjs from 'dayjs'
 import { useMemo, useState } from 'react'
@@ -71,7 +71,10 @@ function calculateCategoryStats(expenses: IExpense[]) {
 function getTotalExpenses(expenses: IExpense[] | undefined): number {
 	if (!expenses) return 0
 
-	return expenses.reduce((acc, expense) => acc + expense.value, 0)
+	const currentYearMonth = getCurrentMonthYear()
+	return expenses
+		.filter((expense) => expense.yearMonth === currentYearMonth)
+		.reduce((acc, expense) => acc + expense.value, 0)
 }
 
 export function useExpenses() {
