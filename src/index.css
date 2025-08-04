@@ -103,8 +103,10 @@
 
 		/* status */
 		--clr-success: #22c55e;
+		--clr-success-rgb: 40, 167, 69;
 		--clr-warning: #facc15;
 		--clr-danger: #ef4444;
+		--clr-danger-rgb: 239, 68, 68;
 		--clr-info: #6366f1;
 
 		/* text and background */
