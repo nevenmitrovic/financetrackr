@@ -12,6 +12,8 @@ interface ExpenseCardProps {
 	value: number
 	percentage: number
 	category: string
+	level: 'category' | 'subcategory' | 'noLevel'
+	today?: boolean
 }
 
 const ExpenseCard = ({
@@ -21,14 +23,20 @@ const ExpenseCard = ({
 	value,
 	percentage,
 	category,
+	level,
+	today = false,
 }: ExpenseCardProps) => {
-	const { getCategoryNameById } = useExpenseCategories()
+	const { getCategoryNameById, getSubcategoryNameById } = useExpenseCategories()
 	return (
 		<div className='content-card expense-card'>
 			<div>
 				<h3>
 					<FaMoneyBill color={iconColor} />
-					{getCategoryNameById(Number(category))}
+					{level === 'category'
+						? getCategoryNameById(Number(category))
+						: level === 'noLevel'
+						? category
+						: getSubcategoryNameById(Number(category))}
 				</h3>
 				<p>{title}</p>
 			</div>
@@ -40,7 +48,7 @@ const ExpenseCard = ({
 							<FaArrowTrendUp />
 							{percentage}%
 						</p>
-						<span>increase since last month</span>
+						<span>increase since {today ? 'yesterday' : 'last month'}</span>
 					</div>
 				) : trendType === 'decrease' ? (
 					<div className='trend-down'>
@@ -48,7 +56,7 @@ const ExpenseCard = ({
 							<FaArrowTrendDown />
 							{percentage}%
 						</p>
-						<span>decrease since last month</span>
+						<span>decrease since {today ? 'yesterday' : 'last month'}</span>
 					</div>
 				) : (
 					<div className='noChange'>
@@ -56,7 +64,7 @@ const ExpenseCard = ({
 							<MdOutlineTrendingFlat />
 							{percentage}%
 						</p>
-						<span>no change since last month</span>
+						<span>no change since {today ? 'yesterday' : 'last month'}</span>
 					</div>
 				)}
 			</div>

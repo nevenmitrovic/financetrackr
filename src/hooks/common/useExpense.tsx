@@ -1,7 +1,13 @@
 import { useAuth } from '@/contexts/AuthContext'
 import { supabaseClient } from '@/services/supabaseClient'
 import { queryKeys } from '@/services/tanstack-query/constants'
-import type { ExpenseTimeFilterValue, IExpense, ITopExpenseCategory } from '@/types'
+import type {
+	ExpenseTimeFilterValue,
+	IExpense,
+	ITopExpenseCategory,
+	ITopExpenseSubcategory,
+	ITotalExpense,
+} from '@/types'
 import { getCurrentMonthYear, toCamelCase } from '@/utils'
 import { useQuery } from '@tanstack/react-query'
 import dayjs from 'dayjs'
@@ -9,6 +15,18 @@ import { useMemo, useState } from 'react'
 
 const TOP_EXPENSE_CATEGORY_FALLBACK: ITopExpenseCategory = {
 	category: '',
+	total: 0,
+	trendType: 'noChange',
+	percentage: 0,
+}
+const TOP_EXPENSE_SUBCATEGORY_FALLBACK: ITopExpenseSubcategory = {
+	subcategory: '',
+	total: 0,
+	trendType: 'noChange',
+	percentage: 0,
+}
+const TOTAL_EXPENSE_FALLBACK: ITotalExpense = {
+	category: 'Total',
 	total: 0,
 	trendType: 'noChange',
 	percentage: 0,
@@ -35,6 +53,8 @@ function getFilteredExpenses(
 		const expenseDate = dayjs(expense.transactionDate)
 
 		switch (timeFilter) {
+			case 'today':
+				return expenseDate.isSame(now, 'day')
 			case 'week':
 				const oneWeekAgo = now.subtract(1, 'week')
 				return expenseDate.isAfter(oneWeekAgo)
@@ -75,7 +95,7 @@ function calculateCategoryStats(expenses: IExpense[]) {
 		.slice(0, 3) // get top 3 category
 }
 
-function getTotalExpenses(expenses: IExpense[] | undefined): number {
+function getCurrentMonthTotalExpenses(expenses: IExpense[] | undefined): number {
 	if (!expenses) return 0
 
 	const currentYearMonth = getCurrentMonthYear()
@@ -84,6 +104,41 @@ function getTotalExpenses(expenses: IExpense[] | undefined): number {
 		.reduce((acc, expense) => acc + expense.value, 0)
 }
 
+function getTotalExpense(expenses: IExpense[] | undefined): number {
+	if (!expenses) return 0
+	return expenses.reduce((acc, expense) => acc + expense.value, 0)
+}
+
+function getTotalExpenseAllTime(expenses: IExpense[] | undefined): ITotalExpense {
+	if (!expenses) return TOTAL_EXPENSE_FALLBACK
+
+	const total = getTotalExpense(expenses)
+	const monthlyTrend = getCurrentMonthTrend(expenses)
+
+	return {
+		total,
+		category: 'Total',
+		trendType: monthlyTrend.type,
+		percentage: monthlyTrend.value,
+	}
+}
+function getTotalExpenseToday(expenses: IExpense[] | undefined): ITotalExpense {
+	if (!expenses) return TOTAL_EXPENSE_FALLBACK
+
+	const todaysExpenses = getFilteredExpenses(expenses, 'today')
+
+	const dailyTotal = getTotalExpense(todaysExpenses)
+	const dailyTrend = getCurrentDayTrend(expenses)
+
+	return {
+		total: dailyTotal,
+		category: 'Total',
+		trendType: dailyTrend.type,
+		percentage: dailyTrend.value,
+	}
+}
+
+// get trend for current month since last month
 function getCurrentMonthTrend(expenses: IExpense[]): {
 	value: number
 	type: 'increase' | 'decrease' | 'noChange'
@@ -102,6 +157,28 @@ function getCurrentMonthTrend(expenses: IExpense[]): {
 	if (totalLastMonthExpense === 0) return { value: 0, type: 'noChange' }
 	const trendValue =
 		((totalCurrentMonthExpense - totalLastMonthExpense) / totalLastMonthExpense) * 100
+	const trendType = trendValue > 0 ? 'increase' : trendValue < 0 ? 'decrease' : 'noChange'
+	return { value: parseFloat(trendValue.toFixed(2)), type: trendType }
+}
+// get trend for current day since yesterday
+function getCurrentDayTrend(expenses: IExpense[]): {
+	value: number
+	type: 'increase' | 'decrease' | 'noChange'
+} {
+	const today = dayjs()
+	const yesterday = dayjs().subtract(1, 'day')
+	const todayExpenses = expenses.filter((expense) =>
+		dayjs(expense.transactionDate).isSame(today, 'day')
+	)
+	const yesterdayExpenses = expenses.filter((expense) =>
+		dayjs(expense.transactionDate).isSame(yesterday, 'day')
+	)
+
+	const totalTodayExpense = todayExpenses.reduce((sum, expense) => sum + expense.value, 0)
+	const totalYesterdayExpense = yesterdayExpenses.reduce((sum, expense) => sum + expense.value, 0)
+
+	if (totalYesterdayExpense === 0) return { value: 0, type: 'noChange' }
+	const trendValue = ((totalTodayExpense - totalYesterdayExpense) / totalYesterdayExpense) * 100
 	const trendType = trendValue > 0 ? 'increase' : trendValue < 0 ? 'decrease' : 'noChange'
 	return { value: parseFloat(trendValue.toFixed(2)), type: trendType }
 }
@@ -137,6 +214,37 @@ function getTopExpenseCategory(expenses: IExpense[] | undefined): ITopExpenseCat
 
 	return topCategory || TOP_EXPENSE_CATEGORY_FALLBACK
 }
+function getTopExpenseSubcategory(expenses: IExpense[] | undefined): ITopExpenseSubcategory {
+	if (!expenses || expenses.length === 0) return TOP_EXPENSE_SUBCATEGORY_FALLBACK
+
+	const filteredTransactions = expenses.filter((expense) => expense.type === 'expense')
+	if (filteredTransactions.length === 0) return TOP_EXPENSE_SUBCATEGORY_FALLBACK
+
+	const subcategoryGroups = filteredTransactions.reduce((acc, expense) => {
+		const subcategory = expense.subcategory
+		if (!acc[subcategory]) {
+			acc[subcategory] = []
+		}
+		acc[subcategory].push(expense)
+		return acc
+	}, {} as Record<string, IExpense[]>)
+
+	const topSubcategory = Object.entries(subcategoryGroups)
+		.map(([subcategory, subcategoryExpenses]) => {
+			const subcategoryTotal = subcategoryExpenses.reduce((sum, expense) => sum + expense.value, 0)
+			const currentMonthTrend = getCurrentMonthTrend(subcategoryExpenses)
+
+			return {
+				subcategory,
+				total: subcategoryTotal,
+				trendType: currentMonthTrend.type,
+				percentage: currentMonthTrend.value,
+			}
+		})
+		.sort((a, b) => b.total - a.total)[0]
+
+	return topSubcategory || TOP_EXPENSE_SUBCATEGORY_FALLBACK
+}
 
 export function useExpenses() {
 	const { user } = useAuth()
@@ -155,14 +263,23 @@ export function useExpenses() {
 	const categoryStats = useMemo(() => {
 		return calculateCategoryStats(getFilteredExpenses(expenses, timeFilter))
 	}, [timeFilter, expenses])
-	const total = useMemo(() => {
-		return getTotalExpenses(expenses)
+	const currentMonthTotal = useMemo(() => {
+		return getCurrentMonthTotalExpenses(expenses)
 	}, [expenses])
 	const monthlyTotal = useMemo(() => {
-		return getTotalExpenses(getFilteredExpenses(expenses, 'month'))
+		return getTotalExpense(getFilteredExpenses(expenses, 'month')) // for last 30 days
 	}, [expenses])
 	const topExpenseCategory = useMemo(() => {
 		return getTopExpenseCategory(expenses)
+	}, [expenses])
+	const topExpenseSubcategory = useMemo(() => {
+		return getTopExpenseSubcategory(expenses)
+	}, [expenses])
+	const totalExpenseAllTime = useMemo(() => {
+		return getTotalExpenseAllTime(expenses)
+	}, [expenses])
+	const totalExpenseToday = useMemo(() => {
+		return getTotalExpenseToday(expenses)
 	}, [expenses])
 
 	return {
@@ -170,8 +287,11 @@ export function useExpenses() {
 		handleFilterChange,
 		timeFilter,
 		categoryStats,
-		total,
+		currentMonthTotal,
 		monthlyTotal,
 		topExpenseCategory,
+		topExpenseSubcategory,
+		totalExpenseAllTime,
+		totalExpenseToday,
 	}
 }

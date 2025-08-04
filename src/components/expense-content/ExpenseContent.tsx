@@ -10,7 +10,8 @@ import './expense-content.style.css'
 const ExpenseLayoutContent = () => {
 	const { open } = useSidebarContext()
 	const isMobile = useIsMobile()
-	const { topExpenseCategory } = useExpenses()
+	const { topExpenseCategory, topExpenseSubcategory, totalExpenseAllTime, totalExpenseToday } =
+		useExpenses()
 
 	return (
 		<>
@@ -28,6 +29,7 @@ const ExpenseLayoutContent = () => {
 							<ExpenseCard
 								iconColor='var(--clr-income-paycheck)'
 								title='Top Expense Category'
+								level='category'
 								category={topExpenseCategory.category}
 								trendType={topExpenseCategory.trendType}
 								value={topExpenseCategory.total}
@@ -36,26 +38,30 @@ const ExpenseLayoutContent = () => {
 							<ExpenseCard
 								iconColor='var(--clr-income-gift)'
 								title='Top Expense Subcategory'
-								category='Random'
-								trendType='decrease'
-								value={1886}
-								percentage={11}
+								level='subcategory'
+								category={topExpenseSubcategory.subcategory}
+								trendType={topExpenseSubcategory.trendType}
+								value={topExpenseSubcategory.total}
+								percentage={topExpenseSubcategory.percentage}
 							/>
 							<ExpenseCard
 								iconColor='var(--clr-expense-transfers)'
 								title='Total Expense All Time'
-								category='Random'
-								trendType='decrease'
-								value={3400}
-								percentage={33}
+								level='noLevel'
+								category={totalExpenseAllTime.category}
+								trendType={totalExpenseAllTime.trendType}
+								value={totalExpenseAllTime.total}
+								percentage={totalExpenseAllTime.percentage}
 							/>
 							<ExpenseCard
 								iconColor='var(--clr-info)'
 								title='Total Expense Today'
-								category='Random'
-								trendType='noChange'
-								value={2008}
-								percentage={4}
+								level='noLevel'
+								category={totalExpenseToday.category}
+								trendType={totalExpenseToday.trendType}
+								value={totalExpenseToday.total}
+								percentage={totalExpenseToday.percentage}
+								today={true}
 							/>
 						</div>
 					</div>

@@ -9,7 +9,7 @@ import './budget-control.style.css'
 
 const BudgetControl = () => {
 	const { userBudgetMax, getBudgetControlPercentage } = useBudget()
-	const { monthlyTotal } = useExpenses()
+	const { currentMonthTotal } = useExpenses()
 	const { toggleBudgetModal } = useBudgetContext()
 
 	return (
@@ -27,7 +27,7 @@ const BudgetControl = () => {
 						<p>Please set your budget limit!</p>
 					) : (
 						<div>
-							<h3>{monthlyTotal}$</h3> of {userBudgetMax.budgetMax}$
+							<h3>{currentMonthTotal}$</h3> of {userBudgetMax.budgetMax}$
 						</div>
 					)}
 				</div>
@@ -35,10 +35,10 @@ const BudgetControl = () => {
 			{userBudgetMax && (
 				<div className='budget-control-view'>
 					<ProgressStripe
-						percentage={getBudgetControlPercentage(monthlyTotal, userBudgetMax.budgetMax)}
+						percentage={getBudgetControlPercentage(currentMonthTotal, userBudgetMax.budgetMax)}
 					/>
 					<AlertMessage
-						percentage={getBudgetControlPercentage(monthlyTotal, userBudgetMax.budgetMax)}
+						percentage={getBudgetControlPercentage(currentMonthTotal, userBudgetMax.budgetMax)}
 					/>
 				</div>
 			)}

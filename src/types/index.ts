@@ -46,6 +46,18 @@ export interface ITopExpenseCategory {
 	trendType: 'increase' | 'decrease' | 'noChange'
 	percentage: number
 }
+export interface ITopExpenseSubcategory {
+	subcategory: string
+	total: number
+	trendType: 'increase' | 'decrease' | 'noChange'
+	percentage: number
+}
+export interface ITotalExpense {
+	category: 'Total'
+	total: number
+	trendType: 'increase' | 'decrease' | 'noChange'
+	percentage: number
+}
 
 export type CreateMonthlyIncome = IMonthlyIncome
 export type AddIncomeFormValues = InferType<typeof addIncomeSchema>
@@ -65,5 +77,5 @@ export type DataTransformNameType =
 export type ExpenseFormValue = InferType<typeof expenseTransactionSchema>
 export type TransactionsType = (IMonthlyIncome | IExpense)[]
 export type ExpenseType = 'subscriptions' | 'fixed' | 'transfers'
-export type ExpenseTimeFilterValue = 'week' | 'month' | 'year'
+export type ExpenseTimeFilterValue = 'week' | 'month' | 'year' | 'today'
 export type TransactionType = 'income' | 'expense'
