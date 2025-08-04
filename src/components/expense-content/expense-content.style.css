@@ -5,7 +5,7 @@
 .expense-top-cards {
 	display: grid;
 	grid-template-columns: repeat(4, minmax(280px, 1fr));
-	grid-template-rows: 140px;
+	grid-template-rows: 180px;
 	overflow-x: auto;
 	gap: 0.5rem;
 	padding-block: 0.5rem;

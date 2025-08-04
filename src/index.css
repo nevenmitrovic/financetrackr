@@ -99,6 +99,7 @@
 		/* expense */
 		--clr-expense-subscriptions: #f43f5e;
 		--clr-expense-fixed: #0ea5e9;
+		--clr-expense-fixed-rgb: 14, 165, 233;
 		--clr-expense-transfers: #22c55e;
 
 		/* status */

@@ -2,6 +2,7 @@ import { useSidebarContext } from '@/contexts/SidebarContext'
 import { useIsMobile } from '@/hooks/common/useIsMobile'
 import PageHeader from '@/components/common/page-header/PageHeader'
 import ExpenseCard from '@/components/expense-content/expense-card/ExpenseCard'
+import { useExpenses } from '@/hooks/common/useExpense'
 
 import '@/components/dashboard-content/dashboard-content.style.css'
 import './expense-content.style.css'
@@ -9,6 +10,7 @@ import './expense-content.style.css'
 const ExpenseLayoutContent = () => {
 	const { open } = useSidebarContext()
 	const isMobile = useIsMobile()
+	const { topExpenseCategory } = useExpenses()
 
 	return (
 		<>
@@ -26,28 +28,32 @@ const ExpenseLayoutContent = () => {
 							<ExpenseCard
 								iconColor='var(--clr-income-paycheck)'
 								title='Top Expense Category'
-								type='increase'
-								value={2134}
-								percentage={13}
+								category={topExpenseCategory.category}
+								trendType={topExpenseCategory.trendType}
+								value={topExpenseCategory.total}
+								percentage={topExpenseCategory.percentage}
 							/>
 							<ExpenseCard
 								iconColor='var(--clr-income-gift)'
 								title='Top Expense Subcategory'
-								type='decrease'
+								category='Random'
+								trendType='decrease'
 								value={1886}
 								percentage={11}
 							/>
 							<ExpenseCard
 								iconColor='var(--clr-expense-transfers)'
 								title='Total Expense All Time'
-								type='decrease'
+								category='Random'
+								trendType='decrease'
 								value={3400}
 								percentage={33}
 							/>
 							<ExpenseCard
 								iconColor='var(--clr-info)'
 								title='Total Expense Today'
-								type='increase'
+								category='Random'
+								trendType='noChange'
 								value={2008}
 								percentage={4}
 							/>

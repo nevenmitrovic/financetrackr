@@ -1,11 +1,18 @@
 import { useAuth } from '@/contexts/AuthContext'
 import { supabaseClient } from '@/services/supabaseClient'
 import { queryKeys } from '@/services/tanstack-query/constants'
-import type { ExpenseTimeFilterValue, IExpense } from '@/types'
+import type { ExpenseTimeFilterValue, IExpense, ITopExpenseCategory } from '@/types'
 import { getCurrentMonthYear, toCamelCase } from '@/utils'
 import { useQuery } from '@tanstack/react-query'
 import dayjs from 'dayjs'
 import { useMemo, useState } from 'react'
+
+const TOP_EXPENSE_CATEGORY_FALLBACK: ITopExpenseCategory = {
+	category: '',
+	total: 0,
+	trendType: 'noChange',
+	percentage: 0,
+}
 
 async function getExpenses(): Promise<IExpense[]> {
 	const { data: expenses, error } = await supabaseClient
@@ -77,6 +84,60 @@ function getTotalExpenses(expenses: IExpense[] | undefined): number {
 		.reduce((acc, expense) => acc + expense.value, 0)
 }
 
+function getCurrentMonthTrend(expenses: IExpense[]): {
+	value: number
+	type: 'increase' | 'decrease' | 'noChange'
+} {
+	const currentMonthYear = getCurrentMonthYear()
+	const lastMonthYear = dayjs().subtract(1, 'month').format('YYYY-MM')
+	const currentMonthExpenses = expenses.filter((expense) => expense.yearMonth === currentMonthYear)
+	const lastMonthExpenses = expenses.filter((expense) => expense.yearMonth === lastMonthYear)
+
+	const totalCurrentMonthExpense = currentMonthExpenses.reduce(
+		(sum, expense) => sum + expense.value,
+		0
+	)
+	const totalLastMonthExpense = lastMonthExpenses.reduce((sum, expense) => sum + expense.value, 0)
+
+	if (totalLastMonthExpense === 0) return { value: 0, type: 'noChange' }
+	const trendValue =
+		((totalCurrentMonthExpense - totalLastMonthExpense) / totalLastMonthExpense) * 100
+	const trendType = trendValue > 0 ? 'increase' : trendValue < 0 ? 'decrease' : 'noChange'
+	return { value: parseFloat(trendValue.toFixed(2)), type: trendType }
+}
+
+function getTopExpenseCategory(expenses: IExpense[] | undefined): ITopExpenseCategory {
+	if (!expenses || expenses.length === 0) return TOP_EXPENSE_CATEGORY_FALLBACK
+
+	const filteredTransactions = expenses.filter((expense) => expense.type === 'expense')
+	if (filteredTransactions.length === 0) return TOP_EXPENSE_CATEGORY_FALLBACK
+
+	const categoryGroups = filteredTransactions.reduce((acc, expense) => {
+		const category = expense.category || 'Other'
+		if (!acc[category]) {
+			acc[category] = []
+		}
+		acc[category].push(expense)
+		return acc
+	}, {} as Record<string, IExpense[]>)
+
+	const topCategory = Object.entries(categoryGroups)
+		.map(([category, categoryExpenses]) => {
+			const categoryTotal = categoryExpenses.reduce((sum, expense) => sum + expense.value, 0)
+			const currentMonthTrend = getCurrentMonthTrend(categoryExpenses)
+
+			return {
+				category,
+				total: categoryTotal,
+				trendType: currentMonthTrend.type,
+				percentage: currentMonthTrend.value,
+			}
+		})
+		.sort((a, b) => b.total - a.total)[0]
+
+	return topCategory || TOP_EXPENSE_CATEGORY_FALLBACK
+}
+
 export function useExpenses() {
 	const { user } = useAuth()
 	const [timeFilter, setTimeFilter] = useState<ExpenseTimeFilterValue>('week')
@@ -100,6 +161,17 @@ export function useExpenses() {
 	const monthlyTotal = useMemo(() => {
 		return getTotalExpenses(getFilteredExpenses(expenses, 'month'))
 	}, [expenses])
+	const topExpenseCategory = useMemo(() => {
+		return getTopExpenseCategory(expenses)
+	}, [expenses])
 
-	return { expenses, handleFilterChange, timeFilter, categoryStats, total, monthlyTotal }
+	return {
+		expenses,
+		handleFilterChange,
+		timeFilter,
+		categoryStats,
+		total,
+		monthlyTotal,
+		topExpenseCategory,
+	}
 }

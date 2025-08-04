@@ -1,20 +1,25 @@
 .expense-card {
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
+	justify-content: space-evenly;
 	gap: 1rem;
 }
-.expense-card > h3 {
+.expense-card > div > h3 {
 	display: flex;
 	align-items: center;
 	gap: 4px;
 }
-.expense-card > div {
+.expense-card > div > p {
+	color: var(--clr-text-secondary);
+}
+.trend-info {
 	display: flex;
 	flex-direction: column;
 	gap: 0.5rem;
 }
-.trend-up {
+.trend-up,
+.trend-down,
+.noChange {
 	display: flex;
 	gap: 0.5rem;
 	color: var(--clr-text-secondary);
@@ -28,18 +33,11 @@
 	color: var(--clr-success);
 	border-radius: var(--border-radius-2);
 }
-.trend-down > span {
+.trend-down > span,
+.trend-up > span,
+.noChange > span {
 	display: inline-block;
 	margin-block: auto;
-}
-.trend-up > span {
-	display: inline-block;
-	margin-block: auto;
-}
-.trend-down {
-	display: flex;
-	gap: 0.5rem;
-	color: var(--clr-text-secondary);
 }
 .trend-down > p {
 	display: flex;
@@ -48,5 +46,14 @@
 	background-color: rgba(var(--clr-danger-rgb), 0.15);
 	padding: 4px;
 	color: var(--clr-danger);
+	border-radius: var(--border-radius-2);
+}
+.noChange > p {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	background-color: rgba(var(--clr-expense-fixed-rgb), 0.15);
+	padding: 4px;
+	color: var(--clr-expense-fixed);
 	border-radius: var(--border-radius-2);
 }

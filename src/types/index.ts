@@ -40,6 +40,12 @@ export interface IExpense {
 	yearMonth: string
 	type?: TransactionType
 }
+export interface ITopExpenseCategory {
+	category: string
+	total: number
+	trendType: 'increase' | 'decrease' | 'noChange'
+	percentage: number
+}
 
 export type CreateMonthlyIncome = IMonthlyIncome
 export type AddIncomeFormValues = InferType<typeof addIncomeSchema>
