@@ -25,7 +25,7 @@ const ExpenseHistory = () => {
 		}
 		return paginatedExpenses.map((expense) => {
 			return (
-				<tr>
+				<tr key={expense.id}>
 					<td>{getCategoryNameById(expense.category)}</td>
 					<td>{getSubcategoryNameById(expense.subcategory)}</td>
 					<td>{expense.id}</td>
