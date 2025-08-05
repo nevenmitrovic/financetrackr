@@ -1,12 +1,21 @@
+import { useExpenseHistory } from '@/hooks/expense-history/useExpenseHistory'
+
 import './expense-history.style.css'
 
 const ExpenseHistory = () => {
+	const { handleItemsPerPage } = useExpenseHistory()
+
 	return (
 		<div className='expense-history content-card'>
 			<div className='expense-history-header'>
 				<h3>Expense history</h3>
 				<div>
-					<select name='itemsPerPage' id='itemsPerPage' className='button'>
+					<select
+						name='itemsPerPage'
+						id='itemsPerPage'
+						className='button'
+						onChange={handleItemsPerPage}
+					>
 						<option value={5}>5</option>
 						<option value={10}>10</option>
 						<option value={15}>15</option>

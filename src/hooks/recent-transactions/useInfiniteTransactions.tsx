@@ -1,5 +1,5 @@
 import { supabaseClient } from '@/services/supabaseClient'
-import { getCurrentMonthYear, toCamelCase } from '@/utils'
+import { getCurrentMonthYear, getRange, toCamelCase } from '@/utils'
 import type { IMonthlyIncome, TransactionsType, IExpense } from '@/types'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { queryKeys } from '@/services/tanstack-query/constants'
@@ -14,8 +14,7 @@ async function getTransactions(
 	acc: any[] = []
 ): Promise<TransactionsType> {
 	const currentYearMonth = getCurrentMonthYear()
-	const from = pageParam * PAGE_SIZE
-	const to = (pageParam + 1) * PAGE_SIZE - 1
+	const range = getRange(pageParam, PAGE_SIZE)
 
 	const [
 		{ data: userIncomes, error: incomeError },
@@ -27,14 +26,14 @@ async function getTransactions(
 			.eq('user_id', id)
 			.eq('year_month', currentYearMonth)
 			.order('transaction_date', { ascending: false })
-			.range(from, to),
+			.range(range[0], range[1]),
 		supabaseClient
 			.from('expenses')
 			.select('*')
 			.eq('user_id', id)
 			.eq('year_month', currentYearMonth)
 			.order('transaction_date', { ascending: false })
-			.range(from, to),
+			.range(range[0], range[1]),
 	])
 	if (incomeError || transactionsError) {
 		throw new Error(

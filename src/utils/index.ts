@@ -104,3 +104,10 @@ export function getColorByIndex(index: number): string {
 			return 'var(--clr-expense-subscriptions)'
 	}
 }
+
+export function getRange(page: number, limit: number) {
+	const from = page * limit
+	const to = from + limit - 1
+
+	return [from, to]
+}
