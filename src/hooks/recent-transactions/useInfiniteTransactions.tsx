@@ -72,7 +72,7 @@ export function useInfiniteTransactions() {
 		select: (data) => {
 			const allTransactions = data.pages.flat()
 			const uniqueTransactions = allTransactions.filter(
-				(item, index, self) => self.findIndex((t) => t.id === item.id) === index
+				(item, index, self) => self.findIndex((transacion) => transacion.id === item.id) === index
 			)
 			return {
 				...data,
@@ -84,8 +84,8 @@ export function useInfiniteTransactions() {
 			}
 		},
 		getNextPageParam: (lastPage, pages) => {
-			// max last 15 transactions
-			if (lastPage.length < PAGE_SIZE * 2 || pages.length > 2) {
+			// max last 24 transactions
+			if (lastPage.length < PAGE_SIZE * 2 || pages.length > 3) {
 				return undefined
 			}
 			return pages.length

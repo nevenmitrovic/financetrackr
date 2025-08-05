@@ -1,9 +1,40 @@
-import { useExpenseHistory } from '@/hooks/expense-history/useExpenseHistory'
+import { useExpenses } from '@/hooks/common/useExpense'
+import dayjs from 'dayjs'
+import { useExpenseCategories } from '@/hooks/common/useExpenseCategories'
 
 import './expense-history.style.css'
 
 const ExpenseHistory = () => {
-	const { handleItemsPerPage } = useExpenseHistory()
+	const {
+		paginatedExpenses,
+		handlePreviousPage,
+		handleNextPage,
+		handleItemsPerPage,
+		checkNextPage,
+		checkPreviousPage,
+	} = useExpenses()
+	const { getCategoryNameById, getSubcategoryNameById } = useExpenseCategories()
+
+	const renderPaginatedExpenses = () => {
+		if (paginatedExpenses.length === 0) {
+			return (
+				<tr>
+					<td colSpan={5}>You don't have any expenses!</td>
+				</tr>
+			)
+		}
+		return paginatedExpenses.map((expense) => {
+			return (
+				<tr>
+					<td>{getCategoryNameById(expense.category)}</td>
+					<td>{getSubcategoryNameById(expense.subcategory)}</td>
+					<td>{expense.id}</td>
+					<td>${expense.value}</td>
+					<td>{dayjs(expense.transactionDate).format('YYYY-MM-DD')}</td>
+				</tr>
+			)
+		})
+	}
 
 	return (
 		<div className='expense-history content-card'>
@@ -33,47 +64,15 @@ const ExpenseHistory = () => {
 							<th>Date</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<td>Food</td>
-							<td>Groceries</td>
-							<td>EXP001</td>
-							<td>$45.00</td>
-							<td>2025-08-01</td>
-						</tr>
-						<tr>
-							<td>Transport</td>
-							<td>Bus</td>
-							<td>EXP002</td>
-							<td>$2.50</td>
-							<td>2025-08-02</td>
-						</tr>
-						<tr>
-							<td>Utilities</td>
-							<td>Electricity</td>
-							<td>EXP003</td>
-							<td>$60.00</td>
-							<td>2025-08-03</td>
-						</tr>
-						<tr>
-							<td>Entertainment</td>
-							<td>Movies</td>
-							<td>EXP004</td>
-							<td>$12.00</td>
-							<td>2025-08-04</td>
-						</tr>
-						<tr>
-							<td>Health</td>
-							<td>Pharmacy</td>
-							<td>EXP005</td>
-							<td>$25.00</td>
-							<td>2025-08-05</td>
-						</tr>
-					</tbody>
+					<tbody>{renderPaginatedExpenses()}</tbody>
 				</table>
 				<div className='pagination'>
-					<button className='button'>Previous</button>
-					<button className='button'>Next</button>
+					<button className='button' onClick={handlePreviousPage} disabled={!checkPreviousPage}>
+						Previous
+					</button>
+					<button className='button' onClick={handleNextPage} disabled={!checkNextPage}>
+						Next
+					</button>
 				</div>
 			</div>
 		</div>

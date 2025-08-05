@@ -253,6 +253,9 @@
 	.button:hover {
 		color: var(--clr-text-primary);
 	}
+	.button:disabled {
+		opacity: 0.5;
+	}
 
 	.content-card {
 		background-color: var(--clr-bg-card);

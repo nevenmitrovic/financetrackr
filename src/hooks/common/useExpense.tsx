@@ -8,7 +8,7 @@ import type {
 	ITopExpenseSubcategory,
 	ITotalExpense,
 } from '@/types'
-import { getCurrentMonthYear, toCamelCase } from '@/utils'
+import { getCurrentMonthYear, getRange, toCamelCase } from '@/utils'
 import { useQuery } from '@tanstack/react-query'
 import dayjs from 'dayjs'
 import { useMemo, useState } from 'react'
@@ -32,10 +32,11 @@ const TOTAL_EXPENSE_FALLBACK: ITotalExpense = {
 	percentage: 0,
 }
 
-async function getExpenses(): Promise<IExpense[]> {
+async function getExpenses(id: string): Promise<IExpense[]> {
 	const { data: expenses, error } = await supabaseClient
 		.from('expenses')
 		.select('*')
+		.eq('user_id', id)
 		.order('transaction_date', { ascending: false })
 	if (error) throw new Error(error.message)
 	return expenses
@@ -245,14 +246,40 @@ function getTopExpenseSubcategory(expenses: IExpense[] | undefined): ITopExpense
 
 	return topSubcategory || TOP_EXPENSE_SUBCATEGORY_FALLBACK
 }
+// expense history feature
+function getPaginatedExpenses(
+	pageParam: number,
+	limit: number,
+	expenses: IExpense[] | undefined
+): IExpense[] {
+	if (!expenses) return []
+
+	const range = getRange(pageParam, limit)
+	return expenses.slice(range[0], range[1] + 1)
+}
+function hasNextPage(
+	expenses: IExpense[] | undefined,
+	itemsPerPage: number,
+	currentPage: number
+): boolean {
+	if (!expenses) return false
+
+	const totalPages = Math.ceil(expenses.length / itemsPerPage)
+	return currentPage < totalPages - 1
+}
+function hasPreviousPage(currentPage: number): boolean {
+	return currentPage > 0
+}
 
 export function useExpenses() {
 	const { user } = useAuth()
 	const [timeFilter, setTimeFilter] = useState<ExpenseTimeFilterValue>('week')
+	const [itemsPerPage, setItemsPerPage] = useState(5)
+	const [currentPageIndex, setCurrentPageIndex] = useState(0)
 
 	const { data: expenses } = useQuery({
 		queryKey: [queryKeys.expenses, user!.id],
-		queryFn: getExpenses,
+		queryFn: () => getExpenses(user!.id),
 		select: (data: IExpense[]) => data.map((expense) => toCamelCase(expense)) as IExpense[],
 		enabled: !!user,
 	})
@@ -260,6 +287,18 @@ export function useExpenses() {
 	const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		setTimeFilter(e.target.value as ExpenseTimeFilterValue)
 	}
+	const handleItemsPerPage = (e: React.ChangeEvent<HTMLSelectElement>) => {
+		setItemsPerPage(Number(e.target.value))
+		setCurrentPageIndex(0)
+	}
+	const handlePreviousPage = () => {
+		if (currentPageIndex === 0) return
+		setCurrentPageIndex((prev) => prev - 1)
+	}
+	const handleNextPage = () => {
+		setCurrentPageIndex((prev) => prev + 1)
+	}
+
 	const categoryStats = useMemo(() => {
 		return calculateCategoryStats(getFilteredExpenses(expenses, timeFilter))
 	}, [timeFilter, expenses])
@@ -281,6 +320,15 @@ export function useExpenses() {
 	const totalExpenseToday = useMemo(() => {
 		return getTotalExpenseToday(expenses)
 	}, [expenses])
+	const paginatedExpenses = useMemo(() => {
+		return getPaginatedExpenses(currentPageIndex, itemsPerPage, expenses)
+	}, [expenses, currentPageIndex, itemsPerPage])
+	const checkPreviousPage = useMemo(() => {
+		return hasPreviousPage(currentPageIndex)
+	}, [currentPageIndex])
+	const checkNextPage = useMemo(() => {
+		return hasNextPage(expenses, itemsPerPage, currentPageIndex)
+	}, [expenses, currentPageIndex, itemsPerPage])
 
 	return {
 		expenses,
@@ -293,5 +341,11 @@ export function useExpenses() {
 		topExpenseSubcategory,
 		totalExpenseAllTime,
 		totalExpenseToday,
+		handlePreviousPage,
+		handleNextPage,
+		handleItemsPerPage,
+		paginatedExpenses,
+		checkNextPage,
+		checkPreviousPage,
 	}
 }

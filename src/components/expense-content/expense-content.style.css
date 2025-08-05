@@ -1,6 +1,6 @@
 .expense-content-container {
 	display: grid;
-	grid-template-rows: min-content calc(100vh - 280px);
+	grid-template-rows: min-content max-content;
 	gap: 0.2rem;
 	min-height: 100%;
 }
