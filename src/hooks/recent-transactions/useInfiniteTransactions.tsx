@@ -85,7 +85,8 @@ export function useInfiniteTransactions() {
 			}
 		},
 		getNextPageParam: (lastPage, pages) => {
-			if (lastPage.length < PAGE_SIZE * 2) {
+			// max last 15 transactions
+			if (lastPage.length < PAGE_SIZE * 2 || pages.length > 2) {
 				return undefined
 			}
 			return pages.length

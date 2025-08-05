@@ -52,8 +52,7 @@ const TransactionCard = ({
 				</div>
 				<div className='transaction-value'>
 					<h4>
-						{category === 'Income transaction' ? '+' : '-'}
-						{value}$
+						{category === 'Income transaction' ? '+' : '-'}${value}
 					</h4>
 				</div>
 			</div>

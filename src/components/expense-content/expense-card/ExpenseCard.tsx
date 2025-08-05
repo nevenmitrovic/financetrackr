@@ -41,7 +41,7 @@ const ExpenseCard = ({
 				<p>{title}</p>
 			</div>
 			<div className='trend-info'>
-				<h3>{value}$</h3>
+				<h3>${value}</h3>
 				{trendType === 'increase' ? (
 					<div className='trend-up'>
 						<p>

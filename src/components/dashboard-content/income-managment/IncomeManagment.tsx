@@ -19,7 +19,7 @@ const IncomeManagment = () => {
 					<h3>Income Managment</h3>
 					<p>Montly income recap</p>
 					<div className='income-controller'>
-						<h3>{total.total}$</h3>
+						<h3>${total.total}</h3>
 						<div>
 							<button className='button' onClick={() => toggleIncomeModal('create')}>
 								<FaPlus />

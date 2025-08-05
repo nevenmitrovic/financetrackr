@@ -3,6 +3,7 @@ import { useIsMobile } from '@/hooks/common/useIsMobile'
 import PageHeader from '@/components/common/page-header/PageHeader'
 import ExpenseCard from '@/components/expense-content/expense-card/ExpenseCard'
 import { useExpenses } from '@/hooks/common/useExpense'
+import ExpenseHistory from '@/components/expense-content/expense-history/ExpenseHistory'
 
 import '@/components/dashboard-content/dashboard-content.style.css'
 import './expense-content.style.css'
@@ -64,6 +65,7 @@ const ExpenseLayoutContent = () => {
 								today={true}
 							/>
 						</div>
+						<ExpenseHistory />
 					</div>
 				</div>
 			</div>

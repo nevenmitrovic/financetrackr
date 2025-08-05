@@ -1,0 +1,10 @@
+.expense-history {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+.expense-history-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}

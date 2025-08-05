@@ -27,7 +27,7 @@ const BudgetControl = () => {
 						<p>Please set your budget limit!</p>
 					) : (
 						<div>
-							<h3>{currentMonthTotal}$</h3> of {userBudgetMax.budgetMax}$
+							<h3>${currentMonthTotal}</h3> of ${userBudgetMax.budgetMax}
 						</div>
 					)}
 				</div>
