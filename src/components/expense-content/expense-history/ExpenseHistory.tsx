@@ -1,5 +1,3 @@
-import { TbReportAnalytics } from 'react-icons/tb'
-
 import './expense-history.style.css'
 
 const ExpenseHistory = () => {
@@ -8,9 +6,11 @@ const ExpenseHistory = () => {
 			<div className='expense-history-header'>
 				<h3>Expense history</h3>
 				<div>
-					<button className='button'>
-						<TbReportAnalytics /> View report
-					</button>
+					<select name='itemsPerPage' id='itemsPerPage' className='button'>
+						<option value={5}>5</option>
+						<option value={10}>10</option>
+						<option value={15}>15</option>
+					</select>
 				</div>
 			</div>
 			<div className='table-responsive'>
@@ -62,6 +62,10 @@ const ExpenseHistory = () => {
 						</tr>
 					</tbody>
 				</table>
+				<div className='pagination'>
+					<button className='button'>Previous</button>
+					<button className='button'>Next</button>
+				</div>
 			</div>
 		</div>
 	)
