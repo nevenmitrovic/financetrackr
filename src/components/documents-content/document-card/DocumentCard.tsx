@@ -4,12 +4,12 @@ import { FaFileDownload } from 'react-icons/fa'
 import './document-card.style.css'
 
 interface DocumentCardProps {
-	user: string
 	onClick: () => void
 	title: string
+	desc: string
 }
 
-const DocumentCard = ({ user, onClick, title }: DocumentCardProps) => {
+const DocumentCard = ({ onClick, title, desc }: DocumentCardProps) => {
 	return (
 		<div className='document-card'>
 			<div className='document-header'>
@@ -17,9 +17,7 @@ const DocumentCard = ({ user, onClick, title }: DocumentCardProps) => {
 			</div>
 			<div className='document-body'>
 				<h4>{title}</h4>
-				<p>
-					Download {title.toLocaleLowerCase()} for {user}
-				</p>
+				<p>{desc}</p>
 			</div>
 			<div className='document-foot'>
 				<button className='button' onClick={onClick}>

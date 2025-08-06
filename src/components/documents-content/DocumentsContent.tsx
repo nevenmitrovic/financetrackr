@@ -5,10 +5,12 @@ import DocumentCard from '@/components/documents-content/document-card/DocumentC
 
 import './documents-content.style.css'
 import '@/components/dashboard-content/dashboard-content.style.css'
+import { useAuth } from '@/contexts/AuthContext'
 
 const DocumentsContent = () => {
 	const { open } = useSidebarContext()
 	const isMobile = useIsMobile()
+	const { user } = useAuth()
 
 	return (
 		<>
@@ -28,17 +30,25 @@ const DocumentsContent = () => {
 							</div>
 							<div className='documents-container'>
 								<DocumentCard
-									user='Neven Mitrovic'
 									onClick={() => {}}
 									title='Current month income'
+									desc="Download the current month's income"
 								/>
-								<DocumentCard user='Neven Mitrovic' onClick={() => {}} title='All time income' />
 								<DocumentCard
-									user='Neven Mitrovic'
+									onClick={() => {}}
+									title='All time income'
+									desc='Download all-time income'
+								/>
+								<DocumentCard
 									onClick={() => {}}
 									title='Current month expenses'
+									desc="Download the current month's expenses"
 								/>
-								<DocumentCard user='Neven Mitrovic' onClick={() => {}} title='All time expenses' />
+								<DocumentCard
+									onClick={() => {}}
+									title='All time expenses'
+									desc='Download all-time expenses'
+								/>
 							</div>
 						</div>
 					</div>
