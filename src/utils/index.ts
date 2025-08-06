@@ -1,5 +1,6 @@
-import type { DataTransformNameType, ExpenseType } from '@/types'
+import type { DataTransformNameType, ExpenseType, IMonthlyIncome } from '@/types'
 import dayjs from 'dayjs'
+import * as XLSX from 'xlsx'
 
 export const formatPath = (path: string): string => {
 	if (path === '/') return 'Home'
@@ -110,4 +111,19 @@ export function getRange(page: number, limit: number) {
 	const to = from + limit - 1
 
 	return [from, to]
+}
+
+export function exportDataToExcel(
+	data: IMonthlyIncome[] | undefined,
+	name: string,
+	filename: string
+) {
+	if (!data) return null
+
+	const workbook = XLSX.utils.book_new()
+	const worksheet = XLSX.utils.json_to_sheet(data)
+
+	XLSX.utils.book_append_sheet(workbook, worksheet, name)
+
+	XLSX.writeFile(workbook, filename)
 }

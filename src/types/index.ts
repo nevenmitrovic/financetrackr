@@ -59,6 +59,7 @@ export interface ITotalExpense {
 	percentage: number
 }
 
+export type Income = IMonthlyIncome
 export type CreateMonthlyIncome = IMonthlyIncome
 export type AddIncomeFormValues = InferType<typeof addIncomeSchema>
 export type UpdateIncomeFormValues = InferType<typeof updateIncomeSchema>

@@ -2,6 +2,7 @@ import { useSidebarContext } from '@/contexts/SidebarContext'
 import { useIsMobile } from '@/hooks/common/useIsMobile'
 import PageHeader from '@/components/common/page-header/PageHeader'
 import DocumentCard from '@/components/documents-content/document-card/DocumentCard'
+import { useIncome } from '@/hooks/income-managment/useIncome'
 
 import './documents-content.style.css'
 import '@/components/dashboard-content/dashboard-content.style.css'
@@ -9,6 +10,7 @@ import '@/components/dashboard-content/dashboard-content.style.css'
 const DocumentsContent = () => {
 	const { open } = useSidebarContext()
 	const isMobile = useIsMobile()
+	const { handleDownloadMonthlyIncome, handleDownloadAllTimeIncome } = useIncome()
 
 	return (
 		<>
@@ -28,12 +30,12 @@ const DocumentsContent = () => {
 							</div>
 							<div className='documents-container'>
 								<DocumentCard
-									onClick={() => {}}
+									onClick={handleDownloadMonthlyIncome}
 									title='Current month income'
 									desc="Download the current month's income"
 								/>
 								<DocumentCard
-									onClick={() => {}}
+									onClick={handleDownloadAllTimeIncome}
 									title='All time income'
 									desc='Download all-time income'
 								/>

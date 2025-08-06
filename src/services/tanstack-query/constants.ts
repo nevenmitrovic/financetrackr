@@ -6,5 +6,5 @@ export const queryKeys = {
 	images: 'images',
 	transactions: 'transactions',
 	expenses: 'expenses',
-	expenseHistory: 'expense-history',
+	allTimeIncome: 'incomes',
 }
