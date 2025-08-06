@@ -2,7 +2,7 @@ import { useSidebarContext } from '@/contexts/SidebarContext'
 import { useIsMobile } from '@/hooks/common/useIsMobile'
 import PageHeader from '@/components/common/page-header/PageHeader'
 import ExpenseCard from '@/components/expense-content/expense-card/ExpenseCard'
-import { useExpenses } from '@/hooks/common/useExpense'
+import { useExpense } from '@/hooks/common/useExpense'
 import ExpenseHistory from '@/components/expense-content/expense-history/ExpenseHistory'
 
 import '@/components/dashboard-content/dashboard-content.style.css'
@@ -12,7 +12,7 @@ const ExpenseLayoutContent = () => {
 	const { open } = useSidebarContext()
 	const isMobile = useIsMobile()
 	const { topExpenseCategory, topExpenseSubcategory, totalExpenseAllTime, totalExpenseToday } =
-		useExpenses()
+		useExpense()
 
 	return (
 		<>

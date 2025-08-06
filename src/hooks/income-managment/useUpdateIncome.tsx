@@ -45,6 +45,7 @@ export function useUpdateIncome() {
 			toast.dismiss(LOAD_ID)
 			queryClient.invalidateQueries({ queryKey: [queryKeys.income, user!.id] })
 			queryClient.invalidateQueries({ queryKey: [queryKeys.transactions, user!.id] })
+			queryClient.invalidateQueries({ queryKey: [queryKeys.allTimeIncome, user!.id] })
 			toast.success('Monthly income successfully updated.')
 		},
 		onMutate: () => {

@@ -1,5 +1,5 @@
 import { IoSettings } from 'react-icons/io5'
-import { useExpenses } from '@/hooks/common/useExpense'
+import { useExpense } from '@/hooks/common/useExpense'
 import ProgressStripe from './progress-stripe/ProgressStripe'
 import AlertMessage from './alert-message/AlertMessage'
 import { useBudget } from '@/hooks/budget-control/useBudget'
@@ -9,7 +9,7 @@ import './budget-control.style.css'
 
 const BudgetControl = () => {
 	const { userBudgetMax, getBudgetControlPercentage } = useBudget()
-	const { currentMonthTotal } = useExpenses()
+	const { currentMonthTotal } = useExpense()
 	const { toggleBudgetModal } = useBudgetContext()
 
 	return (

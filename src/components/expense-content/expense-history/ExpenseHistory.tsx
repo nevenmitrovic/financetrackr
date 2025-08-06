@@ -1,4 +1,4 @@
-import { useExpenses } from '@/hooks/common/useExpense'
+import { useExpense } from '@/hooks/common/useExpense'
 import dayjs from 'dayjs'
 import { useExpenseCategories } from '@/hooks/common/useExpenseCategories'
 
@@ -12,7 +12,7 @@ const ExpenseHistory = () => {
 		handleItemsPerPage,
 		checkNextPage,
 		checkPreviousPage,
-	} = useExpenses()
+	} = useExpense()
 	const { getCategoryNameById, getSubcategoryNameById } = useExpenseCategories()
 
 	const renderPaginatedExpenses = () => {

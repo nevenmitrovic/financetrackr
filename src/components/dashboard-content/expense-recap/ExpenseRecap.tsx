@@ -1,12 +1,12 @@
 import './expense-recap.style.css'
-import { useExpenses } from '@/hooks/common/useExpense'
+import { useExpense } from '@/hooks/common/useExpense'
 import { useExpenseCategories } from '@/hooks/common/useExpenseCategories'
 import { getColorByIndex } from '@/utils'
 
 const CIRCUMFERENCE = 2 * Math.PI * 45
 
 const ExpenseRecap = () => {
-	const { timeFilter, handleFilterChange, categoryStats } = useExpenses()
+	const { timeFilter, handleFilterChange, categoryStats } = useExpense()
 	const { getCategoryNameById } = useExpenseCategories()
 	let cumulativePercentage = 0
 

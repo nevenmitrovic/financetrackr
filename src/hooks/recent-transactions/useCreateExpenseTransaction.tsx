@@ -31,6 +31,7 @@ export function useCreateExpenseTransaction() {
 			toast.dismiss(LOAD_ID)
 			queryClient.invalidateQueries({ queryKey: [queryKeys.transactions, user!.id] })
 			queryClient.invalidateQueries({ queryKey: [queryKeys.expenses, user!.id] })
+			queryClient.invalidateQueries({ queryKey: [queryKeys.monthlyExpenses, user!.id] })
 			toast.success('Expense transaction created successfully')
 		},
 		onMutate: () => {
