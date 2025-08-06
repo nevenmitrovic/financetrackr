@@ -7,6 +7,7 @@ import { IncomeManagmentProvider } from '@/contexts/IncomeManagmentContext'
 import { BudgetControlProvider } from '@/contexts/BudgetControlContext'
 import { RecentTransactionProvider } from '@/contexts/RecentTransactionContext'
 
+const Documents = lazy(() => import('@/pages/Documents'))
 const Expense = lazy(() => import('@/pages/Expense'))
 const Dashboard = lazy(() => import('@/pages/Dashboard'))
 const SignIn = lazy(() => import('@/pages/SignIn'))
@@ -29,6 +30,7 @@ const Router = () => {
 						}
 					/>
 					<Route path='/expense' element={<Expense />} />
+					<Route path='/documents' element={<Documents />} />
 				</Route>
 
 				<Route path='/signin' element={<SignIn />} />

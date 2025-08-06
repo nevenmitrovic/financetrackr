@@ -1,0 +1,24 @@
+.document-card {
+	min-width: 250px;
+	min-height: 200px;
+	border-radius: var(--border-radius-2);
+	border: 1px solid var(--clr-border);
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	padding: 0.5rem;
+}
+.document-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.document-body {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+.document-body > p {
+	color: var(--clr-text-secondary);
+	font-size: var(--font-size-sm);
+}
