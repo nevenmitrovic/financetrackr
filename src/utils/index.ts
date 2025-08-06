@@ -1,4 +1,4 @@
-import type { DataTransformNameType, ExpenseType, IMonthlyIncome } from '@/types'
+import type { DataTransformNameType, ExpenseType, IExpense, IMonthlyIncome } from '@/types'
 import dayjs from 'dayjs'
 import * as XLSX from 'xlsx'
 
@@ -114,7 +114,7 @@ export function getRange(page: number, limit: number) {
 }
 
 export function exportDataToExcel(
-	data: IMonthlyIncome[] | undefined,
+	data: IMonthlyIncome[] | IExpense[] | undefined,
 	name: string,
 	filename: string
 ) {

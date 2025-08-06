@@ -8,10 +8,11 @@ import type {
 	ITopExpenseSubcategory,
 	ITotalExpense,
 } from '@/types'
-import { getCurrentMonthYear, getRange, toCamelCase } from '@/utils'
+import { exportDataToExcel, getCurrentMonthYear, getRange, toCamelCase } from '@/utils'
 import { useQuery } from '@tanstack/react-query'
 import dayjs from 'dayjs'
-import { useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
+import { useExpenseCategories } from './useExpenseCategories'
 
 const TOP_EXPENSE_CATEGORY_FALLBACK: ITopExpenseCategory = {
 	category: '',
@@ -37,6 +38,18 @@ async function getExpenses(id: string): Promise<IExpense[]> {
 		.from('expenses')
 		.select('*')
 		.eq('user_id', id)
+		.order('transaction_date', { ascending: false })
+	if (error) throw new Error(error.message)
+	return expenses
+}
+async function getCurrentMonthExpenses(id: string): Promise<IExpense[]> {
+	const currentMonthYear = getCurrentMonthYear()
+
+	const { data: expenses, error } = await supabaseClient
+		.from('expenses')
+		.select('*')
+		.eq('user_id', id)
+		.eq('year_month', currentMonthYear)
 		.order('transaction_date', { ascending: false })
 	if (error) throw new Error(error.message)
 	return expenses
@@ -271,15 +284,24 @@ function hasPreviousPage(currentPage: number): boolean {
 	return currentPage > 0
 }
 
-export function useExpenses() {
+export function useExpense() {
 	const { user } = useAuth()
+	const { getCategoryNameById, getSubcategoryNameById } = useExpenseCategories()
 	const [timeFilter, setTimeFilter] = useState<ExpenseTimeFilterValue>('week')
 	const [itemsPerPage, setItemsPerPage] = useState(5)
 	const [currentPageIndex, setCurrentPageIndex] = useState(0)
 
+	// all-time expense
 	const { data: expenses } = useQuery({
 		queryKey: [queryKeys.expenses, user!.id],
 		queryFn: () => getExpenses(user!.id),
+		select: (data: IExpense[]) => data.map((expense) => toCamelCase(expense)) as IExpense[],
+		enabled: !!user,
+	})
+	// monthly expense
+	const { data: monthlyExpenses } = useQuery({
+		queryKey: [queryKeys.monthlyExpenses, user!.id],
+		queryFn: () => getCurrentMonthExpenses(user!.id),
 		select: (data: IExpense[]) => data.map((expense) => toCamelCase(expense)) as IExpense[],
 		enabled: !!user,
 	})
@@ -329,6 +351,27 @@ export function useExpenses() {
 	const checkNextPage = useMemo(() => {
 		return hasNextPage(expenses, itemsPerPage, currentPageIndex)
 	}, [expenses, currentPageIndex, itemsPerPage])
+	const handleDownloadMonthlyExpense = useCallback(() => {
+		if (!monthlyExpenses) return
+
+		const mappedData: any[] = monthlyExpenses.map((expense) => ({
+			...expense,
+			category: getCategoryNameById(expense.category),
+			subcategory: getSubcategoryNameById(expense.subcategory),
+		}))
+
+		return exportDataToExcel(mappedData, "The User's monthly expenses", 'MyMonthlyExpenses.xlsx')
+	}, [monthlyExpenses, getCategoryNameById, getSubcategoryNameById])
+	const handleDownloadAllTimeExpense = useCallback(() => {
+		if (!expenses) return
+
+		const mappedData: any[] = expenses.map((expense) => ({
+			...expense,
+			category: getCategoryNameById(expense.category),
+			subcategory: getSubcategoryNameById(expense.subcategory),
+		}))
+		return exportDataToExcel(mappedData, "The User's all-time expense", 'MyAllTimeExpenses.xlsx')
+	}, [expenses, getCategoryNameById, getSubcategoryNameById])
 
 	return {
 		expenses,
@@ -347,5 +390,7 @@ export function useExpenses() {
 		paginatedExpenses,
 		checkNextPage,
 		checkPreviousPage,
+		handleDownloadMonthlyExpense,
+		handleDownloadAllTimeExpense,
 	}
 }

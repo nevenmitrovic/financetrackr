@@ -7,4 +7,5 @@ export const queryKeys = {
 	transactions: 'transactions',
 	expenses: 'expenses',
 	allTimeIncome: 'incomes',
+	monthlyExpenses: 'monthlyExpenses',
 }
