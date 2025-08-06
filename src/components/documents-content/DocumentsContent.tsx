@@ -5,12 +5,10 @@ import DocumentCard from '@/components/documents-content/document-card/DocumentC
 
 import './documents-content.style.css'
 import '@/components/dashboard-content/dashboard-content.style.css'
-import { useAuth } from '@/contexts/AuthContext'
 
 const DocumentsContent = () => {
 	const { open } = useSidebarContext()
 	const isMobile = useIsMobile()
-	const { user } = useAuth()
 
 	return (
 		<>
