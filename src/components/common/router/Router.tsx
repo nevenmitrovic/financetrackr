@@ -6,8 +6,8 @@ import ProtectedRoutes from '@/components/common/protected-routes/ProtectedRoute
 import { IncomeManagmentProvider } from '@/contexts/IncomeManagmentContext'
 import { BudgetControlProvider } from '@/contexts/BudgetControlContext'
 import { RecentTransactionProvider } from '@/contexts/RecentTransactionContext'
-import Expense from '@/pages/Expense'
 
+const Expense = lazy(() => import('@/pages/Expense'))
 const Dashboard = lazy(() => import('@/pages/Dashboard'))
 const SignIn = lazy(() => import('@/pages/SignIn'))
 
