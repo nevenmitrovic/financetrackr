@@ -168,7 +168,13 @@ function getCurrentMonthTrend(expenses: IExpense[]): {
 	)
 	const totalLastMonthExpense = lastMonthExpenses.reduce((sum, expense) => sum + expense.value, 0)
 
-	if (totalLastMonthExpense === 0) return { value: 0, type: 'noChange' }
+	if (totalLastMonthExpense === 0) {
+		if (totalCurrentMonthExpense === 0) {
+			return { value: 0, type: 'noChange' }
+		} else {
+			return { value: 100, type: 'increase' }
+		}
+	}
 	const trendValue =
 		((totalCurrentMonthExpense - totalLastMonthExpense) / totalLastMonthExpense) * 100
 	const trendType = trendValue > 0 ? 'increase' : trendValue < 0 ? 'decrease' : 'noChange'
@@ -191,7 +197,13 @@ function getCurrentDayTrend(expenses: IExpense[]): {
 	const totalTodayExpense = todayExpenses.reduce((sum, expense) => sum + expense.value, 0)
 	const totalYesterdayExpense = yesterdayExpenses.reduce((sum, expense) => sum + expense.value, 0)
 
-	if (totalYesterdayExpense === 0) return { value: 0, type: 'noChange' }
+	if (totalYesterdayExpense === 0) {
+		if (totalTodayExpense === 0) {
+			return { value: 0, type: 'noChange' }
+		} else {
+			return { value: 100, type: 'increase' }
+		}
+	}
 	const trendValue = ((totalTodayExpense - totalYesterdayExpense) / totalYesterdayExpense) * 100
 	const trendType = trendValue > 0 ? 'increase' : trendValue < 0 ? 'decrease' : 'noChange'
 	return { value: parseFloat(trendValue.toFixed(2)), type: trendType }
