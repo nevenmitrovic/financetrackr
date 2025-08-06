@@ -27,16 +27,12 @@ export function useExpenseCategories() {
 	const { data: expenseCategories } = useQuery({
 		queryKey: [queryKeys.expenseCategories],
 		queryFn: getExpenseCategories,
-		staleTime: 50 * 60 * 1000, // 50min
-		gcTime: 60 * 60 * 1000, // 60min
 	})
 	const { data: expenseSubcategories } = useQuery({
 		queryKey: [queryKeys.expenseSubcategories],
 		queryFn: getExpenseSubcategories,
 		select: (data: IExpenseSubcategory[]) =>
 			data.map((subcategory) => toCamelCase(subcategory) as IExpenseSubcategory),
-		staleTime: 50 * 60 * 1000, // 50min
-		gcTime: 60 * 60 * 1000, // 60min
 	})
 
 	const filteredSubcategories = useMemo(() => {

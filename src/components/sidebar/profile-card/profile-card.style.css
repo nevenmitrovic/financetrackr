@@ -25,7 +25,7 @@
 	background-color: var(--clr-bg-card);
 	border-radius: var(--border-radius-2);
 	font-size: var(--font-size-sm);
-	top: -180%;
+	top: -130%;
 	left: 0;
 }
 .profile-dropdown > li {
@@ -56,7 +56,7 @@
 	}
 	.profile-dropdown {
 		font-size: var(--font-size-regular);
-		top: -195%;
+		top: -140%;
 	}
 	.avatar {
 		max-width: 36px;

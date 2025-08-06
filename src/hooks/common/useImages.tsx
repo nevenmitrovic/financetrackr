@@ -42,8 +42,6 @@ export function useImages() {
 	const { data: images } = useQuery({
 		queryKey: [queryKeys.images],
 		queryFn: getImages,
-		staleTime: 30 * 60 * 1000, // 30min
-		gcTime: 45 * 60 * 1000, // 45min
 	})
 
 	function getImageByName(name: string | null): FileObjectWithUrl | null {

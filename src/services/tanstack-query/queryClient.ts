@@ -21,6 +21,8 @@ export const queryClient = new QueryClient({
 		queries: {
 			refetchOnWindowFocus: false,
 			refetchOnReconnect: true,
+			staleTime: Infinity,
+			gcTime: Infinity,
 		},
 	},
 	queryCache: new QueryCache({

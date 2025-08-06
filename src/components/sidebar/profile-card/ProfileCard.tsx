@@ -55,7 +55,6 @@ const ProfileCard = () => {
 			</div>
 
 			<ul className={`profile-dropdown container ${!openDropdown ? 'hidden' : ''}`}>
-				<li>Edit profile</li>
 				<li onClick={signOut}>Logout</li>
 			</ul>
 		</div>
