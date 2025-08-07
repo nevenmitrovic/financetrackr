@@ -20,6 +20,7 @@ const SignInContent = () => {
 					providers={['google']}
 					view='sign_in'
 					onlyThirdPartyProviders={true}
+					redirectTo={window.location.origin}
 				/>
 			</div>
 		</div>

@@ -339,5 +339,8 @@
 		.table-responsive table {
 			min-width: 600px;
 		}
+		.content-card {
+			padding: 1rem;
+		}
 	}
 }
