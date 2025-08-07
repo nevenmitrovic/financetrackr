@@ -56,3 +56,31 @@ Visit the production application: [link](#)
 - The initial view shows the last seven days.
 - Based on the selected time filter, the statistics and donut chart update.
 - This section displays the top 3 categories where the most money was spent during the selected period, showing the amount and percentage of total expenses spent on them.
+
+---
+
+### Expense Insights
+
+- Consists of four cards showing:
+  - The category where the most money has been spent since using the application, the total amount spent, and the percentage increase or decrease in spending for that category compared to the previous month.
+  - The same information for the subcategory.
+  - The total amount of money spent since starting to use the application and the percentage change compared to the previous month.
+  - The total spending today and the percentage change compared to yesterday.
+  - If the total amount of money spent last month is 0, then every new transaction this month is considered an increase, and the percentage change is shown as 100%.
+
+---
+
+### Expense History
+
+- A table displaying all expenses since the start of using the application, sorted from newest to oldest.
+- The table shows the category, subcategory, transaction ID, amount, and date.
+- Users can choose how many transactions to display per page: 5, 10, or 15.
+
+---
+
+### Documents
+
+- Users can export data to an xlsx file.
+- It is possible to export all income or expenses for the current month, or all income or expenses since the start of using the application.
+
+---
