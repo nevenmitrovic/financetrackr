@@ -20,12 +20,6 @@ import { AiFillEdit } from 'react-icons/ai'
 
 import './income-modal-content.style.css'
 
-const INCOME_TYPE_LABELS = {
-	partTime: 'Part-Time',
-	paycheck: 'Paycheck',
-	gift: 'Gift',
-}
-
 const IncomeModalContent = () => {
 	const { toggleIncomeModal, modalType } = useIncomeContext()
 	const createIncome = useCreateIncome()
@@ -172,9 +166,7 @@ const IncomeModalContent = () => {
 						</div>
 						{typeof selectedIncomeType === 'string' && (
 							<div>
-								<label htmlFor={String(selectedIncomeType)}>
-									{INCOME_TYPE_LABELS[selectedIncomeType]}
-								</label>
+								<label htmlFor={String(selectedIncomeType)}>Amount</label>
 								<input
 									{...createForm.register(selectedIncomeType as IncomeTypes)}
 									type='number'
