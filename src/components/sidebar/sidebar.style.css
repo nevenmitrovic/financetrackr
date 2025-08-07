@@ -30,7 +30,7 @@
 	width: 80px;
 }
 
-@media (width > 768px) {
+@media (width >= 768px) {
 	.sidebar-container.sidebar-open {
 		width: 25vw;
 	}
