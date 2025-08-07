@@ -16,7 +16,7 @@ const RecentTransactions = () => {
 	const isMobile = useIsMobile()
 	const loadButtonRef = useRef<HTMLButtonElement>(null)
 	const { inView, ref } = useInView({
-		threshold: 0.1,
+		threshold: 1,
 	})
 	const { transactions, fetchNextPage, isFetchingNextPage, hasNextPage } = useInfiniteTransactions()
 
