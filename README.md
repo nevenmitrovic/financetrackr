@@ -89,3 +89,19 @@ Visit the production application: [link](#)
 - It is possible to export all income or expenses for the current month, or all income or expenses since the start of using the application.
 
 ---
+
+## Technology Stack
+
+- **React** – Library for building user interfaces, enables declarative and component-based development.
+- **TypeScript** – Superset of JavaScript with static typing, improves code safety and maintainability.
+- **Vite** – Fast frontend build tool, provides instant reload and modern optimization.
+- **Supabase** – Backend as a service, used for user authentication and data storage (database and API).
+- **TanStack Query (React Query)** – Library for managing asynchronous data, caching, and server synchronization.
+- **xlsx** – Library for working with Excel files, enables exporting data to .xlsx format.
+- **CSS** – Used for styling the application and layout of elements.
+- **ESLint** – Tool for analyzing and maintaining the quality of JavaScript/TypeScript code.
+- **dayjs** – Lightweight library for parsing, validating, manipulating, and formatting dates.
+- **react-hook-form** – Library for managing forms in React, provides easy validation and state management.
+- **react-intersection-observer** – React implementation of the Intersection Observer API, used for detecting when elements enter or leave the viewport.
+- **react-toastify** – Library for displaying customizable toast notifications in React applications.
+- **yup** – JavaScript schema builder for value parsing and validation, commonly used for form validation.
