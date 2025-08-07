@@ -68,3 +68,9 @@ export const expenseTransactionSchema = Yup.object().shape({
 		.min(1, 'Subcategory value is required')
 		.required('Subcategory value is required'),
 })
+export const budgetLimitSchema = Yup.object().shape({
+	maxValue: Yup.number()
+		.typeError('Budget limit must be a valid number')
+		.min(1, 'Budget limit must be at least $1')
+		.required('Budget limit is required'),
+})

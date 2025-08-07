@@ -7,6 +7,7 @@
 	flex-direction: column;
 	gap: 0.5rem;
 	width: 310px;
+	padding-bottom: 0.5rem;
 }
 .budget-modal-body label {
 	color: var(--clr-text-secondary);
