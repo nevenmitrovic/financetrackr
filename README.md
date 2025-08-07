@@ -8,7 +8,7 @@ FinanceTrackr is an application where users can enter and track their income and
 
 ## Live Demo
 
-Visit the production application: [link](#)
+[🔗 Visit the live app](https://financetrackr-theta.vercel.app)
 
 ---
 
