@@ -14,6 +14,11 @@ Visit the production application: [link](#)
 
 ## Features
 
+### Sign in with Google
+
+- Users can sign in using their Google account.
+- Signing in provides secure access to all application features.
+
 ---
 
 ### Income Management
