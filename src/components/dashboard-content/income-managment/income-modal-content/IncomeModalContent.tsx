@@ -67,6 +67,8 @@ const IncomeModalContent = () => {
 	}, [selectedIncome, modalType])
 
 	const handleSelectValue = (e: React.ChangeEvent<HTMLSelectElement>) => {
+		createForm.unregister(['partTime', 'paycheck', 'gift'])
+
 		if (e.target.value === '0') {
 			setSelectedIncomeType(0)
 		} else {

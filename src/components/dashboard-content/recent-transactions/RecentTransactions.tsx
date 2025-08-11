@@ -31,7 +31,7 @@ const RecentTransactions = () => {
 			<div className='recent-transactions-header'>
 				<h3>Recent Transactions</h3>
 				<button className='button' onClick={toggleTransactionModal}>
-					<FaPlus /> Add new
+					<FaPlus /> Add expense
 				</button>
 			</div>
 			<div className='transactions-container'>
